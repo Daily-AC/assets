@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; }
+  body {
+    background: #14141a;
+    font-family: "PingFang SC", "Hiragino Sans GB", "STHeiti", sans-serif;
+    color: #f2f2f5;
+    position: relative;
+    overflow: hidden;
+  }
+  .bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(1000px 600px at 74% 22%, rgba(255,107,90,.14), transparent 62%),
+      radial-gradient(700px 460px at 4% 92%, rgba(255,107,90,.06), transparent 60%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(160deg, #000 10%, transparent 70%);
+  }
+
+  .stage {
+    position: relative; height: 100%;
+    display: grid; grid-template-columns: 1fr 772px;
+    gap: 64px; align-items: center;
+    padding: 0 96px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 22px; margin-bottom: 42px; }
+  .brand svg { width: 68px; height: 68px; display: block; }
+  .brand .name {
+    font-size: 40px; font-weight: 600; letter-spacing: .5px;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  }
+  .brand .tag {
+    margin-left: 6px; padding: 8px 17px;
+    border: 2px solid rgba(255,107,90,.42); border-radius: 999px;
+    font-size: 20px; color: #ff8f80;
+  }
+
+  h1 { font-size: 82px; line-height: 1.24; font-weight: 700; letter-spacing: -1.2px; white-space: nowrap; }
+  h1 .hl { color: #FF6B5A; }
+
+  .rule { width: 110px; height: 6px; background: #FF6B5A; border-radius: 4px; margin: 42px 0 34px; }
+
+  .sources { font-size: 33px; line-height: 1.5; color: #c9c9d2; font-weight: 500; white-space: nowrap; }
+  .sources2 { margin-top: 10px; font-size: 27px; color: #8b8b98; white-space: nowrap; }
+  .sources b { color: #fff; font-weight: 700; }
+  .sub {
+    margin-top: 18px; font-size: 26px; color: #8e8e9c;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  }
+
+  /* 右侧终端 */
+  .term {
+    background: #1c1c24; border-radius: 16px;
+    box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.055);
+    overflow: hidden;
+  }
+  .term .bar {
+    height: 52px; background: #24242e; display: flex; align-items: center;
+    padding: 0 20px; gap: 10px;
+  }
+  .term .bar i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+  .term .bar .r { background: #ff5f57; } .term .bar .y { background: #febc2e; } .term .bar .g { background: #28c840; }
+  .term .bar span {
+    margin-left: 16px; font-size: 19px; color: #6e6e7d;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+  }
+  .term .body {
+    padding: 30px 32px 34px;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: 23px; line-height: 1.85;
+  }
+  .p { color: #6f7bd6; }
+  .cmd { color: #e6e6ee; }
+  .flag { color: #ffb457; }
+  .str { color: #7ddc9a; }
+  .out { color: #a9a9b8; }
+  .ad { color: #FF6B5A; }
+  .dim { color: #63636f; }
+
+  .foot {
+    position: absolute; left: 96px; right: 96px; bottom: 56px;
+    display: flex; align-items: center; gap: 26px;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: 29px; color: #9a9aa6;
+  }
+  .foot .line { flex: 1; height: 2px; background: rgba(255,255,255,.075); }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grid"></div>
+
+  <div class="stage">
+    <div>
+      <div class="brand">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="32" fill="none" stroke="#FF6B5A" stroke-width="4.5"/>
+          <g fill="#FF6B5A">
+            <circle cx="50" cy="18" r="8"/><circle cx="82" cy="50" r="8"/>
+            <circle cx="50" cy="82" r="8"/><circle cx="18" cy="50" r="8"/>
+            <circle cx="50" cy="50" r="11"/>
+          </g>
+        </svg>
+        <span class="name">omnireach</span>
+        <span class="tag">开源 · MIT</span>
+      </div>
+
+      <h1>AI Agent 能联网<br>却搜不到<span class="hl">微信公众号</span></h1>
+
+      <div class="rule"></div>
+
+      <div class="sources">
+        <b>微信公众号</b> · <b>小红书</b> · <b>抖音</b> · <b>B站</b>
+      </div>
+      <div class="sources2">Twitter · Reddit · HackerNews · YouTube · GitHub</div>
+      <div class="sub">一条命令搜完 · 统一 JSON · 微信零配置</div>
+    </div>
+
+    <div class="term">
+      <div class="bar">
+        <i class="r"></i><i class="y"></i><i class="g"></i>
+        <span>zsh — omnireach</span>
+      </div>
+      <div class="body">
+        <div><span class="p">$</span> <span class="cmd">pip install omnireach</span></div>
+        <div class="dim">Successfully installed omnireach-0.18.0a0</div>
+        <div style="height:14px"></div>
+        <div><span class="p">$</span> <span class="cmd">omnireach search</span> <span class="flag">--on</span> wechat <span class="str">"Claude Code"</span></div>
+        <div style="height:10px"></div>
+        <div class="out"><span class="ad">sogou</span>&nbsp;&nbsp;果壳&nbsp;&nbsp;Claude Code 突然被泄露</div>
+        <div class="out"><span class="ad">sogou</span>&nbsp;&nbsp;APPSO&nbsp;&nbsp;翻遍泄露的 50 万行代码</div>
+        <div class="out"><span class="ad">sogou</span>&nbsp;&nbsp;大数据文摘&nbsp;&nbsp;10 个隐藏命令</div>
+        <div style="height:14px"></div>
+        <div class="dim"># 不用 API key，不用登录</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>github.com/Daily-AC/omnireach</span>
+    <span class="line"></span>
+  </div>
+</body>
+</html>

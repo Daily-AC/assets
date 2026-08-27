@@ -51,6 +51,7 @@ moved out of the OmniReach repository so ordinary installs don't clone it.
 | `launch-xhs-cover.png` | v0.12 Xiaohongshu launch card |
 | `launch-xhs-demo.png` | v0.12 Xiaohongshu launch card |
 | `launch-xhs-routing.png` | v0.12 Xiaohongshu launch card |
+| `csdn-cover.png` | CSDN article cover, 1920×1080 — rebuild from `csdn-cover.html` |
 
 ## What is not committed
 
