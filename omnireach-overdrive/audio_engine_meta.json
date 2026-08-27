@@ -1,0 +1,188 @@
+{
+  "tts_provider": "qwen3-tts",
+  "voice_id": "Vivian",
+  "bgm": {
+    "path": "assets/bgm/overdrive.wav",
+    "volume": 0.11,
+    "provider": "local-procedural",
+    "bpm": 132
+  },
+  "bgm_pending": false,
+  "bgm_provider": "local-procedural",
+  "bgm_mode": "generate",
+  "bgm_target_duration_s": 36.1,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.5,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Agent 搜个抖音，怎么又弹",
+          "start": 0.08,
+          "end": 2.2149583333333336
+        },
+        {
+          "id": "w1",
+          "text": "Chrome？",
+          "start": 2.3959583333333336,
+          "end": 3.245791666666667
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "048218347b485fbb9703f41966b6e585e788d5c4d2947899b20007516c254e34"
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.2,
+      "words": [
+        {
+          "id": "w0",
+          "text": "搜索和读取，",
+          "start": 0.08,
+          "end": 1.0986666666666667
+        },
+        {
+          "id": "w1",
+          "text": "不该每次拉起整套浏览器自动化。",
+          "start": 1.2796666666666667,
+          "end": 3.8133749999999997
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "09fd1d68fe7a53602d0dc3ed956b7449e5d02e707ad844f19130c1260dfb774c"
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 5.3,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Omnireach",
+          "start": 0.08,
+          "end": 1.0871666666666668
+        },
+        {
+          "id": "w1",
+          "text": "直接复用你已经登录的 Chrome，",
+          "start": 1.2681666666666669,
+          "end": 3.3270833333333334
+        },
+        {
+          "id": "w2",
+          "text": "只走一条只读原生桥。",
+          "start": 3.5080833333333334,
+          "end": 4.926958333333333
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "6d65269d0aeacc303f725369e18c176beddd306a69f988a8de00f69a07dc3f2b"
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 7.8,
+      "words": [
+        {
+          "id": "w0",
+          "text": "真实运行，",
+          "start": 0.08,
+          "end": 0.9385416666666666
+        },
+        {
+          "id": "w1",
+          "text": "三条抖音结果，",
+          "start": 1.1195416666666667,
+          "end": 2.697916666666667
+        },
+        {
+          "id": "w2",
+          "text": "adapter 是 native-chrome。",
+          "start": 2.878916666666667,
+          "end": 7.417375000000001
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "4223a72779f2fcda55736bb63216c830cab56f9c8cee5fdc25f8c6b1bcd01ba7"
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 15.3,
+      "words": [
+        {
+          "id": "w0",
+          "text": "PATH 里没有 OpenCLI。",
+          "start": 0.08,
+          "end": 4.618916666666666
+        },
+        {
+          "id": "w1",
+          "text": "errors 为空。",
+          "start": 4.799916666666666,
+          "end": 6.936624999999999
+        },
+        {
+          "id": "w2",
+          "text": "可见窗口和标签页，零到零。",
+          "start": 7.117624999999999,
+          "end": 10.044041666666667
+        },
+        {
+          "id": "w3",
+          "text": "点击和表单，交给 Playwright。",
+          "start": 10.225041666666666,
+          "end": 12.60375
+        },
+        {
+          "id": "w4",
+          "text": "搜索和读取，",
+          "start": 12.784749999999999,
+          "end": 14.123708333333333
+        },
+        {
+          "id": "w5",
+          "text": "装完就用。",
+          "start": 14.304708333333332,
+          "end": 15.16325
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "ccfdb1d1fb35ed0c5739fe7df7fc7c5540889d23fb702d1464c3e89bf9333503"
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 36.1,
+  "tts": {
+    "provider": "qwen3-tts",
+    "runtime": "mlx-audio",
+    "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+    "voice": "Vivian",
+    "language": "Chinese",
+    "instruct": "中文普通话，年轻女性，懂技术，快速、冷静、有攻击性但不喊叫。每个短句像电子音乐里的一个重拍。英文产品名、命令和字段名自然发音。不要播音腔。",
+    "seed": 20260713
+  }
+}

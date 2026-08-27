@@ -1,0 +1,91 @@
+{
+  "query": "gpt5.6",
+  "ts": "2026-07-12T16:57:24.620022Z",
+  "results": [
+    {
+      "source": "douyin",
+      "adapter": "native-chrome",
+      "title": "GPT5.6 模型更新语音对话，真的笑麻了！！！ #gpt新模型 #ai对话 #codex #ai工具 #ai语音",
+      "url": "https://www.douyin.com/video/7660840191250238747",
+      "content": "GPT5.6 模型更新语音对话，真的笑麻了！！！ #gpt新模型 #ai对话 #codex #ai工具 #ai语音",
+      "author": "OdysseAI 奥德赛",
+      "ts": null,
+      "score": 0.5,
+      "engagement": {
+        "likes": 46000,
+        "comments": null,
+        "shares": null,
+        "views": null
+      },
+      "raw": {
+        "rank": 1,
+        "desc": "GPT5.6 模型更新语音对话，真的笑麻了！！！ #gpt新模型 #ai对话 #codex #ai工具 #ai语音",
+        "author": "OdysseAI 奥德赛",
+        "url": "https://www.douyin.com/video/7660840191250238747",
+        "plays": 0,
+        "likes": 46000,
+        "comments": 0,
+        "shares": 0
+      },
+      "cost": "free",
+      "raw_score": 0.53
+    },
+    {
+      "source": "douyin",
+      "adapter": "native-chrome",
+      "title": "GPT5.6实测30小时！这能力真的行爆了？ #ai新星计划 #vibecoding大赏 #青年创作者成长计划",
+      "url": "https://www.douyin.com/video/7661294188813700379",
+      "content": "GPT5.6实测30小时！这能力真的行爆了？ #ai新星计划 #vibecoding大赏 #青年创作者成长计划",
+      "author": "FredTalk",
+      "ts": null,
+      "score": 0.5,
+      "engagement": {
+        "likes": 874,
+        "comments": null,
+        "shares": null,
+        "views": null
+      },
+      "raw": {
+        "rank": 2,
+        "desc": "GPT5.6实测30小时！这能力真的行爆了？ #ai新星计划 #vibecoding大赏 #青年创作者成长计划",
+        "author": "FredTalk",
+        "url": "https://www.douyin.com/video/7661294188813700379",
+        "plays": 0,
+        "likes": 874,
+        "comments": 0,
+        "shares": 0
+      },
+      "cost": "free",
+      "raw_score": 0.53
+    },
+    {
+      "source": "douyin",
+      "adapter": "native-chrome",
+      "title": "「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？最佳平替还是拙劣模仿？#ai新星计划 #gpt56 #chatgpt#OpenAI#vibecoding大赏",
+      "url": "https://www.douyin.com/video/7660852657644440895",
+      "content": "「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？最佳平替还是拙劣模仿？#ai新星计划 #gpt56 #chatgpt#OpenAI#vibecoding大赏",
+      "author": "神烦老狗",
+      "ts": null,
+      "score": 0.5,
+      "engagement": {
+        "likes": 768,
+        "comments": null,
+        "shares": null,
+        "views": null
+      },
+      "raw": {
+        "rank": 3,
+        "desc": "「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？最佳平替还是拙劣模仿？#ai新星计划 #gpt56 #chatgpt#OpenAI#vibecoding大赏",
+        "author": "神烦老狗",
+        "url": "https://www.douyin.com/video/7660852657644440895",
+        "plays": 0,
+        "likes": 768,
+        "comments": 0,
+        "shares": 0
+      },
+      "cost": "free",
+      "raw_score": 0.53
+    }
+  ],
+  "errors": []
+}

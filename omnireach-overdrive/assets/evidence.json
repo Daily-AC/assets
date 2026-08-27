@@ -1,0 +1,55 @@
+{
+  "captured_at": "2026-07-12T16:57:24.620022Z",
+  "omnireach_version": "0.14.0-alpha",
+  "display_command": "env PATH=/usr/bin:/bin:/usr/sbin:/sbin OMNIREACH_BROWSER_TRANSPORT=native $HOME/.local/bin/omnireach search \"gpt5.6\" --on douyin --limit 3 --timeout 45 --json",
+  "query": "gpt5.6",
+  "transport": {
+    "forced": "native",
+    "opencli_in_path": false,
+    "adapter": "native-chrome"
+  },
+  "bridge": {
+    "installed": true,
+    "connected": true,
+    "extension_version": "0.1.1",
+    "error": ""
+  },
+  "chrome": {
+    "running": true,
+    "before": {
+      "windows": 0,
+      "tabs": 0
+    },
+    "after": {
+      "windows": 0,
+      "tabs": 0
+    }
+  },
+  "results": [
+    {
+      "rank": 1,
+      "title": "GPT5.6 模型更新语音对话，真的笑麻了！！！ #gpt新模型 #ai对话 #codex #ai工具 #ai语音",
+      "author": "OdysseAI 奥德赛",
+      "url": "https://www.douyin.com/video/7660840191250238747",
+      "likes": 46000,
+      "adapter": "native-chrome"
+    },
+    {
+      "rank": 2,
+      "title": "GPT5.6实测30小时！这能力真的行爆了？ #ai新星计划 #vibecoding大赏 #青年创作者成长计划",
+      "author": "FredTalk",
+      "url": "https://www.douyin.com/video/7661294188813700379",
+      "likes": 874,
+      "adapter": "native-chrome"
+    },
+    {
+      "rank": 3,
+      "title": "「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？最佳平替还是拙劣模仿？#ai新星计划 #gpt56 #chatgpt#OpenAI#vibecoding大赏",
+      "author": "神烦老狗",
+      "url": "https://www.douyin.com/video/7660852657644440895",
+      "likes": 768,
+      "adapter": "native-chrome"
+    }
+  ],
+  "errors": []
+}

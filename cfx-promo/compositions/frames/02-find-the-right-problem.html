@@ -1,0 +1,473 @@
+<template>
+  <div id="root" data-composition-id="02-find-the-right-problem" data-duration="7.5" data-width="1920" data-height="1080">
+    <div id="frame-02-ground" class="clip _02-find-the-right-problem-ground" data-layout-ignore data-start="0" data-duration="7.5" data-track-index="0"></div>
+
+    <div class="_02-find-the-right-problem-index">
+      <div class="_02-find-the-right-problem-index-rule"></div>
+      <div class="_02-find-the-right-problem-index-label">01 / FIND THE RIGHT PROBLEM</div>
+      <h1>Search with<br><em>intent.</em></h1>
+      <p>Topic, rating, tags,<br>and solved state.</p>
+      <div class="_02-find-the-right-problem-filter-note">FILTERS / CODEFORCES</div>
+    </div>
+
+    <div class="_02-find-the-right-problem-stage">
+      <div class="_02-find-the-right-problem-terminal">
+        <div class="_02-find-the-right-problem-titlebar">
+          <div class="_02-find-the-right-problem-dots"><i></i><i></i><i></i></div>
+          <span>cfx · problem search</span>
+          <span>codeforces</span>
+        </div>
+
+        <div class="_02-find-the-right-problem-command-shell">
+          <div class="_02-find-the-right-problem-command-row">
+            <span class="_02-find-the-right-problem-prompt">$</span>
+            <div class="_02-find-the-right-problem-command" aria-label="cfx problem search command"></div>
+            <span class="_02-find-the-right-problem-caret _02-find-the-right-problem-command-caret"></span>
+          </div>
+        </div>
+
+        <div class="_02-find-the-right-problem-results">
+          <div class="_02-find-the-right-problem-results-head">
+            <span>PROBLEM</span><span>TITLE</span><span>RATING</span>
+          </div>
+          <div class="_02-find-the-right-problem-selection"></div>
+
+          <div class="_02-find-the-right-problem-result-row _02-find-the-right-problem-row-1">
+            <span>520B</span><strong>Two Buttons</strong><b>1400</b>
+          </div>
+          <div class="_02-find-the-right-problem-result-row _02-find-the-right-problem-row-2">
+            <span>1418C</span><strong>Mortal Kombat Tower</strong><b>1500</b>
+          </div>
+          <div class="_02-find-the-right-problem-result-row _02-find-the-right-problem-row-3">
+            <span>1365D</span><strong>Solve The Maze</strong><b>1700</b>
+          </div>
+        </div>
+
+        <div class="_02-find-the-right-problem-meta">
+          <span>graphs</span><i>·</i><span>shortest paths</span><i>·</i><span>unsolved</span>
+        </div>
+
+        <div class="_02-find-the-right-problem-next-prompt">
+          <span>$</span><span class="_02-find-the-right-problem-caret"></span>
+        </div>
+
+        <div class="_02-find-the-right-problem-status">
+          <span>CFX / LIVE INDEX</span><span>FILTERED RESULTS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #171814;
+    }
+
+    ._02-find-the-right-problem-ground {
+      position: absolute;
+      inset: 0;
+      background: #f3f0e7;
+    }
+
+    ._02-find-the-right-problem-index {
+      position: absolute;
+      left: 80px;
+      top: 112px;
+      width: 425px;
+      height: 690px;
+      z-index: 2;
+      color: #171814;
+    }
+
+    ._02-find-the-right-problem-index-rule {
+      width: 0;
+      height: 1px;
+      background: rgba(23, 24, 20, 0.2);
+      margin-bottom: 26px;
+    }
+
+    ._02-find-the-right-problem-index-label,
+    ._02-find-the-right-problem-filter-note {
+      font-family: monospace;
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+    }
+
+    ._02-find-the-right-problem-index h1 {
+      margin: 88px 0 26px;
+      max-width: 410px;
+      font-family: serif;
+      font-size: 96px;
+      line-height: 0.94;
+      letter-spacing: -0.022em;
+      font-weight: 400;
+    }
+
+    ._02-find-the-right-problem-index h1 em {
+      font-weight: 400;
+    }
+
+    ._02-find-the-right-problem-index p {
+      margin: 0;
+      font-family: serif;
+      font-size: 34px;
+      line-height: 1.25;
+      font-weight: 400;
+    }
+
+    ._02-find-the-right-problem-filter-note {
+      position: absolute;
+      left: 0;
+      bottom: 3px;
+      font-size: 17px;
+      color: #6e6e68;
+    }
+
+    ._02-find-the-right-problem-stage {
+      position: absolute;
+      left: 550px;
+      top: 74px;
+      width: 1290px;
+      height: 790px;
+      z-index: 3;
+      transform-origin: 61% 47%;
+    }
+
+    ._02-find-the-right-problem-terminal {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border: 1px solid rgba(243, 240, 231, 0.14);
+      border-radius: 8px;
+      background: #181615;
+      box-shadow: 0 1px 3px rgba(23, 24, 20, 0.08), 0 4px 16px rgba(23, 24, 20, 0.04);
+      color: #f3f0e7;
+      font-family: monospace;
+    }
+
+    ._02-find-the-right-problem-titlebar {
+      height: 66px;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 28px;
+      border-bottom: 1px solid rgba(243, 240, 231, 0.14);
+      background: #252120;
+      color: rgba(243, 240, 231, 0.58);
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    ._02-find-the-right-problem-titlebar > span:last-child {
+      justify-self: end;
+    }
+
+    ._02-find-the-right-problem-dots {
+      display: flex;
+      gap: 9px;
+    }
+
+    ._02-find-the-right-problem-dots i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(243, 240, 231, 0.26);
+    }
+
+    ._02-find-the-right-problem-command-shell {
+      height: 146px;
+      box-sizing: border-box;
+      padding: 36px 42px 22px;
+      border-bottom: 1px solid rgba(243, 240, 231, 0.11);
+      background: #1f1c1b;
+      overflow: hidden;
+    }
+
+    ._02-find-the-right-problem-command-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      font-size: 26px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    ._02-find-the-right-problem-prompt {
+      flex: 0 0 auto;
+      color: #f07f5a;
+      font-weight: 700;
+    }
+
+    ._02-find-the-right-problem-command {
+      width: 1060px;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      color: #f3f0e7;
+    }
+
+    ._02-find-the-right-problem-caret {
+      display: inline-block;
+      width: 14px;
+      height: 29px;
+      margin-top: 5px;
+      background: #f3f0e7;
+    }
+
+    ._02-find-the-right-problem-results {
+      position: absolute;
+      left: 42px;
+      right: 42px;
+      top: 270px;
+      height: 324px;
+      overflow: hidden;
+    }
+
+    ._02-find-the-right-problem-results-head {
+      display: grid;
+      grid-template-columns: 200px 1fr 120px;
+      align-items: center;
+      height: 48px;
+      padding: 0 22px;
+      border-bottom: 1px solid rgba(243, 240, 231, 0.14);
+      color: rgba(243, 240, 231, 0.42);
+      font-size: 16px;
+      letter-spacing: 0.14em;
+    }
+
+    ._02-find-the-right-problem-selection {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 55px;
+      height: 72px;
+      border-radius: 6px;
+      background: #b8d9cb;
+    }
+
+    ._02-find-the-right-problem-result-row {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 55px;
+      height: 72px;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 200px 1fr 120px;
+      align-items: center;
+      padding: 0 22px;
+      border-bottom: 1px solid rgba(243, 240, 231, 0.09);
+      font-size: 25px;
+      color: #f3f0e7;
+    }
+
+    ._02-find-the-right-problem-result-row strong,
+    ._02-find-the-right-problem-result-row b {
+      font-weight: 400;
+    }
+
+    ._02-find-the-right-problem-result-row b {
+      color: #f07f5a;
+    }
+
+    ._02-find-the-right-problem-meta {
+      position: absolute;
+      left: 42px;
+      top: 646px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(243, 240, 231, 0.64);
+      font-size: 18px;
+      letter-spacing: 0.08em;
+    }
+
+    ._02-find-the-right-problem-meta i {
+      color: rgba(243, 240, 231, 0.28);
+      font-style: normal;
+    }
+
+    ._02-find-the-right-problem-next-prompt {
+      position: absolute;
+      left: 42px;
+      top: 696px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(243, 240, 231, 0.72);
+      font-size: 25px;
+    }
+
+    ._02-find-the-right-problem-next-prompt ._02-find-the-right-problem-caret {
+      width: 13px;
+      height: 26px;
+      opacity: 0.62;
+    }
+
+    ._02-find-the-right-problem-status {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 44px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      border-top: 1px solid rgba(243, 240, 231, 0.11);
+      background: #252120;
+      color: #8c8884;
+      font-size: 15px;
+      letter-spacing: 0.11em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const root = document.querySelector('[data-composition-id="02-find-the-right-problem"]');
+      const command = 'cfx problem search "shortest path" --min-rating 1400 --max-rating 1800 --tag graphs --unsolved';
+      const commandNode = root.querySelector('._02-find-the-right-problem-command');
+
+      for (const character of command) {
+        const span = document.createElement('span');
+        span.className = '_02-find-the-right-problem-command-char';
+        span.textContent = character;
+        commandNode.appendChild(span);
+      }
+
+      const chars = root.querySelectorAll('._02-find-the-right-problem-command-char');
+      gsap.set(chars, { opacity: 0 });
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('._02-find-the-right-problem-stage',
+        { opacity: 0, scale: 0.92, filter: 'blur(18px)' },
+        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.48, ease: 'expo.out' },
+        0
+      );
+      tl.fromTo('._02-find-the-right-problem-index-rule',
+        { width: 0 },
+        { width: 425, duration: 0.52, ease: 'power3.out' },
+        0.08
+      );
+      tl.fromTo('._02-find-the-right-problem-index-label',
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.42, ease: 'power3.out' },
+        0.16
+      );
+      tl.fromTo('._02-find-the-right-problem-prompt',
+        { opacity: 0.18, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.18, ease: 'power2.out' },
+        0.26
+      );
+      tl.to('._02-find-the-right-problem-prompt', { opacity: 0.28, duration: 0.12, ease: 'none' }, 0.52);
+      tl.to('._02-find-the-right-problem-prompt', { opacity: 1, duration: 0.14, ease: 'none' }, 0.64);
+
+      tl.fromTo('._02-find-the-right-problem-index h1',
+        { opacity: 0, x: 42 },
+        { opacity: 1, x: 0, duration: 0.66, ease: 'power4.out' },
+        0.72
+      );
+      tl.fromTo('._02-find-the-right-problem-index p',
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+        1.08
+      );
+      tl.fromTo('._02-find-the-right-problem-filter-note',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.42, ease: 'power3.out' },
+        1.36
+      );
+
+      tl.to('._02-find-the-right-problem-stage', { scale: 1.018, duration: 2.36, ease: 'power1.inOut' }, 0.8);
+      tl.to(chars, {
+        opacity: 1,
+        duration: 0.015,
+        stagger: 0.021,
+        ease: 'none'
+      }, 0.84);
+      tl.to('._02-find-the-right-problem-command-shell', {
+        height: 190,
+        duration: 0.52,
+        ease: 'power3.out'
+      }, 2.05);
+      tl.to('._02-find-the-right-problem-command-caret', { opacity: 0, duration: 0.08, ease: 'none' }, 3.12);
+
+      tl.fromTo('._02-find-the-right-problem-results',
+        { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: 0.3, ease: 'power4.out' },
+        3.18
+      );
+      tl.fromTo('._02-find-the-right-problem-row-1',
+        { opacity: 0, y: 62 },
+        { opacity: 1, y: 0, duration: 0.36, ease: 'power4.out' },
+        3.42
+      );
+      tl.fromTo('._02-find-the-right-problem-row-1 b',
+        { opacity: 0, scale: 1.18 },
+        { opacity: 1, scale: 1, duration: 0.24, ease: 'power3.out' },
+        3.72
+      );
+
+      tl.to('._02-find-the-right-problem-row-1', { y: -6, duration: 0.3, ease: 'power3.out' }, 4.0);
+      tl.fromTo('._02-find-the-right-problem-row-2',
+        { opacity: 0, y: 126 },
+        { opacity: 1, y: 72, duration: 0.36, ease: 'power4.out' },
+        4.0
+      );
+      tl.fromTo('._02-find-the-right-problem-row-2 b',
+        { opacity: 0, scale: 1.18 },
+        { opacity: 1, scale: 1, duration: 0.24, ease: 'power3.out' },
+        4.3
+      );
+
+      tl.to('._02-find-the-right-problem-row-1', { y: -12, duration: 0.3, ease: 'power3.out' }, 4.58);
+      tl.to('._02-find-the-right-problem-row-2', { y: 66, duration: 0.3, ease: 'power3.out' }, 4.58);
+      tl.fromTo('._02-find-the-right-problem-row-3',
+        { opacity: 0, y: 192 },
+        { opacity: 1, y: 144, duration: 0.36, ease: 'power4.out' },
+        4.58
+      );
+      tl.fromTo('._02-find-the-right-problem-row-3 b',
+        { opacity: 0, scale: 1.18 },
+        { opacity: 1, scale: 1, duration: 0.24, ease: 'power3.out' },
+        4.9
+      );
+
+      tl.fromTo('._02-find-the-right-problem-meta',
+        { opacity: 0, x: 46 },
+        { opacity: 1, x: 0, duration: 0.48, ease: 'power4.out' },
+        5.58
+      );
+      tl.fromTo('._02-find-the-right-problem-selection',
+        { opacity: 0, scaleX: 0.82, transformOrigin: 'left center' },
+        { opacity: 0.92, scaleX: 1, duration: 0.42, ease: 'power3.out' },
+        5.84
+      );
+      tl.to('._02-find-the-right-problem-row-1', { color: '#171814', duration: 0.2, ease: 'none' }, 5.9);
+      tl.to('._02-find-the-right-problem-row-1 b', { color: '#171814', duration: 0.2, ease: 'none' }, 5.9);
+      tl.fromTo('._02-find-the-right-problem-next-prompt',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+        6.24
+      );
+      tl.to('._02-find-the-right-problem-next-prompt ._02-find-the-right-problem-caret', {
+        opacity: 0.34,
+        duration: 0.28,
+        ease: 'none'
+      }, 6.62);
+      tl.set('._02-find-the-right-problem-stage', { scale: 1.018 }, 6.98);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['02-find-the-right-problem'] = tl;
+    })();
+  </script>
+</template>

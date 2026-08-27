@@ -1,0 +1,676 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2");
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #171814;
+      isolation: isolate;
+    }
+
+    #root * {
+      box-sizing: border-box;
+    }
+
+    .f04-agent-test-submit-ground {
+      position: absolute;
+      inset: 0;
+      background: #f3f0e7;
+    }
+
+    .f04-agent-test-submit-kicker {
+      position: absolute;
+      top: 68px;
+      left: 81px;
+      display: flex;
+      align-items: center;
+      gap: 19px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 26px;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #171814;
+    }
+
+    .f04-agent-test-submit-kicker-index {
+      opacity: 0.44;
+    }
+
+    .f04-agent-test-submit-kicker-rule {
+      width: 92px;
+      height: 1px;
+      background: rgba(23, 24, 20, 0.2);
+      transform-origin: left center;
+    }
+
+    .f04-agent-test-submit-shell {
+      position: absolute;
+      top: 136px;
+      left: 81px;
+      width: 1758px;
+      height: 712px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 30% 70%;
+      border: 1px solid rgba(243, 240, 231, 0.14);
+      border-radius: 8px;
+      background: #181615;
+      box-shadow: 0 1px 3px rgba(23, 24, 20, 0.08), 0 4px 16px rgba(23, 24, 20, 0.04);
+      color: #f3f0e7;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .f04-agent-test-submit-rail {
+      position: relative;
+      padding: 34px 34px 30px;
+      border-right: 1px solid rgba(243, 240, 231, 0.14);
+      background: #1f1c1b;
+    }
+
+    .f04-agent-test-submit-windowbar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 30px;
+      margin-bottom: 57px;
+      color: #87847f;
+      font-size: 17px;
+      letter-spacing: 0.02em;
+    }
+
+    .f04-agent-test-submit-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(243, 240, 231, 0.28);
+    }
+
+    .f04-agent-test-submit-window-title {
+      margin-left: 9px;
+    }
+
+    .f04-agent-test-submit-step {
+      position: relative;
+      height: 86px;
+      display: grid;
+      grid-template-columns: 42px 1fr 32px;
+      align-items: center;
+      padding: 0 18px;
+      border-top: 1px solid rgba(243, 240, 231, 0.1);
+      color: rgba(243, 240, 231, 0.43);
+      font-size: 25px;
+      letter-spacing: 0.01em;
+    }
+
+    .f04-agent-test-submit-step:last-child {
+      border-bottom: 1px solid rgba(243, 240, 231, 0.1);
+    }
+
+    .f04-agent-test-submit-step-no {
+      color: #868482;
+      font-size: 16px;
+    }
+
+    .f04-agent-test-submit-step-check {
+      width: 22px;
+      height: 22px;
+      opacity: 0;
+    }
+
+    .f04-agent-test-submit-step-check path {
+      fill: none;
+      stroke: #b8d9cb;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .f04-agent-test-submit-active-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 86px;
+      background: #b8d9cb;
+    }
+
+    .f04-agent-test-submit-pane {
+      position: relative;
+      overflow: hidden;
+      background: #181615;
+    }
+
+    .f04-agent-test-submit-pane-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 38px;
+      border-bottom: 1px solid rgba(243, 240, 231, 0.12);
+      background: #252120;
+      color: rgba(243, 240, 231, 0.56);
+      font-size: 18px;
+    }
+
+    .f04-agent-test-submit-pane-state {
+      color: #b8d9cb;
+    }
+
+    .f04-agent-test-submit-stage {
+      position: absolute;
+      top: 74px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 48px 52px;
+    }
+
+    .f04-agent-test-submit-policy-label {
+      margin-bottom: 24px;
+      color: #817f7a;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .f04-agent-test-submit-policy {
+      width: 920px;
+      padding-left: 24px;
+      border-left: 1px solid #b8d9cb;
+      font-family: "EB Garamond", serif;
+      font-size: 45px;
+      line-height: 1.18;
+      letter-spacing: -0.012em;
+      color: #f3f0e7;
+    }
+
+    .f04-agent-test-submit-log {
+      position: absolute;
+      left: 52px;
+      right: 52px;
+      bottom: 44px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .f04-agent-test-submit-log-row {
+      display: grid;
+      grid-template-columns: 116px 1fr;
+      gap: 18px;
+      color: rgba(243, 240, 231, 0.58);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .f04-agent-test-submit-log-key {
+      color: #b8d9cb;
+    }
+
+    .f04-agent-test-submit-prompt {
+      display: flex;
+      align-items: center;
+      min-height: 62px;
+      gap: 18px;
+      font-size: 30px;
+      line-height: 1.4;
+      color: #f3f0e7;
+    }
+
+    .f04-agent-test-submit-prompt-mark {
+      color: #5db8a6;
+    }
+
+    .f04-agent-test-submit-cursor {
+      width: 13px;
+      height: 33px;
+      background: rgba(243, 240, 231, 0.74);
+    }
+
+    .f04-agent-test-submit-test-command {
+      position: absolute;
+      left: 52px;
+      top: 41px;
+    }
+
+    .f04-agent-test-submit-test-results {
+      position: absolute;
+      left: 52px;
+      right: 52px;
+      top: 132px;
+      display: grid;
+      gap: 13px;
+    }
+
+    .f04-agent-test-submit-test-row {
+      height: 67px;
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center;
+      padding: 0 23px;
+      border: 1px solid rgba(184, 217, 203, 0.18);
+      border-radius: 6px;
+      background: rgba(184, 217, 203, 0.075);
+      color: #b8d9cb;
+      font-size: 21px;
+    }
+
+    .f04-agent-test-submit-test-row-index {
+      color: rgba(184, 217, 203, 0.46);
+    }
+
+    .f04-agent-test-submit-test-row-time {
+      color: rgba(243, 240, 231, 0.38);
+      font-size: 17px;
+    }
+
+    .f04-agent-test-submit-test-summary {
+      position: absolute;
+      left: 52px;
+      right: 52px;
+      bottom: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 23px;
+      border-top: 1px solid rgba(243, 240, 231, 0.14);
+      color: #f3f0e7;
+      font-size: 24px;
+    }
+
+    .f04-agent-test-submit-voltage {
+      position: absolute;
+      right: 52px;
+      bottom: 40px;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #f07f5a;
+      border-radius: 50%;
+      color: #f07f5a;
+      transform-origin: center;
+    }
+
+    .f04-agent-test-submit-voltage svg {
+      width: 31px;
+      height: 31px;
+    }
+
+    .f04-agent-test-submit-voltage path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .f04-agent-test-submit-submit-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding-bottom: 34px;
+    }
+
+    .f04-agent-test-submit-submit-card {
+      width: 930px;
+      padding: 34px 38px 30px;
+      border: 1px solid rgba(243, 240, 231, 0.14);
+      border-radius: 8px;
+      background: #252120;
+    }
+
+    .f04-agent-test-submit-submit-label {
+      margin-bottom: 24px;
+      color: rgba(243, 240, 231, 0.4);
+      font-size: 17px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .f04-agent-test-submit-submit-command {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      color: #f3f0e7;
+      font-size: 31px;
+    }
+
+    .f04-agent-test-submit-submit-char {
+      display: inline-block;
+    }
+
+    .f04-agent-test-submit-enter {
+      margin-left: auto;
+      padding: 9px 14px;
+      border: 1px solid rgba(243, 240, 231, 0.2);
+      border-radius: 6px;
+      color: rgba(243, 240, 231, 0.55);
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .f04-agent-test-submit-submit-note {
+      margin-top: 23px;
+      color: rgba(243, 240, 231, 0.44);
+      font-family: "EB Garamond", serif;
+      font-size: 27px;
+    }
+
+    .f04-agent-test-submit-submitted {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #b8d9cb;
+      font-family: "EB Garamond", serif;
+      font-size: 76px;
+      letter-spacing: -0.018em;
+    }
+
+    .f04-agent-test-submit-status-stage {
+      display: grid;
+      grid-template-columns: 58% 42%;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .f04-agent-test-submit-status-console {
+      position: relative;
+      padding: 23px 28px;
+      border: 1px solid rgba(243, 240, 231, 0.12);
+      border-radius: 8px;
+      background: #1f1c1b;
+    }
+
+    .f04-agent-test-submit-status-word-wrap {
+      position: absolute;
+      left: 29px;
+      bottom: 42px;
+      width: 520px;
+      height: 100px;
+      overflow: hidden;
+    }
+
+    .f04-agent-test-submit-status-word {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: rgba(243, 240, 231, 0.52);
+      font-family: "EB Garamond", serif;
+      font-size: 70px;
+      line-height: 1;
+      letter-spacing: -0.018em;
+    }
+
+    .f04-agent-test-submit-verdict {
+      position: relative;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(243, 240, 231, 0.14);
+      border-radius: 8px;
+      background: #252120;
+      text-align: center;
+    }
+
+    .f04-agent-test-submit-verdict-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .f04-agent-test-submit-ok {
+      font-family: "EB Garamond", serif;
+      font-size: 112px;
+      line-height: 0.9;
+      letter-spacing: -0.025em;
+      color: #f3f0e7;
+    }
+
+    .f04-agent-test-submit-accepted {
+      margin-top: 22px;
+      color: #f07f5a;
+      font-size: 22px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .f04-agent-test-submit-verdict-line {
+      position: absolute;
+      left: 13%;
+      right: 13%;
+      bottom: 25%;
+      height: 1px;
+      background: #f07f5a;
+      transform-origin: left center;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-agent-test-submit" data-duration="9.4" data-width="1920" data-height="1080">
+    <div id="frame-04-ground" class="clip f04-agent-test-submit-ground" data-layout-ignore data-start="0" data-duration="9.4" data-track-index="0"></div>
+
+    <div id="frame-04-kicker" class="clip f04-agent-test-submit-kicker" data-start="0" data-duration="9.4" data-track-index="2">
+      <span class="f04-agent-test-submit-kicker-index">03 /</span>
+      <span>Agent, test, submit</span>
+      <span class="f04-agent-test-submit-kicker-rule"></span>
+    </div>
+
+    <section id="frame-04-shell" class="clip f04-agent-test-submit-shell" data-start="0" data-duration="9.4" data-track-index="1">
+      <aside class="f04-agent-test-submit-rail">
+        <div class="f04-agent-test-submit-windowbar">
+          <span class="f04-agent-test-submit-dot"></span>
+          <span class="f04-agent-test-submit-dot"></span>
+          <span class="f04-agent-test-submit-dot"></span>
+          <span class="f04-agent-test-submit-window-title">training loop</span>
+        </div>
+
+        <div class="f04-agent-test-submit-active-line"></div>
+
+        <div class="f04-agent-test-submit-step" data-step="hint">
+          <span class="f04-agent-test-submit-step-no">01</span>
+          <span>hint</span>
+          <svg class="f04-agent-test-submit-step-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        </div>
+        <div class="f04-agent-test-submit-step" data-step="review">
+          <span class="f04-agent-test-submit-step-no">02</span>
+          <span>review</span>
+          <svg class="f04-agent-test-submit-step-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        </div>
+        <div class="f04-agent-test-submit-step" data-step="test">
+          <span class="f04-agent-test-submit-step-no">03</span>
+          <span>test</span>
+          <svg class="f04-agent-test-submit-step-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        </div>
+        <div class="f04-agent-test-submit-step" data-step="submit">
+          <span class="f04-agent-test-submit-step-no">04</span>
+          <span>submit</span>
+          <svg class="f04-agent-test-submit-step-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        </div>
+      </aside>
+
+      <div class="f04-agent-test-submit-pane">
+        <div class="f04-agent-test-submit-pane-top">
+          <span class="f04-agent-test-submit-pane-file">AGENTS.md</span>
+          <span class="f04-agent-test-submit-pane-state" data-layout-allow-occlusion>coach mode</span>
+        </div>
+
+        <div class="f04-agent-test-submit-stage f04-agent-test-submit-agent-stage" data-layout-allow-overflow>
+          <div class="f04-agent-test-submit-policy-label">Training policy</div>
+          <div class="f04-agent-test-submit-policy">Coach first.<br>Submission is explicit.</div>
+          <div class="f04-agent-test-submit-log">
+            <div class="f04-agent-test-submit-log-row"><span class="f04-agent-test-submit-log-key">hint</span><span>Point to the invariant. Keep the implementation yours.</span></div>
+            <div class="f04-agent-test-submit-log-row"><span class="f04-agent-test-submit-log-key">review</span><span>Check complexity, edge cases, and the sample contract.</span></div>
+          </div>
+        </div>
+
+        <div class="f04-agent-test-submit-stage f04-agent-test-submit-test-stage" data-layout-allow-overflow>
+          <div class="f04-agent-test-submit-prompt f04-agent-test-submit-test-command"><span class="f04-agent-test-submit-prompt-mark">$</span><span>cfx test</span><span class="f04-agent-test-submit-cursor"></span></div>
+          <div class="f04-agent-test-submit-test-results">
+            <div class="f04-agent-test-submit-test-row"><span class="f04-agent-test-submit-test-row-index">01</span><span>sample 1</span><span class="f04-agent-test-submit-test-row-time">passed</span></div>
+            <div class="f04-agent-test-submit-test-row"><span class="f04-agent-test-submit-test-row-index">02</span><span>sample 2</span><span class="f04-agent-test-submit-test-row-time">passed</span></div>
+            <div class="f04-agent-test-submit-test-row"><span class="f04-agent-test-submit-test-row-index">03</span><span>sample 3</span><span class="f04-agent-test-submit-test-row-time">passed</span></div>
+          </div>
+          <div class="f04-agent-test-submit-test-summary"><span>all samples passed</span><span>local proof</span></div>
+          <div class="f04-agent-test-submit-voltage" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M7 18.5l7 7L29 10"/></svg></div>
+        </div>
+
+        <div class="f04-agent-test-submit-stage f04-agent-test-submit-submit-stage" data-layout-allow-overflow>
+          <div class="f04-agent-test-submit-submit-wrap">
+            <div class="f04-agent-test-submit-submit-card">
+              <div class="f04-agent-test-submit-submit-label">Explicit gate</div>
+              <div class="f04-agent-test-submit-submit-command">
+                <span class="f04-agent-test-submit-prompt-mark">$</span>
+                <span class="f04-agent-test-submit-submit-text" aria-label="cfx submit --yes"></span>
+                <span class="f04-agent-test-submit-enter">enter</span>
+              </div>
+              <div class="f04-agent-test-submit-submit-note">Review the action. Then submit.</div>
+            </div>
+            <div class="f04-agent-test-submit-submitted" data-layout-allow-occlusion>submitted</div>
+          </div>
+        </div>
+
+        <div class="f04-agent-test-submit-stage f04-agent-test-submit-status-stage" data-layout-allow-overflow>
+          <div class="f04-agent-test-submit-status-console">
+            <div class="f04-agent-test-submit-prompt"><span class="f04-agent-test-submit-prompt-mark">$</span><span>cfx status --wait</span></div>
+            <div class="f04-agent-test-submit-status-word-wrap">
+              <div class="f04-agent-test-submit-status-word f04-agent-test-submit-waiting" data-layout-allow-overlap>waiting</div>
+              <div class="f04-agent-test-submit-status-word f04-agent-test-submit-judging" data-layout-allow-overlap>judging</div>
+            </div>
+          </div>
+          <div class="f04-agent-test-submit-verdict">
+            <div class="f04-agent-test-submit-verdict-inner">
+              <div class="f04-agent-test-submit-ok">OK</div>
+              <div class="f04-agent-test-submit-accepted">Accepted</div>
+            </div>
+            <div class="f04-agent-test-submit-verdict-line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const id = "04-agent-test-submit";
+      const frame = document.querySelector('[data-composition-id="' + id + '"]');
+      if (!frame || typeof gsap === "undefined") return;
+
+      const q = (selector) => frame.querySelector(selector);
+      const qa = (selector) => Array.from(frame.querySelectorAll(selector));
+      const submitText = q(".f04-agent-test-submit-submit-text");
+      "cfx submit --yes".split("").forEach((character) => {
+        const span = document.createElement("span");
+        span.className = "f04-agent-test-submit-submit-char";
+        span.textContent = character === " " ? "\u00a0" : character;
+        submitText.appendChild(span);
+      });
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines[id] = tl;
+
+      const steps = qa(".f04-agent-test-submit-step");
+      const stepChecks = qa(".f04-agent-test-submit-step-check");
+      const testRows = qa(".f04-agent-test-submit-test-row");
+      const logRows = qa(".f04-agent-test-submit-log-row");
+      const submitChars = qa(".f04-agent-test-submit-submit-char");
+
+      gsap.set([q(".f04-agent-test-submit-test-stage"), q(".f04-agent-test-submit-submit-stage"), q(".f04-agent-test-submit-status-stage")], { opacity: 0, visibility: "hidden" });
+      gsap.set([q(".f04-agent-test-submit-verdict"), q(".f04-agent-test-submit-submitted")], { opacity: 0 });
+      gsap.set(logRows, { opacity: 0, y: 18 });
+      gsap.set(testRows, { opacity: 0, y: 22 });
+      gsap.set(q(".f04-agent-test-submit-test-summary"), { opacity: 0, y: 12 });
+      gsap.set(q(".f04-agent-test-submit-voltage"), { opacity: 0, scale: 0.92 });
+      gsap.set(q(".f04-agent-test-submit-voltage path"), { strokeDasharray: 42, strokeDashoffset: 42 });
+      gsap.set(submitChars, { opacity: 0 });
+      gsap.set(q(".f04-agent-test-submit-enter"), { opacity: 0.42 });
+      gsap.set([q(".f04-agent-test-submit-waiting"), q(".f04-agent-test-submit-judging")], { opacity: 0 });
+      gsap.set(q(".f04-agent-test-submit-judging"), { y: 45 });
+      gsap.set(q(".f04-agent-test-submit-verdict-line"), { scaleX: 0 });
+      gsap.set(stepChecks, { opacity: 0 });
+      gsap.set(steps, { color: "rgba(243, 240, 231, 0.43)" });
+      gsap.set(steps[0], { color: "#f3f0e7" });
+
+      tl.fromTo(q(".f04-agent-test-submit-kicker"), { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 0)
+        .fromTo(q(".f04-agent-test-submit-kicker-rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.62, ease: "power3.out" }, 0.12)
+        .fromTo(q(".f04-agent-test-submit-shell"), { opacity: 0, y: 44, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.64, ease: "power3.out" }, 0.08)
+        .fromTo(q(".f04-agent-test-submit-policy-label"), { opacity: 0, x: 32 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 0.35)
+        .fromTo(q(".f04-agent-test-submit-policy"), { opacity: 0, x: 42 }, { opacity: 1, x: 0, duration: 0.52, ease: "power3.out" }, 0.48)
+        .fromTo(q(".f04-agent-test-submit-active-line"), { scaleY: 0 }, { scaleY: 1, duration: 0.42, ease: "power3.out", transformOrigin: "top center" }, 0.44)
+        .fromTo(logRows[0], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.34, ease: "power3.out" }, 1.62)
+        .to(steps[0], { color: "rgba(243, 240, 231, 0.43)", duration: 0.18 }, 1.72)
+        .to(q(".f04-agent-test-submit-active-line"), { y: 86, duration: 0.32, ease: "power3.inOut" }, 1.72)
+        .to(steps[1], { color: "#f3f0e7", duration: 0.18 }, 1.88)
+        .fromTo(logRows[1], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.34, ease: "power3.out" }, 2.12)
+        .to(q(".f04-agent-test-submit-pane-file"), { opacity: 0.45, duration: 0.2 }, 2.84)
+        .to(q(".f04-agent-test-submit-agent-stage"), { opacity: 0, x: -120, duration: 0.26, ease: "power4.in" }, 3.18)
+        .set(q(".f04-agent-test-submit-agent-stage"), { visibility: "hidden" }, 3.44)
+        .set(q(".f04-agent-test-submit-test-stage"), { visibility: "visible" }, 3.34)
+        .fromTo(q(".f04-agent-test-submit-test-stage"), { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.36, ease: "power4.out" }, 3.34)
+        .to(q(".f04-agent-test-submit-active-line"), { y: 172, duration: 0.32, ease: "power3.inOut" }, 3.34)
+        .to(steps[1], { color: "rgba(243, 240, 231, 0.43)", duration: 0.18 }, 3.34)
+        .to(steps[2], { color: "#f3f0e7", duration: 0.18 }, 3.5)
+        .to(q(".f04-agent-test-submit-pane-file"), { opacity: 1, duration: 0.2 }, 3.52)
+        .fromTo(testRows[0], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 3.72)
+        .fromTo(testRows[1], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 4.08)
+        .fromTo(testRows[2], { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 4.44)
+        .fromTo(q(".f04-agent-test-submit-test-summary"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 4.78)
+        .fromTo(q(".f04-agent-test-submit-voltage"), { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out" }, 4.9)
+        .to(q(".f04-agent-test-submit-voltage path"), { strokeDashoffset: 0, duration: 0.34, ease: "power2.out" }, 5.04)
+        .to(q(".f04-agent-test-submit-test-stage"), { opacity: 0, x: -120, duration: 0.24, ease: "power4.in" }, 5.36)
+        .set(q(".f04-agent-test-submit-test-stage"), { visibility: "hidden" }, 5.6)
+        .set(q(".f04-agent-test-submit-submit-stage"), { visibility: "visible" }, 5.48)
+        .fromTo(q(".f04-agent-test-submit-submit-stage"), { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.34, ease: "power4.out" }, 5.48)
+        .to(q(".f04-agent-test-submit-active-line"), { y: 258, duration: 0.32, ease: "power3.inOut" }, 5.48)
+        .to(steps[2], { color: "rgba(243, 240, 231, 0.43)", duration: 0.18 }, 5.48)
+        .to(steps[3], { color: "#f3f0e7", duration: 0.18 }, 5.64)
+        .fromTo(submitChars, { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.048, ease: "none" }, 5.68)
+        .to(q(".f04-agent-test-submit-enter"), { opacity: 1, duration: 0.16 }, 6.46)
+        .fromTo(q(".f04-agent-test-submit-submit-card"), { scale: 1 }, { scale: 0.985, duration: 0.11, ease: "power2.in" }, 6.58)
+        .to(q(".f04-agent-test-submit-submit-card"), { scale: 1, duration: 0.18, ease: "power2.out" }, 6.69)
+        .to(q(".f04-agent-test-submit-submit-card"), { opacity: 0, scale: 0.92, filter: "blur(10px)", duration: 0.2, ease: "power3.in" }, 6.84)
+        .fromTo(q(".f04-agent-test-submit-submitted"), { opacity: 0.15, scale: 1.25, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, 6.99)
+        .to(q(".f04-agent-test-submit-submit-stage"), { opacity: 0, x: -120, duration: 0.2, ease: "power4.in" }, 7.12)
+        .set(q(".f04-agent-test-submit-submit-stage"), { visibility: "hidden" }, 7.32)
+        .set(q(".f04-agent-test-submit-status-stage"), { visibility: "visible" }, 7.32)
+        .fromTo(q(".f04-agent-test-submit-status-stage"), { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.34, ease: "power4.out" }, 7.32)
+        .fromTo(q(".f04-agent-test-submit-waiting"), { opacity: 0, y: 45 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 7.44)
+        .to(q(".f04-agent-test-submit-waiting"), { opacity: 0, y: -45, duration: 0.2, ease: "power4.in" }, 7.78)
+        .fromTo(q(".f04-agent-test-submit-judging"), { opacity: 0, y: 45 }, { opacity: 1, y: 0, duration: 0.3, ease: "power4.out" }, 7.98)
+        .fromTo(q(".f04-agent-test-submit-verdict"), { opacity: 0, scale: 1.16, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.46, ease: "expo.out" }, 8.32)
+        .to(q(".f04-agent-test-submit-verdict-line"), { scaleX: 1, duration: 0.36, ease: "power3.out" }, 8.44)
+        .to(stepChecks, { opacity: 1, duration: 0.18, stagger: 0.08, ease: "power2.out" }, 8.42)
+        .to(q(".f04-agent-test-submit-pane-state"), { textContent: "accepted", duration: 0.01 }, 8.44)
+        .to({}, { duration: 0.45 }, 8.9);
+    })();
+  </script>
+</template>

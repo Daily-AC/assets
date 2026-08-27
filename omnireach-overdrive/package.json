@@ -1,0 +1,14 @@
+{
+  "name": "omnireach-overdrive",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.7.55 preview",
+    "test": "node --test tests/*.test.mjs",
+    "voice:qwen": "node scripts/run-qwen-voice.mjs",
+    "music": "python3 scripts/generate-overdrive-bgm.py",
+    "check": "npx --yes hyperframes@0.7.55 check",
+    "render": "npx --yes hyperframes@0.7.55 render",
+    "publish": "npx --yes hyperframes@0.7.55 publish"
+  }
+}

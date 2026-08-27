@@ -1,0 +1,229 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Noto Sans CJK SC'; src: url('assets/fonts/NotoSansCJKSC-Bold.woff2') format('woff2'); font-weight: 700; font-display: block; }
+      @font-face { font-family: 'Noto Sans CJK SC'; src: url('assets/fonts/NotoSansCJKSC-Regular.woff2') format('woff2'); font-weight: 400; font-display: block; }
+      :root {
+      --ink-black: #111315;
+      --ink-black-alt: #181B1F;
+      --fire-orange: #FFCC38;
+      --cream: #F4F3EE;
+      --cream-muted: #A8ADB5;
+      --cream-hint: #525861;
+      --border-dark: #353A40;
+      --success-green: #50E878;
+      --tech-cyan: #58D4E5;
+      --error-red: #E65B5B;
+      --ink-on-orange-muted: rgba(17,19,21,0.75);
+      --ink-on-orange-hint: rgba(17,19,21,0.55);
+      --ink-on-orange-faint: rgba(17,19,21,0.40);
+      --ink-on-orange-border: rgba(17,19,21,0.20);
+      --cap-ink: #111315;
+      --cap-canvas: #F4F3EE;
+      --cap-accent: #FFCC38;
+      --cap-accent-2: #58D4E5;
+      --font-display: "Noto Sans CJK SC", system-ui, serif;
+      --font-body: "Noto Sans CJK SC", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE ink-black plate — single 1px fire-orange hairline (broadside's lone accent),
+     SHARP corners (0 radius), NO shadow (the plane is flat) */
+  .caption-pill {
+    max-width: 80%;
+    padding: 18px 44px 22px;
+    background: var(--cap-ink, #111111);
+    border: 1px solid var(--cap-accent, #e85d26);
+    border-radius: 0;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.04em 0.3em;
+    font-family: "Noto Sans CJK SC", sans-serif;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  /* upcoming — faint cream, no block (massive lowercase Barlow 900 as graphic primitive) */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.08em;
+    color: #a8adb5;
+  }
+  /* current word — THE register flip: a hard flat fire-orange block (box-shadow spread =
+     a sharp rectangle w/o layout shift; no blur), ink reading on top — the lone accent */
+  .caption-word.is-active {
+    color: var(--cap-ink, #111111);
+    background: var(--cap-accent, #e85d26);
+    box-shadow: 0 0 0 0.06em var(--cap-accent, #e85d26);
+  }
+  /* already spoken — solid cream, the orange block cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-canvas, #f0ece5);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — fire-orange ink, the cream-on-ink register's only inflection */
+  .caption-word.cap-brand {
+    color: var(--cap-accent, #e85d26);
+  }
+  /* numerals / data — the IBM Plex Mono chrome voice, uppercase + tracked, recessed */
+  .caption-word.cap-num {
+    font-family: "Noto Sans CJK SC", ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 72%, var(--cap-ink, #111111));
+  }
+  /* emphasis — a fire-orange hairline underline (no second hue; the lone accent again) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #e85d26);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: 42px;
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="51.3"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.08,"end":3.792,"text":"Agent 搜个抖音，怎么又弹 Chrome？","words":[{"id":"caption-word-0-0","text":"Agent 搜个抖音，怎么又弹","start":0.08,"end":2.933},{"id":"caption-word-0-1","text":"Chrome？","start":3.053,"end":3.672}]},{"id":"caption-group-1","frame":2,"start":3.98,"end":6.799,"text":"搜索和读取，只是只读任务。","words":[{"id":"caption-word-1-0","text":"搜索和读取，只是只读任务。","start":3.98,"end":6.679}]},{"id":"caption-group-2","frame":2,"start":6.869,"end":9.037,"text":"没必要每次启动整套 Playwright。","words":[{"id":"caption-word-2-0","text":"没必要每次启动整套 Playwright。","start":6.869,"end":8.917}]},{"id":"caption-group-3","frame":2,"start":9.107,"end":12.726,"text":"点击、表单、上传和视觉检查，","words":[{"id":"caption-word-3-0","text":"点击、表单、上传和视觉检查，","start":9.107,"end":12.606}]},{"id":"caption-group-4","frame":2,"start":12.796,"end":14.014,"text":"仍然交给它。","words":[{"id":"caption-word-4-0","text":"仍然交给它。","start":12.796,"end":13.894}]},{"id":"caption-group-5","frame":3,"start":14.38,"end":15.663,"text":"Omnireach","words":[{"id":"caption-word-5-0","text":"Omnireach","start":14.38,"end":15.543}]},{"id":"caption-group-6","frame":3,"start":15.733,"end":17.992,"text":"直接连接你已经登录的 Chrome，","words":[{"id":"caption-word-6-0","text":"直接连接你已经登录的 Chrome，","start":15.733,"end":17.872}]},{"id":"caption-group-7","frame":3,"start":18.062,"end":20.64,"text":"只继承登录态，不读取密码。","words":[{"id":"caption-word-7-0","text":"只继承登录态，不读取密码。","start":18.062,"end":20.52}]},{"id":"caption-group-8","frame":4,"start":21.08,"end":23.564,"text":"输入这一条命令，","words":[{"id":"caption-word-8-0","text":"输入这一条命令，","start":21.08,"end":23.444}]},{"id":"caption-group-9","frame":4,"start":23.634,"end":25.093,"text":"GPT 5.6","words":[{"id":"caption-word-9-0","text":"GPT 5.6","start":23.634,"end":24.973}]},{"id":"caption-group-10","frame":4,"start":25.163,"end":28.382,"text":"真实抖音结果，就回来了。","words":[{"id":"caption-word-10-0","text":"真实抖音结果，就回来了。","start":25.163,"end":28.262}]},{"id":"caption-group-11","frame":5,"start":28.48,"end":29.617,"text":"这次 PATH 里，","words":[{"id":"caption-word-11-0","text":"这次 PATH 里，","start":28.48,"end":29.497}]},{"id":"caption-group-12","frame":5,"start":29.687,"end":30.977,"text":"没有 OpenCLI。","words":[{"id":"caption-word-12-0","text":"没有 OpenCLI。","start":29.687,"end":30.857}]},{"id":"caption-group-13","frame":5,"start":31.047,"end":32.425,"text":"返回 adapter，","words":[{"id":"caption-word-13-0","text":"返回 adapter，","start":31.047,"end":32.305}]},{"id":"caption-group-14","frame":5,"start":32.495,"end":34.514,"text":"是 native-chrome。","words":[{"id":"caption-word-14-0","text":"是 native-chrome。","start":32.495,"end":34.394}]},{"id":"caption-group-15","frame":5,"start":34.584,"end":37.067,"text":"errors 为空，可见 Chrome，","words":[{"id":"caption-word-15-0","text":"errors 为空，可见 Chrome，","start":34.584,"end":36.947}]},{"id":"caption-group-16","frame":5,"start":37.138,"end":38.517,"text":"窗口和标签页，","words":[{"id":"caption-word-16-0","text":"窗口和标签页，","start":37.138,"end":38.397}]},{"id":"caption-group-17","frame":5,"start":38.587,"end":41.229,"text":"都是零到零。","words":[{"id":"caption-word-17-0","text":"都是零到零。","start":38.587,"end":41.109}]},{"id":"caption-group-18","frame":6,"start":41.48,"end":43.885,"text":"它不替代点击和表单。","words":[{"id":"caption-word-18-0","text":"它不替代点击和表单。","start":41.48,"end":43.765}]},{"id":"caption-group-19","frame":6,"start":43.955,"end":45.894,"text":"只把搜索和读取做轻。","words":[{"id":"caption-word-19-0","text":"只把搜索和读取做轻。","start":43.955,"end":45.774}]},{"id":"caption-group-20","frame":6,"start":45.964,"end":48.383,"text":"装完搜一次，跑不通，","words":[{"id":"caption-word-20-0","text":"装完搜一次，跑不通，","start":45.964,"end":48.263}]},{"id":"caption-group-21","frame":6,"start":48.453,"end":51.111,"text":"就把失败案例留在评论区。","words":[{"id":"caption-word-21-0","text":"就把失败案例留在评论区。","start":48.453,"end":50.991}]}];
+  var DURATION = 51.3;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.92 }, { scale: 1, duration: 0.1, ease: "power3.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Break The Loop</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #root {
+          --ink: #f5f7ff;
+          --surface: #07090d;
+          --canvas: #050505;
+          --cyan-dark: #003940;
+          --cyan: #31e8ff;
+          --teal: #008191;
+          --magenta-dark: #700047;
+          --magenta: #ff2fb3;
+          --danger: #ff4a5f;
+          --warning: #ffd84d;
+          --border: 0.37cqw;
+          --shadow: 0.74cqw;
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          container-type: size;
+          color: var(--ink);
+          font-family: "Noto Sans CJK SC";
+        }
+
+        .clip {
+          position: absolute;
+        }
+
+        .ground {
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          background-color: var(--canvas);
+          container-type: size;
+        }
+
+        .ground::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(rgba(49, 232, 255, 0.18) 1.5px, transparent 1.5px);
+          background-size: 24px 24px;
+          opacity: 0.42;
+        }
+
+        .ground::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 510px;
+          width: 4px;
+          height: 850px;
+          margin-left: -2px;
+          background: rgba(245, 247, 255, 0.16);
+        }
+
+        .side-field {
+          position: absolute;
+          top: 465px;
+          width: 44%;
+          height: 900px;
+          border: 3px solid rgba(245, 247, 255, 0.12);
+          opacity: 0.48;
+        }
+
+        .side-field-left {
+          left: -8%;
+          background: rgba(0, 129, 145, 0.13);
+        }
+
+        .side-field-right {
+          right: -8%;
+          background: rgba(112, 0, 71, 0.18);
+        }
+
+        .stripe-block {
+          position: absolute;
+          left: -42px;
+          top: 1372px;
+          width: 350px;
+          height: 72px;
+          border: var(--border) solid var(--ink);
+          background: repeating-linear-gradient(
+            135deg,
+            var(--cyan) 0,
+            var(--cyan) 18px,
+            var(--surface) 18px,
+            var(--surface) 36px
+          );
+          transform: rotate(-5deg);
+        }
+
+        .burst {
+          position: absolute;
+          right: -36px;
+          top: 108px;
+          width: 166px;
+          height: 166px;
+          border: var(--border) solid var(--ink);
+          background: var(--magenta);
+          clip-path: polygon(
+            50% 0%,
+            61% 27%,
+            85% 15%,
+            73% 39%,
+            100% 50%,
+            73% 61%,
+            85% 85%,
+            61% 73%,
+            50% 100%,
+            39% 73%,
+            15% 85%,
+            27% 61%,
+            0% 50%,
+            27% 39%,
+            15% 15%,
+            39% 27%
+          );
+          transform: rotate(8deg);
+        }
+
+        .title-block {
+          z-index: 10;
+          left: 65px;
+          top: 96px;
+          width: 950px;
+          height: 520px;
+          pointer-events: none;
+        }
+
+        .title-core {
+          width: 100%;
+          transform-origin: 50% 0%;
+          will-change: transform, opacity;
+        }
+
+        .label-pill {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 52px;
+          padding: 10px 24px;
+          border: 3px solid var(--ink);
+          border-radius: 9999px;
+          background: var(--cyan);
+          box-shadow: 4px 4px 0 var(--ink);
+          color: var(--surface);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .title-label {
+          display: flex;
+          justify-content: center;
+          will-change: transform, opacity;
+        }
+
+        .verb-stack {
+          display: grid;
+          justify-items: center;
+          gap: 30px;
+          margin-top: 32px;
+        }
+
+        .verb {
+          display: grid;
+          place-items: center;
+          width: 780px;
+          height: 170px;
+          border: var(--border) solid var(--ink);
+          background: var(--surface);
+          box-shadow:
+            var(--shadow) var(--shadow) 0 var(--ink),
+            calc(var(--shadow) * 2) calc(var(--shadow) * 2) 0 var(--teal),
+            calc(var(--shadow) * 3) calc(var(--shadow) * 3) 0 var(--magenta-dark);
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 122px;
+          font-weight: 500;
+          line-height: 0.9;
+          letter-spacing: 0;
+          will-change: transform, opacity;
+        }
+
+        .verb-read {
+          width: 650px;
+          background: var(--cyan-dark);
+        }
+
+        .split-stage {
+          z-index: 20;
+          left: 54px;
+          top: 540px;
+          width: 972px;
+          height: 805px;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 36px;
+          perspective: 1450px;
+          transform-style: preserve-3d;
+          pointer-events: none;
+        }
+
+        .card-wing {
+          position: relative;
+          width: 468px;
+          height: 780px;
+          transform-style: preserve-3d;
+          will-change: transform, opacity;
+        }
+
+        .split-card {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          border: var(--border) solid var(--ink);
+          background: var(--surface);
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+
+        .card-left {
+          box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+        }
+
+        .card-right {
+          box-shadow: calc(var(--shadow) * -1) var(--shadow) 0 var(--ink);
+        }
+
+        .card-cap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          min-height: 76px;
+          padding: 16px 20px;
+          border-bottom: var(--border) solid var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 20px;
+          line-height: 1;
+          letter-spacing: 0.08em;
+        }
+
+        .card-left .card-cap {
+          background: var(--cyan);
+          color: var(--surface);
+        }
+
+        .card-right .card-cap {
+          background: var(--magenta);
+          color: var(--surface);
+        }
+
+        .cap-index {
+          display: grid;
+          place-items: center;
+          width: 38px;
+          height: 38px;
+          border: 3px solid var(--surface);
+          background: var(--ink);
+          color: var(--surface);
+          font-size: 17px;
+        }
+
+        .card-body {
+          display: flex;
+          height: calc(100% - 76px);
+          flex-direction: column;
+          padding: 28px 24px 26px;
+        }
+
+        .card-kicker {
+          margin-bottom: 24px;
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 20px;
+          line-height: 1;
+          letter-spacing: 0.08em;
+        }
+
+        .left-hero {
+          display: flex;
+          place-items: center;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 230px;
+          margin-top: 18px;
+          border: var(--border) solid var(--ink);
+          background: var(--cyan-dark);
+          box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+          color: var(--cyan);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 82px;
+          font-weight: 500;
+          line-height: 0.92;
+          text-align: center;
+          will-change: transform, opacity;
+        }
+
+        .left-hero span {
+          display: block;
+        }
+
+        .left-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          min-height: 72px;
+          margin-top: 24px;
+          padding: 12px 16px;
+          border: 3px solid var(--ink);
+          background: var(--teal);
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 28px;
+          letter-spacing: 0;
+          will-change: transform, opacity;
+        }
+
+        .left-row + .left-row {
+          margin-top: 16px;
+          background: var(--cyan);
+          color: var(--surface);
+        }
+
+        .row-mark {
+          display: block;
+          width: 22px;
+          height: 22px;
+          border: 3px solid currentColor;
+          background: var(--surface);
+        }
+
+        .left-row + .left-row .row-mark {
+          background: var(--magenta-dark);
+        }
+
+        .right-stack {
+          display: grid;
+          gap: 14px;
+          margin-top: 4px;
+        }
+
+        .stack-row {
+          display: grid;
+          grid-template-columns: 46px 1fr;
+          align-items: center;
+          min-height: 86px;
+          border: 3px solid var(--ink);
+          background: var(--magenta-dark);
+          box-shadow: 4px 4px 0 var(--ink);
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 27px;
+          line-height: 1;
+          letter-spacing: 0;
+          will-change: transform, opacity;
+        }
+
+        .stack-row:nth-child(2) {
+          background: var(--surface);
+        }
+
+        .stack-row:nth-child(3) {
+          background: #3d002b;
+        }
+
+        .stack-row:nth-child(4) {
+          background: #25001a;
+        }
+
+        .stack-index {
+          display: grid;
+          align-self: stretch;
+          place-items: center;
+          border-right: 3px solid var(--ink);
+          background: var(--magenta);
+          color: var(--surface);
+          font-size: 16px;
+        }
+
+        .stack-word {
+          padding-left: 16px;
+        }
+
+        .load-meter {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 6px;
+          margin-top: 22px;
+          padding: 14px;
+          border: 3px solid var(--ink);
+          background: var(--warning);
+        }
+
+        .load-meter span {
+          height: 26px;
+          border: 2px solid var(--surface);
+          background: var(--danger);
+        }
+
+        .cut-line {
+          z-index: 32;
+          left: 472px;
+          top: 558px;
+          width: 136px;
+          height: 772px;
+          overflow: visible;
+          pointer-events: none;
+          will-change: opacity;
+        }
+
+        .cut-line path {
+          fill: none;
+          stroke: var(--cyan);
+          stroke-width: 11;
+          stroke-linecap: square;
+          stroke-linejoin: miter;
+          filter: drop-shadow(7px 7px 0 var(--ink));
+        }
+
+        .edge-badge {
+          z-index: 42;
+          display: grid;
+          place-items: center;
+          min-height: 74px;
+          padding: 12px 18px;
+          border: 3px solid var(--ink);
+          border-radius: 9999px;
+          box-shadow: 4px 4px 0 var(--ink);
+          color: var(--surface);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 1;
+          letter-spacing: 0.06em;
+          text-align: center;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .badge-left {
+          left: 330px;
+          top: 736px;
+          width: 260px;
+          background: var(--cyan);
+        }
+
+        .badge-right {
+          left: 508px;
+          top: 870px;
+          width: 252px;
+          background: var(--magenta);
+        }
+
+        .caution-rail {
+          z-index: 44;
+          left: 66px;
+          top: 1424px;
+          width: 948px;
+          min-height: 124px;
+          display: grid;
+          grid-template-columns: 160px 1fr;
+          align-items: stretch;
+          border: var(--border) solid var(--ink);
+          background: var(--warning);
+          box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+          color: var(--surface);
+          will-change: transform, opacity;
+        }
+
+        .rail-tag {
+          display: grid;
+          place-items: center;
+          border-right: var(--border) solid var(--ink);
+          background: var(--danger);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 18px;
+          line-height: 1;
+          letter-spacing: 0.08em;
+        }
+
+        .rail-copy {
+          display: flex;
+          align-items: center;
+          padding: 18px 22px;
+          font-size: 28px;
+          font-weight: 700;
+          line-height: 1.3;
+          letter-spacing: 0;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="02-break-the-loop"
+        data-width="1080"
+        data-height="1920"
+        data-duration="4.6"
+      >
+        <div id="frame02-ground" class="clip ground" data-start="0" data-duration="4.6" data-track-index="0">
+          <div class="side-field side-field-left"></div>
+          <div class="side-field side-field-right"></div>
+          <div class="stripe-block"></div>
+          <div class="burst"></div>
+        </div>
+
+        <section
+          id="frame02-title-block"
+          class="clip title-block"
+          data-start="0"
+          data-duration="4.6"
+          data-track-index="1"
+          aria-label="Search and read"
+        >
+          <div class="title-core" id="frame-02-break-the-loop-title-core">
+            <div class="title-label" id="frame-02-break-the-loop-title-label">
+              <span class="label-pill">SEARCH + READ</span>
+            </div>
+            <div class="verb-stack">
+              <div class="verb" id="frame-02-break-the-loop-verb-search">SEARCH</div>
+              <div class="verb verb-read" id="frame-02-break-the-loop-verb-read">READ</div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="frame02-split-stage"
+          class="clip split-stage"
+          data-start="1.05"
+          data-duration="3.55"
+          data-track-index="2"
+          aria-label="Read-only and browser-drive comparison"
+        >
+          <div class="card-wing" id="frame-02-break-the-loop-left-wing">
+            <article class="split-card card-left" id="frame-02-break-the-loop-left-card">
+              <header class="card-cap">
+                <span>READ-ONLY</span>
+                <span class="cap-index">01</span>
+              </header>
+              <div class="card-body">
+                <div class="card-kicker">NATIVE RAIL</div>
+                <div class="left-hero" id="frame-02-break-the-loop-left-hero">
+                  <span>READ</span><span>ONLY</span>
+                </div>
+                <div class="left-row">
+                  <span>SEARCH</span>
+                  <span class="row-mark"></span>
+                </div>
+                <div class="left-row">
+                  <span>READ</span>
+                  <span class="row-mark"></span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="card-wing" id="frame-02-break-the-loop-right-wing">
+            <article class="split-card card-right" id="frame-02-break-the-loop-right-card">
+              <header class="card-cap">
+                <span>BROWSER DRIVE</span>
+                <span class="cap-index">02</span>
+              </header>
+              <div class="card-body">
+                <div class="card-kicker">INTERACTION STACK</div>
+                <div class="right-stack">
+                  <div class="stack-row">
+                    <span class="stack-index">A</span><span class="stack-word">DRIVE</span>
+                  </div>
+                  <div class="stack-row">
+                    <span class="stack-index">B</span><span class="stack-word">CLICK</span>
+                  </div>
+                  <div class="stack-row">
+                    <span class="stack-index">C</span><span class="stack-word">FORM</span>
+                  </div>
+                  <div class="stack-row">
+                    <span class="stack-index">D</span><span class="stack-word">UPLOAD</span>
+                  </div>
+                </div>
+                <div class="load-meter" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <svg
+          id="frame02-cut-line"
+          class="clip cut-line"
+          data-start="1.7"
+          data-duration="2.9"
+          data-track-index="3"
+          viewBox="0 0 136 772"
+          role="img"
+          aria-label="Cut line separating search from browser driving"
+        >
+          <path
+            id="frame-02-break-the-loop-cut-path"
+            d="M 68 8 L 68 126 L 36 170 L 100 226 L 44 288 L 92 350 L 38 416 L 98 486 L 46 548 L 68 596 L 68 764"
+          />
+        </svg>
+
+        <div
+          class="clip edge-badge badge-left"
+          id="frame-02-break-the-loop-badge-left"
+          data-start="3.48"
+          data-duration="1.12"
+          data-track-index="4"
+        >
+          NATIVE SEARCH
+        </div>
+
+        <div
+          class="clip edge-badge badge-right"
+          id="frame-02-break-the-loop-badge-right"
+          data-start="3.58"
+          data-duration="1.02"
+          data-track-index="5"
+        >
+          PLAYWRIGHT
+        </div>
+
+        <div
+          class="clip caution-rail"
+          id="frame-02-break-the-loop-caution"
+          data-start="3.4"
+          data-duration="1.2"
+          data-track-index="6"
+        >
+          <div class="rail-tag">BOUNDARY</div>
+          <div class="rail-copy">点击 / 表单 / 视觉检查仍交给 Playwright</div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        (() => {
+          window.__timelines = window.__timelines || {};
+
+          const tl = gsap.timeline({ paused: true });
+          const titleCore = document.getElementById("frame-02-break-the-loop-title-core");
+          const titleLabel = document.getElementById("frame-02-break-the-loop-title-label");
+          const leftWing = document.getElementById("frame-02-break-the-loop-left-wing");
+          const rightWing = document.getElementById("frame-02-break-the-loop-right-wing");
+          const leftCard = document.getElementById("frame-02-break-the-loop-left-card");
+          const rightCard = document.getElementById("frame-02-break-the-loop-right-card");
+          const cutPath = document.getElementById("frame-02-break-the-loop-cut-path");
+          const cutLength = cutPath.getTotalLength();
+
+          cutPath.style.strokeDasharray = String(cutLength);
+          cutPath.style.strokeDashoffset = String(cutLength);
+
+          tl.fromTo(
+            titleCore,
+            { opacity: 0, y: -54 },
+            { opacity: 1, y: 0, duration: 0.46, ease: "power3.out", immediateRender: true },
+            0,
+          );
+          tl.fromTo(
+            titleLabel,
+            { opacity: 0, y: -40 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", immediateRender: true },
+            0.02,
+          );
+
+          const verbItems = [
+            { id: "frame-02-break-the-loop-verb-search", text: "SEARCH", hold: 0.05 },
+            { id: "frame-02-break-the-loop-verb-read", text: "READ", hold: 0.02 },
+          ];
+          const baseDuration = 0.12;
+          const secondsPerCharacter = 0.018;
+          let sequenceCursor = 0.08;
+          const verbSequence = verbItems.map((item) => {
+            const start = sequenceCursor;
+            const duration = baseDuration + item.text.length * secondsPerCharacter + item.hold;
+            sequenceCursor += duration;
+            return { ...item, start };
+          });
+
+          verbSequence.forEach((item) => {
+            tl.fromTo(
+              document.getElementById(item.id),
+              { opacity: 0, y: -58, scale: 0.92 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.42,
+                ease: "power3.out",
+                immediateRender: true,
+              },
+              item.start,
+            );
+          });
+
+          tl.to(
+            titleCore,
+            { y: -70, scale: 0.65, duration: 0.34, ease: "power4.inOut" },
+            0.96,
+          );
+
+          tl.fromTo(
+            leftWing,
+            { x: -410, scale: 0.84, opacity: 0 },
+            { x: 0, scale: 1, opacity: 1, duration: 0.82, ease: "power3.out", immediateRender: true },
+            1.08,
+          );
+          tl.fromTo(
+            leftCard,
+            { rotateY: 25 },
+            { rotateY: 12, duration: 0.82, ease: "power3.out", immediateRender: true },
+            1.08,
+          );
+          tl.fromTo(
+            rightWing,
+            { x: 430, scale: 0.84, opacity: 0 },
+            { x: 0, scale: 1, opacity: 1, duration: 0.86, ease: "power3.out", immediateRender: true },
+            1.22,
+          );
+          tl.fromTo(
+            rightCard,
+            { rotateY: -26 },
+            { rotateY: -12, duration: 0.86, ease: "power3.out", immediateRender: true },
+            1.22,
+          );
+
+          tl.fromTo(
+            "#frame-02-break-the-loop-left-hero",
+            { opacity: 0, y: 22, scale: 0.94 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", immediateRender: true },
+            1.48,
+          );
+
+          gsap.utils.toArray("#frame-02-break-the-loop-left-card .left-row").forEach((row, index) => {
+            tl.fromTo(
+              row,
+              { opacity: 0, x: -28 },
+              { opacity: 1, x: 0, duration: 0.42, ease: "power3.out", immediateRender: true },
+              1.72 + index * 0.12,
+            );
+          });
+
+          gsap.utils.toArray("#frame-02-break-the-loop-right-card .stack-row").forEach((row, index) => {
+            tl.fromTo(
+              row,
+              { opacity: 0, x: 32 },
+              { opacity: 1, x: 0, duration: 0.42, ease: "power3.out", immediateRender: true },
+              1.62 + index * 0.13,
+            );
+          });
+
+          tl.fromTo(
+            "#frame-02-break-the-loop-right-card .load-meter",
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", immediateRender: true },
+            2.18,
+          );
+
+          tl.to(
+            cutPath,
+            { strokeDashoffset: 0, duration: 1.04, ease: "power2.out" },
+            1.78,
+          );
+          tl.to(
+            rightWing,
+            { x: 42, duration: 0.48, ease: "power3.out" },
+            2.38,
+          );
+          tl.to(
+            leftWing,
+            { x: -12, duration: 0.48, ease: "power3.out" },
+            2.38,
+          );
+
+          tl.fromTo(
+            "#frame-02-break-the-loop-caution",
+            { opacity: 0, y: 34 },
+            { opacity: 1, y: 0, duration: 0.46, ease: "power3.out", immediateRender: true },
+            3.4,
+          );
+          tl.fromTo(
+            "#frame-02-break-the-loop-badge-left",
+            { opacity: 0, scale: 0, y: 18 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: true },
+            3.48,
+          );
+          tl.fromTo(
+            "#frame-02-break-the-loop-badge-right",
+            { opacity: 0, scale: 0, y: 18 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: true },
+            3.58,
+          );
+
+          window.__timelines["02-break-the-loop"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

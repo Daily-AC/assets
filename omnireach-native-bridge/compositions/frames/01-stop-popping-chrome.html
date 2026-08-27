@@ -1,0 +1,324 @@
+<template
+  id="01-stop-popping-chrome-template"
+  data-composition-id="01-stop-popping-chrome"
+  data-width="1080"
+  data-height="1920"
+>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: "Noto Sans CJK SC";
+      src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+    }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      color: #f4f3ee;
+      font-family: "Noto Sans CJK SC";
+      font-synthesis: none;
+      letter-spacing: 0;
+    }
+
+    #root * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    .ground {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: #111315;
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .content-field {
+      position: absolute;
+      top: 120px;
+      left: 72px;
+      width: 936px;
+      height: 1460px;
+      overflow: hidden;
+    }
+
+    .hook-stack {
+      width: 100%;
+      margin-top: 310px;
+      text-align: center;
+    }
+
+    .upper-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 130px;
+      margin: 0;
+      color: #f4f3ee;
+      font-size: 116px;
+      font-weight: 700;
+      line-height: 0.96;
+      white-space: nowrap;
+    }
+
+    .upper-word {
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+
+    .upper-word:first-child {
+      margin-right: 26px;
+    }
+
+    .lower-slot {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      margin-top: 58px;
+      overflow: hidden;
+    }
+
+    .swap-line {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .pain-line {
+      color: #f4f3ee;
+      font-size: 100px;
+    }
+
+    .pain-prefix {
+      display: inline-block;
+      margin-right: 24px;
+    }
+
+    .chrome-token {
+      position: relative;
+      display: inline-block;
+      color: #e65b5b;
+    }
+
+    .chrome-underline {
+      position: absolute;
+      left: 0;
+      bottom: -12px;
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #e65b5b;
+      transform-origin: left center;
+    }
+
+    .question-mark {
+      display: inline-block;
+      color: #f4f3ee;
+    }
+
+    .payoff-line {
+      color: #ffcc38;
+      font-size: 138px;
+      line-height: 0.92;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="01-stop-popping-chrome"
+    data-duration="4.3"
+    data-width="1080"
+    data-height="1920"
+  >
+    <div
+      id="f01-ground"
+      class="clip ground"
+      data-start="0"
+      data-duration="4.3"
+      data-track-index="0"
+      aria-hidden="true"
+    ></div>
+
+    <div
+      id="f01-stage"
+      class="clip stage"
+      data-start="0"
+      data-duration="4.3"
+      data-track-index="1"
+    >
+      <div class="content-field">
+        <div class="hook-stack">
+          <div class="upper-line" aria-label="AGENT 搜个抖音">
+            <span
+              id="f01-word-agent"
+              class="upper-word"
+              data-reveal-word
+              data-speed-factor="1"
+              data-hold="0.02"
+              >AGENT</span
+            ><span
+              id="f01-word-search"
+              class="upper-word"
+              data-reveal-word
+              data-speed-factor="1"
+              data-hold="0.02"
+              >搜个</span
+            ><span
+              id="f01-word-douyin"
+              class="upper-word"
+              data-reveal-word
+              data-speed-factor="1"
+              data-hold="0.02"
+              >抖音</span
+            >
+          </div>
+
+          <div class="lower-slot">
+            <div
+              id="f01-pain-line"
+              class="swap-line pain-line"
+              aria-label="怎么又弹 CHROME？"
+            >
+              <span class="pain-prefix">怎么又弹</span
+              ><span class="chrome-token"
+                >CHROME<span
+                  id="f01-underline"
+                  class="chrome-underline"
+                  aria-hidden="true"
+                ></span></span
+              ><span class="question-mark">？</span>
+            </div>
+
+            <div
+              id="f01-payoff-line"
+              class="swap-line payoff-line"
+            >
+              别再弹。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      window.__timelines = window.__timelines || {};
+
+      const revealWords = [
+        document.getElementById("f01-word-agent"),
+        document.getElementById("f01-word-search"),
+        document.getElementById("f01-word-douyin"),
+      ];
+      const painLine = document.getElementById(
+        "f01-pain-line",
+      );
+      const payoffLine = document.getElementById(
+        "f01-payoff-line",
+      );
+      const underline = document.getElementById(
+        "f01-underline",
+      );
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.set(revealWords, { opacity: 0, y: 28 }, 0);
+      tl.set(painLine, { opacity: 0, x: 0 }, 0);
+      tl.set(payoffLine, { opacity: 0, x: 220 }, 0);
+      tl.set(underline, { scaleX: 0, transformOrigin: "left center" }, 0);
+
+      const baseDuration = 0.14;
+      const secondsPerCharacter = 0.026;
+      let nextStart = 0.06;
+      const revealSchedule = revealWords.map((element) => {
+        const speedFactor = Number(element.dataset.speedFactor);
+        const hold = Number(element.dataset.hold);
+        const slotDuration =
+          (baseDuration +
+            element.textContent.trim().length * secondsPerCharacter +
+            hold) /
+          speedFactor;
+        const item = {
+          element,
+          start: nextStart,
+          duration: Math.min(0.28, slotDuration),
+        };
+        nextStart += slotDuration;
+        return item;
+      });
+
+      revealSchedule.forEach((item) => {
+        tl.fromTo(
+          item.element,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: item.duration,
+            ease: "power3.out",
+            immediateRender: false,
+          },
+          item.start,
+        );
+      });
+
+      tl.set(painLine, { opacity: 1, x: 0 }, 0.9);
+      tl.to(
+        underline,
+        { scaleX: 1, duration: 0.34, ease: "power2.out" },
+        1.02,
+      );
+
+      tl.to(
+        painLine,
+        { x: -220, duration: 0.22, ease: "power4.in" },
+        3.1,
+      );
+      tl.to(
+        painLine,
+        { opacity: 0, duration: 0.2, ease: "power1.in" },
+        3.1,
+      );
+      tl.fromTo(
+        payoffLine,
+        { x: 220, opacity: 0.35 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.3,
+          ease: "power4.out",
+          immediateRender: false,
+        },
+        3.32,
+      );
+
+      window.__timelines["01-stop-popping-chrome"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,351 @@
+{
+  "tts_provider": "qwen3-tts",
+  "voice_id": "Vivian",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.9,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Agent 搜个抖音，怎么又弹",
+          "start": 0.08,
+          "end": 2.932916666666667
+        },
+        {
+          "id": "w1",
+          "text": "Chrome？",
+          "start": 3.052916666666667,
+          "end": 3.6719583333333334
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "55d9e072eb440c44a16dfc368eadfd19794311d48e8dc4f45ec0dc8d70522224"
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 10.4,
+      "words": [
+        {
+          "id": "w0",
+          "text": "搜索和读取，只是只读任务。",
+          "start": 0.08,
+          "end": 2.7786666666666666
+        },
+        {
+          "id": "w1",
+          "text": "没必要每次启动整套 Playwright。",
+          "start": 2.9686666666666666,
+          "end": 5.01725
+        },
+        {
+          "id": "w2",
+          "text": "点击、表单、上传和视觉检查，",
+          "start": 5.20725,
+          "end": 8.705583333333333
+        },
+        {
+          "id": "w3",
+          "text": "仍然交给它。",
+          "start": 8.895583333333333,
+          "end": 9.994499999999999
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "0d15ef8db0f74a76c77625b4ecb8fefd99316b060d24776eb6af54ea144f7b71"
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 6.7,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Omnireach",
+          "start": 0.08,
+          "end": 1.24275
+        },
+        {
+          "id": "w1",
+          "text": "直接连接你已经登录的 Chrome，",
+          "start": 1.43275,
+          "end": 3.5717916666666665
+        },
+        {
+          "id": "w2",
+          "text": "只继承登录态，不读取密码。",
+          "start": 3.7617916666666664,
+          "end": 6.220333333333333
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "ea89fcf8a04cf419c2474bd4fee0fc10f14165635e5fa8f48b3f4c908f1115d6"
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 7.4,
+      "words": [
+        {
+          "id": "w0",
+          "text": "输入这一条命令，",
+          "start": 0.08,
+          "end": 2.4438750000000002
+        },
+        {
+          "id": "w1",
+          "text": "GPT 5.6",
+          "start": 2.633875,
+          "end": 3.9732083333333335
+        },
+        {
+          "id": "w2",
+          "text": "真实抖音结果，就回来了。",
+          "start": 4.163208333333333,
+          "end": 7.26175
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "9f0d269205fefd3690c96fdfd69d76785920715ec8ce315378af71a8c1752fbe"
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 13.0,
+      "words": [
+        {
+          "id": "w0",
+          "text": "这次 PATH 里，",
+          "start": 0.08,
+          "end": 1.0967083333333334
+        },
+        {
+          "id": "w1",
+          "text": "没有 OpenCLI。",
+          "start": 1.2867083333333333,
+          "end": 2.4567083333333333
+        },
+        {
+          "id": "w2",
+          "text": "返回 adapter，",
+          "start": 2.646708333333333,
+          "end": 3.9054166666666665
+        },
+        {
+          "id": "w3",
+          "text": "是 native-chrome。",
+          "start": 4.095416666666667,
+          "end": 5.994416666666667
+        },
+        {
+          "id": "w4",
+          "text": "errors 为空，可见 Chrome，",
+          "start": 6.184416666666667,
+          "end": 8.547500000000001
+        },
+        {
+          "id": "w5",
+          "text": "窗口和标签页，",
+          "start": 8.7375,
+          "end": 9.996500000000001
+        },
+        {
+          "id": "w6",
+          "text": "都是零到零。",
+          "start": 10.1865,
+          "end": 12.708958333333333
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "1bb117d444cdcf20a65522873fcf8e5238fe3d480cdd62299ee61da6ef6f6991"
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 9.9,
+      "words": [
+        {
+          "id": "w0",
+          "text": "它不替代点击和表单。",
+          "start": 0.08,
+          "end": 2.3649583333333335
+        },
+        {
+          "id": "w1",
+          "text": "只把搜索和读取做轻。",
+          "start": 2.5549583333333334,
+          "end": 4.373958333333333
+        },
+        {
+          "id": "w2",
+          "text": "装完搜一次，跑不通，",
+          "start": 4.563958333333334,
+          "end": 6.862625
+        },
+        {
+          "id": "w3",
+          "text": "就把失败案例留在评论区。",
+          "start": 7.052625000000001,
+          "end": 9.591291666666667
+        }
+      ],
+      "provider": "qwen3-tts",
+      "runtime": "mlx-audio",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+      "voice": "Vivian",
+      "sample_rate_hz": 24000,
+      "sha256": "f748786b552db8011f7babc2b359e5664c89e7453c2b368d1fda1be1f1f826b8"
+    }
+  ],
+  "sfx": [
+    {
+      "id": "01",
+      "name": "error",
+      "file": "assets/sfx/error.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 1.62,
+      "volume": 0.35
+    },
+    {
+      "id": "01",
+      "name": "whoosh-short",
+      "file": "assets/sfx/whoosh-short.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.57,
+      "volume": 0.35
+    },
+    {
+      "id": "02",
+      "name": "click-soft",
+      "file": "assets/sfx/click-soft.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.37,
+      "volume": 0.35
+    },
+    {
+      "id": "02",
+      "name": "whoosh-short",
+      "file": "assets/sfx/whoosh-short.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.57,
+      "volume": 0.35
+    },
+    {
+      "id": "03",
+      "name": "whoosh",
+      "file": "assets/sfx/whoosh.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.57,
+      "volume": 0.35
+    },
+    {
+      "id": "03",
+      "name": "chime",
+      "file": "assets/sfx/chime.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 2.5,
+      "volume": 0.35
+    },
+    {
+      "id": "04",
+      "name": "typing",
+      "file": "assets/sfx/typing.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 1.5,
+      "volume": 0.35
+    },
+    {
+      "id": "04",
+      "name": "click-soft",
+      "file": "assets/sfx/click-soft.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.37,
+      "volume": 0.35
+    },
+    {
+      "id": "05",
+      "name": "pop",
+      "file": "assets/sfx/pop.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.72,
+      "volume": 0.35
+    },
+    {
+      "id": "05",
+      "name": "ping",
+      "file": "assets/sfx/ping.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 1.32,
+      "volume": 0.35
+    },
+    {
+      "id": "06",
+      "name": "key-press",
+      "file": "assets/sfx/key-press.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 0.4,
+      "volume": 0.35
+    },
+    {
+      "id": "06",
+      "name": "chime",
+      "file": "assets/sfx/chime.mp3",
+      "source": "local",
+      "offset_s": 0,
+      "duration_s": 2.5,
+      "volume": 0.35
+    }
+  ],
+  "total_duration_s": 51.3,
+  "tts": {
+    "provider": "qwen3-tts",
+    "runtime": "mlx-audio",
+    "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+    "voice": "Vivian",
+    "language": "Chinese",
+    "instruct": "中文普通话，年轻女性，冷静、清晰、有节奏，像懂技术的产品发布旁白。不要播音腔，不要夸张；英文产品名、命令和字段名自然发音。",
+    "seed": 20260713
+  }
+}

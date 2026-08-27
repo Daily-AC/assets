@@ -1,0 +1,533 @@
+<template>
+  <div id="root" data-composition-id="03-start-the-whole-round" data-duration="8.5" data-width="1920" data-height="1080">
+    <div id="frame-03-ground" class="clip f03-ground" data-layout-ignore data-start="0" data-duration="8.5" data-track-index="0"></div>
+
+    <svg class="f03-accent" viewBox="0 0 1920 1080" aria-hidden="true">
+      <path id="f03-spike" d="M100 83 L100 103 M90 93 L110 93 M93 86 L107 100 M107 86 L93 100" />
+      <path id="f03-brace" d="M956 272 L956 315 Q956 332 938 332 L316 332 Q296 332 296 352 L296 372 M956 332 L1604 332 Q1624 332 1624 352 L1624 372 M516 332 L516 372 M738 332 L738 372 M1182 332 L1182 372 M1404 332 L1404 372" />
+    </svg>
+
+    <header class="f03-header">
+      <div class="f03-kicker">02 / START THE WHOLE ROUND</div>
+      <div class="f03-round-label">Codeforces Beta Round #4</div>
+    </header>
+
+    <section class="f03-terminal-wrap">
+      <div class="f03-terminal-shell">
+        <div class="f03-terminal-inner" data-layout-allow-overflow>
+          <div class="f03-terminal-bar">
+            <span class="f03-terminal-title">cfx / contest workspace</span>
+            <span class="f03-terminal-state">local</span>
+          </div>
+          <div class="f03-command-line" aria-label="cfx contest start 4">
+            <span class="f03-prompt">$</span>
+            <span id="f03-command"></span><span class="f03-caret"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="f03-workspace">
+      <div class="f03-tree-head">
+        <span class="f03-folder-mark">/</span>
+        <span>cf-contest-4/</span>
+      </div>
+      <div class="f03-count-rail">
+        <span><b id="f03-problem-count">0</b> problems</span>
+        <i></i>
+        <span><b id="f03-sample-count">0</b> samples</span>
+      </div>
+
+      <div class="f03-grid">
+        <article class="f03-card" data-problem="A">
+          <div class="f03-card-head"><strong>A</strong><span>workspace</span></div>
+          <div class="f03-files">
+            <div class="f03-file"><span>01</span><b>statement.md</b></div>
+            <div class="f03-file"><span>02</span><b>samples/</b></div>
+            <div class="f03-file"><span>03</span><b>main.cpp</b></div>
+            <div class="f03-file"><span>04</span><b>AGENTS.md</b></div>
+            <div class="f03-file"><span>05</span><b>session.json</b></div>
+          </div>
+        </article>
+        <article class="f03-card" data-problem="B">
+          <div class="f03-card-head"><strong>B</strong><span>workspace</span></div>
+          <div class="f03-files">
+            <div class="f03-file"><span>01</span><b>statement.md</b></div>
+            <div class="f03-file"><span>02</span><b>samples/</b></div>
+            <div class="f03-file"><span>03</span><b>main.cpp</b></div>
+            <div class="f03-file"><span>04</span><b>AGENTS.md</b></div>
+            <div class="f03-file"><span>05</span><b>session.json</b></div>
+          </div>
+        </article>
+        <article class="f03-card" data-problem="C">
+          <div class="f03-card-head"><strong>C</strong><span>workspace</span></div>
+          <div class="f03-files">
+            <div class="f03-file"><span>01</span><b>statement.md</b></div>
+            <div class="f03-file"><span>02</span><b>samples/</b></div>
+            <div class="f03-file"><span>03</span><b>main.cpp</b></div>
+            <div class="f03-file"><span>04</span><b>AGENTS.md</b></div>
+            <div class="f03-file"><span>05</span><b>session.json</b></div>
+          </div>
+        </article>
+        <article class="f03-card" data-problem="D">
+          <div class="f03-card-head"><strong>D</strong><span>workspace</span></div>
+          <div class="f03-files">
+            <div class="f03-file"><span>01</span><b>statement.md</b></div>
+            <div class="f03-file"><span>02</span><b>samples/</b></div>
+            <div class="f03-file"><span>03</span><b>main.cpp</b></div>
+            <div class="f03-file"><span>04</span><b>AGENTS.md</b></div>
+            <div class="f03-file"><span>05</span><b>session.json</b></div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <div class="f03-index">03 / 05</div>
+
+    <style>
+      @font-face {
+        font-family: "EB Garamond";
+        src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        container-type: size;
+        color: #171814;
+      }
+
+      #root *, #root *::before, #root *::after {
+        box-sizing: border-box;
+      }
+
+      .f03-ground {
+        position: absolute;
+        inset: 0;
+        background: #f3f0e7;
+      }
+
+      .f03-accent {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 7;
+        pointer-events: none;
+        fill: none;
+        stroke: #f07f5a;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .f03-header {
+        position: absolute;
+        left: 100px;
+        right: 100px;
+        top: 72px;
+        height: 46px;
+        z-index: 9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(23, 24, 20, 0.12);
+      }
+
+      .f03-kicker,
+      .f03-round-label,
+      .f03-terminal-title,
+      .f03-terminal-state,
+      .f03-command-line,
+      .f03-count-rail,
+      .f03-file,
+      .f03-index {
+        font-family: "JetBrains Mono";
+      }
+
+      .f03-kicker {
+        padding-left: 26px;
+        font-size: 26px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+
+      .f03-round-label {
+        font-size: 22px;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        color: rgba(23, 24, 20, 0.58);
+      }
+
+      .f03-terminal-wrap {
+        position: absolute;
+        left: 110px;
+        top: 140px;
+        width: 1700px;
+        height: 152px;
+        z-index: 5;
+      }
+
+      .f03-terminal-shell {
+        width: 1700px;
+        height: 152px;
+        transform-origin: 100% 50%;
+        overflow: hidden;
+        border: 1px solid rgba(243, 240, 231, 0.14);
+        border-radius: 8px;
+        background: #181615;
+        box-shadow: 0 1px 3px rgba(23, 24, 20, 0.08), 0 4px 16px rgba(23, 24, 20, 0.04);
+      }
+
+      .f03-terminal-inner {
+        position: relative;
+        width: 1700px;
+        height: 152px;
+        transform-origin: 100% 50%;
+      }
+
+      .f03-terminal-bar {
+        height: 46px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #252120;
+        border-bottom: 1px solid rgba(243, 240, 231, 0.12);
+      }
+
+      .f03-terminal-title,
+      .f03-terminal-state {
+        font-size: 18px;
+        line-height: 1;
+        color: rgba(243, 240, 231, 0.66);
+      }
+
+      .f03-terminal-state {
+        color: #5db8a6;
+      }
+
+      .f03-command-line {
+        height: 106px;
+        padding: 29px 34px;
+        display: flex;
+        align-items: center;
+        gap: 17px;
+        color: #f3f0e7;
+        font-size: 29px;
+        line-height: 1;
+        white-space: pre;
+      }
+
+      .f03-prompt {
+        color: #5db8a6;
+      }
+
+      .f03-caret {
+        width: 13px;
+        height: 30px;
+        display: inline-block;
+        background: #f3f0e7;
+        opacity: 0.68;
+      }
+
+      .f03-char {
+        display: inline-block;
+      }
+
+      .f03-workspace {
+        position: absolute;
+        left: 110px;
+        top: 314px;
+        width: 1700px;
+        height: 520px;
+        z-index: 3;
+      }
+
+      .f03-tree-head {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-family: "EB Garamond";
+        font-size: 44px;
+        line-height: 1;
+        font-weight: 400;
+        letter-spacing: -0.012em;
+      }
+
+      .f03-folder-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(23, 24, 20, 0.18);
+        border-radius: 6px;
+        background: #dfeee8;
+        font-family: "JetBrains Mono";
+        font-size: 19px;
+      }
+
+      .f03-count-rail {
+        position: absolute;
+        right: 0;
+        top: 4px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: rgba(23, 24, 20, 0.66);
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .f03-count-rail b {
+        color: #171814;
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .f03-count-rail i {
+        width: 1px;
+        height: 24px;
+        background: rgba(23, 24, 20, 0.18);
+      }
+
+      .f03-grid {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 68px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .f03-card {
+        height: 390px;
+        overflow: hidden;
+        transform-origin: 50% 0%;
+        border: 1px solid rgba(23, 24, 20, 0.14);
+        border-radius: 12px;
+        background: #dfeee8;
+        box-shadow: 0 1px 3px rgba(23, 24, 20, 0.08), 0 4px 16px rgba(23, 24, 20, 0.04);
+      }
+
+      .f03-card-head {
+        height: 96px;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(23, 24, 20, 0.12);
+        background: #b8d9cb;
+      }
+
+      .f03-card-head strong {
+        font-family: "EB Garamond";
+        font-size: 58px;
+        line-height: 1;
+        font-weight: 400;
+      }
+
+      .f03-card-head span {
+        font-family: "JetBrains Mono";
+        font-size: 17px;
+        line-height: 1;
+        letter-spacing: 0.06em;
+        color: rgba(23, 24, 20, 0.58);
+      }
+
+      .f03-files {
+        padding: 14px 22px;
+      }
+
+      .f03-file {
+        height: 53px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 1px solid rgba(23, 24, 20, 0.10);
+        color: #171814;
+        font-size: 17px;
+        line-height: 1;
+      }
+
+      .f03-file:last-child {
+        border-bottom: 0;
+      }
+
+      .f03-file span {
+        color: rgba(23, 24, 20, 0.42);
+        font-size: 14px;
+      }
+
+      .f03-file b {
+        font-weight: 400;
+      }
+
+      .f03-index {
+        position: absolute;
+        right: 100px;
+        top: 850px;
+        z-index: 8;
+        color: rgba(23, 24, 20, 0.48);
+        font-size: 18px;
+        line-height: 1;
+        letter-spacing: 0.1em;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (() => {
+        const frame = document.querySelector('[data-composition-id="03-start-the-whole-round"]');
+        const command = frame.querySelector('#f03-command');
+        const commandText = 'cfx contest start 4';
+        command.innerHTML = commandText
+          .split('')
+          .map((character) => `<span class="f03-char">${character === ' ' ? '&nbsp;' : character}</span>`)
+          .join('');
+
+        const cards = Array.from(frame.querySelectorAll('.f03-card'));
+        const fileRows = Array.from({ length: 5 }, (_, rowIndex) =>
+          cards.map((card) => card.querySelectorAll('.f03-file')[rowIndex])
+        );
+        const commandChars = frame.querySelectorAll('.f03-char');
+        const problemCount = { value: 0 };
+        const sampleCount = { value: 0 };
+        const problemCountNode = frame.querySelector('#f03-problem-count');
+        const sampleCountNode = frame.querySelector('#f03-sample-count');
+
+        const spike = frame.querySelector('#f03-spike');
+        const brace = frame.querySelector('#f03-brace');
+        const spikeLength = spike.getTotalLength();
+        const braceLength = brace.getTotalLength();
+        gsap.set(spike, { strokeDasharray: spikeLength, strokeDashoffset: spikeLength });
+        gsap.set(brace, { strokeDasharray: braceLength, strokeDashoffset: braceLength });
+
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+        window.__timelines['03-start-the-whole-round'] = tl;
+
+        tl.fromTo('.f03-header',
+          { opacity: 0, y: -18 },
+          { opacity: 1, y: 0, duration: 0.46, ease: 'power3.out' },
+          0.02
+        );
+        tl.to(spike, { strokeDashoffset: 0, duration: 0.42, ease: 'power2.out' }, 0.04);
+        tl.fromTo('.f03-terminal-shell',
+          { opacity: 0, x: 1020, scaleX: 0.55 },
+          { opacity: 1, x: 580, scaleX: 0.55, duration: 0.48, ease: 'power4.out' },
+          0.10
+        );
+        tl.fromTo('.f03-terminal-inner',
+          { scaleX: 1.818 },
+          { scaleX: 1.818, duration: 0.01 },
+          0.10
+        );
+        tl.fromTo(commandChars,
+          { opacity: 0, y: 7 },
+          { opacity: 1, y: 0, duration: 0.035, stagger: 0.036, ease: 'power2.out' },
+          0.52
+        );
+        tl.fromTo('.f03-caret',
+          { opacity: 0 },
+          { opacity: 0.68, duration: 0.10, ease: 'none' },
+          1.20
+        );
+
+        tl.to('.f03-terminal-shell',
+          { x: 0, scaleX: 1, duration: 0.72, ease: 'power4.inOut' },
+          1.40
+        );
+        tl.to('.f03-terminal-inner',
+          { scaleX: 1, duration: 0.72, ease: 'power4.inOut' },
+          1.40
+        );
+        tl.fromTo('.f03-card',
+          { opacity: 0, y: -74, scaleY: 0.24 },
+          { opacity: 1, y: 0, scaleY: 0.24, duration: 0.38, stagger: 0.12, ease: 'power4.out' },
+          2.10
+        );
+        tl.fromTo('.f03-card-head strong',
+          { opacity: 0, scale: 0.72 },
+          { opacity: 1, scale: 1, duration: 0.34, stagger: 0.12, ease: 'power3.out' },
+          2.22
+        );
+
+        tl.to('.f03-card',
+          { scaleY: 1, duration: 0.60, stagger: 0.11, ease: 'power3.inOut' },
+          3.30
+        );
+        tl.fromTo('.f03-count-rail',
+          { opacity: 0, x: 38 },
+          { opacity: 1, x: 0, duration: 0.42, ease: 'power3.out' },
+          3.72
+        );
+        tl.to(problemCount, {
+          value: 4,
+          duration: 0.82,
+          ease: 'power2.out',
+          onUpdate: () => { problemCountNode.textContent = String(Math.round(problemCount.value)); }
+        }, 3.82);
+
+        fileRows.forEach((row, rowIndex) => {
+          const start = 4.03 + rowIndex * 0.43;
+          tl.fromTo(row,
+            { opacity: 0, x: 26 },
+            { opacity: 1, x: 0, duration: 0.30, stagger: 0.055, ease: 'power3.out' },
+            start
+          );
+        });
+        tl.to(sampleCount, {
+          value: 7,
+          duration: 0.92,
+          ease: 'power2.out',
+          onUpdate: () => { sampleCountNode.textContent = String(Math.round(sampleCount.value)); }
+        }, 5.05);
+
+        tl.fromTo('.f03-tree-head',
+          { opacity: 0, x: -48 },
+          { opacity: 1, x: 0, duration: 0.52, ease: 'power4.out' },
+          6.20
+        );
+        tl.to('.f03-card',
+          { y: 18, duration: 0.50, stagger: 0.055, ease: 'power3.inOut' },
+          6.22
+        );
+        tl.to(brace,
+          { strokeDashoffset: 0, duration: 1.08, ease: 'power2.inOut' },
+          6.48
+        );
+        tl.fromTo('.f03-index',
+          { opacity: 0, x: 18 },
+          { opacity: 1, x: 0, duration: 0.32, ease: 'power2.out' },
+          7.34
+        );
+      })();
+    </script>
+  </div>
+</template>

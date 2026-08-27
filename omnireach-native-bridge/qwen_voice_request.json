@@ -1,0 +1,90 @@
+{
+  "provider": "qwen3-tts",
+  "runtime": "mlx-audio",
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+  "voice": "Vivian",
+  "language": "Chinese",
+  "instruct": "中文普通话，年轻女性，冷静、清晰、有节奏，像懂技术的产品发布旁白。不要播音腔，不要夸张；英文产品名、命令和字段名自然发音。",
+  "temperature": 0.8,
+  "top_p": 0.9,
+  "top_k": 50,
+  "repetition_penalty": 1.1,
+  "seed": 20260713,
+  "lead_s": 0.08,
+  "trim_threshold": 0.003,
+  "trim_margin_s": 0.06,
+  "target_peak_dbfs": -3.0,
+  "frames": [
+    {
+      "id": "01",
+      "frame": 1,
+      "target_duration_s": 3.9,
+      "gaps_s": [0.12],
+      "phrases": [
+        "Agent 搜个抖音，怎么又弹",
+        "Chrome？"
+      ]
+    },
+    {
+      "id": "02",
+      "frame": 2,
+      "target_duration_s": 10.4,
+      "gaps_s": [0.19, 0.19, 0.19],
+      "phrases": [
+        "搜索和读取，只是只读任务。",
+        "没必要每次启动整套 Playwright。",
+        "点击、表单、上传和视觉检查，",
+        "仍然交给它。"
+      ]
+    },
+    {
+      "id": "03",
+      "frame": 3,
+      "target_duration_s": 6.7,
+      "gaps_s": [0.19, 0.19],
+      "phrases": [
+        "Omnireach",
+        "直接连接你已经登录的 Chrome，",
+        "只继承登录态，不读取密码。"
+      ]
+    },
+    {
+      "id": "04",
+      "frame": 4,
+      "target_duration_s": 7.4,
+      "gaps_s": [0.19, 0.19],
+      "phrases": [
+        "输入这一条命令，",
+        "GPT 5.6",
+        "真实抖音结果，就回来了。"
+      ]
+    },
+    {
+      "id": "05",
+      "frame": 5,
+      "target_duration_s": 13.0,
+      "gaps_s": [0.19, 0.19, 0.19, 0.19, 0.19, 0.19],
+      "phrases": [
+        "这次 PATH 里，",
+        "没有 OpenCLI。",
+        "返回 adapter，",
+        "是 native-chrome。",
+        "errors 为空，可见 Chrome，",
+        "窗口和标签页，",
+        "都是零到零。"
+      ]
+    },
+    {
+      "id": "06",
+      "frame": 6,
+      "target_duration_s": 9.9,
+      "gaps_s": [0.19, 0.19, 0.19],
+      "phrases": [
+        "它不替代点击和表单。",
+        "只把搜索和读取做轻。",
+        "装完搜一次，跑不通，",
+        "就把失败案例留在评论区。"
+      ]
+    }
+  ]
+}

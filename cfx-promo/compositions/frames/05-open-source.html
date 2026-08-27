@@ -1,0 +1,467 @@
+<template>
+  <div id="root" data-composition-id="05-open-source" data-duration="6" data-width="1920" data-height="1080">
+    <div id="frame-05-ground" class="clip frame-05-open-source-ground" data-layout-ignore data-start="0" data-duration="6" data-track-index="0"></div>
+
+    <section id="frame-05-stage" class="clip frame-05-open-source-stage" data-start="0" data-duration="6" data-track-index="1" aria-label="cfx open source install card">
+      <div class="frame-05-open-source-index">05 / 05</div>
+      <div class="frame-05-open-source-rule frame-05-open-source-rule-top"></div>
+
+      <div class="frame-05-open-source-identity">
+        <div class="frame-05-open-source-accepted">
+          <span class="frame-05-open-source-accepted-dot"></span>
+          <span class="frame-05-open-source-accepted-label" data-layout-allow-overlap>ACCEPTED</span>
+        </div>
+        <div class="frame-05-open-source-lockup">
+          <span class="frame-05-open-source-brand-dot"></span>
+          <span class="frame-05-open-source-brand" data-layout-allow-overlap>cfx</span>
+        </div>
+        <div class="frame-05-open-source-tagline" aria-label="Train. Test. Submit.">
+          <span>Train.</span><span>Test.</span><span>Submit.</span>
+        </div>
+      </div>
+
+      <div class="frame-05-open-source-terminal-wrap">
+        <div class="frame-05-open-source-shell-chip" data-layout-allow-occlusion>$</div>
+        <div class="frame-05-open-source-terminal">
+          <div class="frame-05-open-source-terminal-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="frame-05-open-source-command-row">
+            <span class="frame-05-open-source-prompt">$</span>
+            <span class="frame-05-open-source-command"></span><span class="frame-05-open-source-caret"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-05-open-source-repo">
+        <div class="frame-05-open-source-repo-rule"></div>
+        <div class="frame-05-open-source-repo-url">github.com/Daily-AC/cfx</div>
+        <div class="frame-05-open-source-repo-label">OPEN SOURCE · NO OPENCLI</div>
+      </div>
+
+      <div class="frame-05-open-source-rule frame-05-open-source-rule-bottom"></div>
+      <div class="frame-05-open-source-footer">CODEFORCES TRAINING CLI</div>
+    </section>
+  </div>
+
+  <style>
+    @font-face {
+      font-family: "EB Garamond";
+      src: url("assets/fonts/EBGaramond-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #171814;
+      isolation: isolate;
+    }
+
+    .frame-05-open-source-ground {
+      position: absolute;
+      inset: 0;
+      background: #f3f0e7;
+    }
+
+    .frame-05-open-source-stage {
+      position: absolute;
+      left: 4.2cqw;
+      top: 5cqh;
+      width: 91.6cqw;
+      height: 76cqh;
+      overflow: hidden;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 24, 20, 0.12);
+      border-radius: 12px;
+      background: #dfeee8;
+      box-shadow: 0 1px 3px rgba(23, 24, 20, 0.08), 0 4px 16px rgba(23, 24, 20, 0.04);
+    }
+
+    .frame-05-open-source-index,
+    .frame-05-open-source-footer {
+      position: absolute;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      color: rgba(23, 24, 20, 0.56);
+    }
+
+    .frame-05-open-source-index {
+      top: 34px;
+      right: 46px;
+    }
+
+    .frame-05-open-source-rule {
+      position: absolute;
+      left: 46px;
+      right: 46px;
+      height: 1px;
+      background: rgba(23, 24, 20, 0.12);
+      transform-origin: left center;
+    }
+
+    .frame-05-open-source-rule-top {
+      top: 71px;
+    }
+
+    .frame-05-open-source-rule-bottom {
+      bottom: 62px;
+    }
+
+    .frame-05-open-source-footer {
+      left: 46px;
+      bottom: 25px;
+      font-size: 18px;
+    }
+
+    .frame-05-open-source-identity {
+      position: absolute;
+      top: 132px;
+      left: 50%;
+      width: 1120px;
+      height: 280px;
+      margin-left: -560px;
+      text-align: center;
+      transform-origin: center top;
+    }
+
+    .frame-05-open-source-accepted {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: max-content;
+      padding: 11px 18px;
+      border: 1px solid rgba(23, 24, 20, 0.2);
+      border-radius: 9999px;
+      background: #f3f0e7;
+      transform: translateX(-50%);
+      transform-origin: center center;
+    }
+
+    .frame-05-open-source-accepted-dot,
+    .frame-05-open-source-brand-dot {
+      display: block;
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+      background: #f07f5a;
+    }
+
+    .frame-05-open-source-accepted-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 19px;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      color: rgba(23, 24, 20, 0.72);
+    }
+
+    .frame-05-open-source-lockup {
+      position: absolute;
+      top: 36px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      width: max-content;
+      transform: translateX(-50%);
+      transform-origin: center center;
+    }
+
+    .frame-05-open-source-brand-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    .frame-05-open-source-brand {
+      font-family: "EB Garamond", serif;
+      font-size: 188px;
+      font-weight: 400;
+      line-height: 0.78;
+      letter-spacing: -0.022em;
+    }
+
+    .frame-05-open-source-tagline {
+      position: absolute;
+      top: 230px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 17px;
+      font-family: "EB Garamond", serif;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.005em;
+    }
+
+    .frame-05-open-source-tagline span {
+      display: inline-block;
+    }
+
+    .frame-05-open-source-terminal-wrap {
+      position: absolute;
+      left: 50%;
+      top: 385px;
+      width: 1470px;
+      height: 122px;
+      margin-left: -735px;
+    }
+
+    .frame-05-open-source-shell-chip {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      margin-left: -31px;
+      border-radius: 8px;
+      background: #181615;
+      color: #f3f0e7;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 28px;
+      line-height: 1;
+      transform-origin: center center;
+    }
+
+    .frame-05-open-source-terminal {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+      border: 1px solid rgba(243, 240, 231, 0.14);
+      border-radius: 8px;
+      background: #181615;
+      color: #f3f0e7;
+      transform-origin: center center;
+    }
+
+    .frame-05-open-source-terminal-dots {
+      position: absolute;
+      top: 19px;
+      left: 24px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .frame-05-open-source-terminal-dots i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(243, 240, 231, 0.28);
+    }
+
+    .frame-05-open-source-command-row {
+      position: absolute;
+      left: 42px;
+      right: 42px;
+      top: 57px;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 28px;
+      line-height: 1.25;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .frame-05-open-source-prompt {
+      margin-right: 18px;
+      color: rgba(243, 240, 231, 0.55);
+    }
+
+    .frame-05-open-source-command {
+      color: #f3f0e7;
+    }
+
+    .frame-05-open-source-caret {
+      display: inline-block;
+      flex: 0 0 auto;
+      width: 13px;
+      height: 31px;
+      margin-left: 5px;
+      border-radius: 2px;
+      background: #f07f5a;
+    }
+
+    .frame-05-open-source-repo {
+      position: absolute;
+      top: 555px;
+      left: 50%;
+      width: 1470px;
+      height: 126px;
+      margin-left: -735px;
+      text-align: center;
+    }
+
+    .frame-05-open-source-repo-rule {
+      width: 100%;
+      height: 1px;
+      background: #b8d9cb;
+      transform-origin: center center;
+    }
+
+    .frame-05-open-source-repo-url {
+      margin-top: 29px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: #171814;
+    }
+
+    .frame-05-open-source-repo-label {
+      margin-top: 19px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      color: rgba(23, 24, 20, 0.58);
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const frame = document.querySelector('[data-composition-id="05-open-source"]');
+      if (!frame) return;
+
+      const q = (selector) => frame.querySelector(selector);
+      const qa = (selector) => frame.querySelectorAll(selector);
+      const command = "go install github.com/Daily-AC/cfx/cmd/cfx@latest";
+      const typed = { count: 0 };
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(q(".frame-05-open-source-stage"),
+        { opacity: 0.01, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.48, ease: "power3.out" },
+        0
+      );
+      tl.fromTo(q(".frame-05-open-source-rule-top"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.72, ease: "power3.out" },
+        0.08
+      );
+      tl.fromTo(q(".frame-05-open-source-accepted"),
+        { opacity: 0, scale: 1.18, filter: "blur(10px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out" },
+        0.04
+      );
+      tl.fromTo(q(".frame-05-open-source-lockup"),
+        { opacity: 0, scale: 0.8, filter: "blur(10px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.48, ease: "expo.out" },
+        0.28
+      );
+      tl.to(q(".frame-05-open-source-accepted"),
+        { opacity: 0, scale: 0.2, duration: 0.26, ease: "power3.in" },
+        0.35
+      );
+      tl.fromTo(qa(".frame-05-open-source-tagline span"),
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.32, ease: "power4.out", stagger: 0.16 },
+        0.42
+      );
+
+      tl.to(q(".frame-05-open-source-identity"),
+        { y: -46, scale: 0.56, duration: 0.48, ease: "power3.inOut" },
+        1.12
+      );
+      tl.to(q(".frame-05-open-source-tagline"),
+        { opacity: 0.62, duration: 0.34, ease: "none" },
+        1.14
+      );
+      tl.to(q(".frame-05-open-source-brand-dot"),
+        { opacity: 0, scale: 0.5, duration: 0.22, ease: "power2.in" },
+        1.5
+      );
+      tl.fromTo(q(".frame-05-open-source-shell-chip"),
+        { opacity: 0, scale: 0.72 },
+        { opacity: 1, scale: 1, duration: 0.32, ease: "back.out(1.35)" },
+        1.28
+      );
+      tl.fromTo(q(".frame-05-open-source-terminal"),
+        { opacity: 0, scaleX: 0.043, scaleY: 0.51 },
+        { opacity: 1, scaleX: 1, scaleY: 1, duration: 0.58, ease: "power4.out" },
+        1.44
+      );
+      tl.to(q(".frame-05-open-source-shell-chip"),
+        { opacity: 0, scale: 0.72, duration: 0.16, ease: "power2.in" },
+        1.54
+      );
+      tl.fromTo(q(".frame-05-open-source-terminal-dots"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.24, ease: "none" },
+        1.88
+      );
+      tl.fromTo(q(".frame-05-open-source-command-row"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.16, ease: "none" },
+        1.98
+      );
+      tl.to(typed, {
+        count: command.length,
+        duration: 2.12,
+        ease: "none",
+        snap: { count: 1 },
+        onUpdate: () => {
+          q(".frame-05-open-source-command").textContent = command.slice(0, typed.count);
+        }
+      }, 2.02);
+
+      tl.fromTo(q(".frame-05-open-source-repo-rule"),
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.52, ease: "power3.out" },
+        3.4
+      );
+      tl.fromTo(q(".frame-05-open-source-repo-url"),
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+        3.66
+      );
+      tl.fromTo(q(".frame-05-open-source-repo-label"),
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.38, ease: "power3.out" },
+        4.02
+      );
+      tl.fromTo(q(".frame-05-open-source-rule-bottom"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.46, ease: "power3.out" },
+        4.14
+      );
+      tl.fromTo(q(".frame-05-open-source-footer"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: "none" },
+        4.22
+      );
+
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 1 }, 4.5);
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 0 }, 4.76);
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 1 }, 5.03);
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 0 }, 5.3);
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 1 }, 5.57);
+      tl.set(q(".frame-05-open-source-caret"), { opacity: 1 }, 6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-open-source"] = tl;
+    })();
+  </script>
+</template>

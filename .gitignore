@@ -1,0 +1,18 @@
+# 成片走 GitHub Release assets，不进仓库历史；封面图保留供 README 引用
+**/renders/*
+!**/renders/*.png
+**/renders/qa/
+**/renders/qa-*.png
+
+# 可再生的中间产物
+capture/
+snapshots/
+.debug/
+**/.media/audio/
+node_modules/
+
+# 脚本可重新生成的大体积音轨（见各工程 scripts/generate-*-bgm.py）
+**/assets/bgm/*.wav
+
+# 系统
+.DS_Store

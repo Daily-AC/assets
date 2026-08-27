@@ -1,0 +1,247 @@
+{
+  "total_duration_s": 36.1,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.08,
+      "end": 2.335,
+      "text": "Agent 搜个抖音，怎么又弹",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Agent 搜个抖音，怎么又弹",
+          "start": 0.08,
+          "end": 2.215
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 2.396,
+      "end": 3.366,
+      "text": "Chrome？",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "Chrome？",
+          "start": 2.396,
+          "end": 3.246
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 2,
+      "start": 3.58,
+      "end": 4.719,
+      "text": "搜索和读取，",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "搜索和读取，",
+          "start": 3.58,
+          "end": 4.599
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 4.78,
+      "end": 7.433,
+      "text": "不该每次拉起整套浏览器自动化。",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "不该每次拉起整套浏览器自动化。",
+          "start": 4.78,
+          "end": 7.313
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 3,
+      "start": 7.78,
+      "end": 8.907,
+      "text": "Omnireach",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "Omnireach",
+          "start": 7.78,
+          "end": 8.787
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 3,
+      "start": 8.968,
+      "end": 11.147,
+      "text": "直接复用你已经登录的 Chrome，",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "直接复用你已经登录的 Chrome，",
+          "start": 8.968,
+          "end": 11.027
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 3,
+      "start": 11.208,
+      "end": 12.747,
+      "text": "只走一条只读原生桥。",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "只走一条只读原生桥。",
+          "start": 11.208,
+          "end": 12.627
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 4,
+      "start": 13.08,
+      "end": 14.059,
+      "text": "真实运行，",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "真实运行，",
+          "start": 13.08,
+          "end": 13.939
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 4,
+      "start": 14.12,
+      "end": 15.818,
+      "text": "三条抖音结果，",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "三条抖音结果，",
+          "start": 14.12,
+          "end": 15.698
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 4,
+      "start": 15.879,
+      "end": 20.537,
+      "text": "adapter 是 native-chrome。",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "adapter 是 native-chrome。",
+          "start": 15.879,
+          "end": 20.417
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 5,
+      "start": 20.88,
+      "end": 25.539,
+      "text": "PATH 里没有 OpenCLI。",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "PATH 里没有 OpenCLI。",
+          "start": 20.88,
+          "end": 25.419
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 5,
+      "start": 25.6,
+      "end": 27.857,
+      "text": "errors 为空。",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "errors 为空。",
+          "start": 25.6,
+          "end": 27.737
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 5,
+      "start": 27.918,
+      "end": 30.964,
+      "text": "可见窗口和标签页，零到零。",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "可见窗口和标签页，零到零。",
+          "start": 27.918,
+          "end": 30.844
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 5,
+      "start": 31.025,
+      "end": 33.524,
+      "text": "点击和表单，交给 Playwright。",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "点击和表单，交给 Playwright。",
+          "start": 31.025,
+          "end": 33.404
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 5,
+      "start": 33.585,
+      "end": 35.044,
+      "text": "搜索和读取，",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "搜索和读取，",
+          "start": 33.585,
+          "end": 34.924
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 5,
+      "start": 35.105,
+      "end": 36.083,
+      "text": "装完就用。",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "装完就用。",
+          "start": 35.105,
+          "end": 35.963
+        }
+      ]
+    }
+  ]
+}

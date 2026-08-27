@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omnireach Native Bridge</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 700;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 500;
+          font-display: block;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          container-type: size;
+          color: #f4f3ee;
+          font-family: "Noto Sans CJK SC";
+          letter-spacing: 0;
+        }
+
+        * {
+          box-sizing: border-box;
+          letter-spacing: 0;
+        }
+
+        .ground {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          background: #111315;
+        }
+
+        .wordmark {
+          position: absolute;
+          top: 120px;
+          left: 72px;
+          width: 936px;
+          height: 454px;
+          display: grid;
+          grid-template-rows: 194px 4px 212px;
+          row-gap: 22px;
+        }
+
+        .word-line {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          font-family: "Noto Sans CJK SC";
+          font-size: 220px;
+          font-weight: 700;
+          line-height: 0.86;
+          white-space: nowrap;
+        }
+
+        .word-line span {
+          display: block;
+          width: 100%;
+          min-height: 194px;
+        }
+
+        .word-omni {
+          justify-content: flex-start;
+          color: #f4f3ee;
+        }
+
+        .word-omni span {
+          text-align: left;
+        }
+
+        .word-reach {
+          justify-content: flex-end;
+          color: #f4f3ee;
+        }
+
+        .word-reach span {
+          text-align: right;
+        }
+
+        .word-separator {
+          display: block;
+          width: 100%;
+          height: 4px;
+          background: #ffcc38;
+          transform-origin: left center;
+        }
+
+        .transport {
+          position: absolute;
+          top: 646px;
+          left: 72px;
+          width: 640px;
+          height: 790px;
+        }
+
+        .transport-path {
+          position: absolute;
+          inset: 0;
+          width: 640px;
+          height: 790px;
+          overflow: visible;
+        }
+
+        .transport-path path {
+          fill: none;
+          stroke: #a8adb5;
+          stroke-width: 2px;
+          stroke-linecap: square;
+          stroke-linejoin: miter;
+        }
+
+        .transport-node {
+          position: absolute;
+          left: 0;
+          width: 640px;
+          height: 132px;
+          display: grid;
+          grid-template-columns: 72px 1fr;
+          align-items: center;
+        }
+
+        .transport-node:nth-of-type(1) {
+          top: 0;
+        }
+
+        .transport-node:nth-of-type(2) {
+          top: 270px;
+        }
+
+        .transport-node:nth-of-type(3) {
+          top: 540px;
+        }
+
+        .node-marker {
+          display: block;
+          width: 24px;
+          height: 24px;
+          margin-left: 24px;
+          border: 4px solid #111315;
+          outline: 2px solid currentColor;
+          background: currentColor;
+        }
+
+        .node-label {
+          width: 100%;
+          min-height: 96px;
+          display: flex;
+          align-items: center;
+          border-top: 1px solid #353a40;
+          border-bottom: 1px solid #353a40;
+          padding: 18px 0;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 34px;
+          font-weight: 500;
+          line-height: 1.35;
+          white-space: nowrap;
+        }
+
+        .node-login {
+          color: #f4f3ee;
+        }
+
+        .node-bridge {
+          color: #58d4e5;
+        }
+
+        .node-native {
+          color: #50e878;
+        }
+
+        .ledger {
+          position: absolute;
+          top: 760px;
+          left: 744px;
+          width: 264px;
+          min-height: 430px;
+          font-family: "Noto Sans Mono CJK SC";
+          font-weight: 500;
+        }
+
+        .ledger-heading {
+          width: 100%;
+          padding-bottom: 18px;
+          border-bottom: 2px solid #ffcc38;
+          color: #ffcc38;
+          font-size: 22px;
+          line-height: 1.2;
+        }
+
+        .permission-row {
+          width: 100%;
+          min-height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          border-bottom: 1px solid #353a40;
+          color: #f4f3ee;
+          font-size: 22px;
+          line-height: 1.2;
+          white-space: nowrap;
+        }
+
+        .permission-row strong {
+          color: #50e878;
+          font: inherit;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="03-native-bridge"
+        data-width="1080"
+        data-height="1920"
+        data-duration="7.2"
+      >
+        <div
+          id="f03-ground"
+          class="clip ground"
+          data-start="0"
+          data-duration="7.2"
+          data-track-index="0"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          id="f03-wordmark"
+          class="clip wordmark"
+          data-start="0"
+          data-duration="7.2"
+          data-track-index="1"
+          aria-label="Omnireach"
+        >
+          <div class="word-line word-omni">
+            <span id="f03-omni-text">O</span>
+          </div>
+          <span class="word-separator" aria-hidden="true"></span>
+          <div class="word-line word-reach">
+            <span id="f03-reach-text"></span>
+          </div>
+        </section>
+
+        <section
+          id="f03-transport"
+          class="clip transport"
+          data-start="1.4"
+          data-duration="5.8"
+          data-track-index="2"
+          aria-label="Chrome native transport"
+        >
+          <svg
+            class="transport-path"
+            viewBox="0 0 640 790"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path id="f03-transport-path" d="M 36 66 L 36 606" />
+          </svg>
+
+          <div class="transport-node node-login">
+            <span class="node-marker" aria-hidden="true"></span>
+            <span class="node-label">CHROME LOGIN</span>
+          </div>
+
+          <div class="transport-node node-bridge">
+            <span class="node-marker" aria-hidden="true"></span>
+            <span class="node-label">LOCAL BRIDGE · v0.1.1</span>
+          </div>
+
+          <div class="transport-node node-native">
+            <span class="node-marker" aria-hidden="true"></span>
+            <span class="node-label">NATIVE-CHROME</span>
+          </div>
+        </section>
+
+        <aside
+          id="f03-ledger"
+          class="clip ledger"
+          data-start="4.8"
+          data-duration="2.4"
+          data-track-index="3"
+          aria-label="Permission ledger"
+        >
+          <div class="ledger-heading">PERMISSIONS</div>
+          <div class="permission-row"><span>cookies:</span><strong>no</strong></div>
+          <div class="permission-row"><span>debugger:</span><strong>no</strong></div>
+          <div class="permission-row"><span>&lt;all_urls&gt;:</span><strong>no</strong></div>
+        </aside>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const compositionRoot = document.querySelector(
+          '[data-composition-id="03-native-bridge"]',
+        );
+        const omniText = compositionRoot.querySelector(
+          '[id="f03-omni-text"]',
+        );
+        const reachText = compositionRoot.querySelector(
+          '[id="f03-reach-text"]',
+        );
+        const separator = compositionRoot.querySelector(".word-separator");
+        const transportPath = compositionRoot.querySelector(
+          '[id="f03-transport-path"]',
+        );
+        const transportNodes = compositionRoot.querySelectorAll(".transport-node");
+        const ledgerHeading = compositionRoot.querySelector(".ledger-heading");
+        const permissionRows = compositionRoot.querySelectorAll(".permission-row");
+
+        const omniStates = [
+          { t: 0, text: "O" },
+          { t: 0.12, text: "OM" },
+          { t: 0.24, text: "OMN" },
+          { t: 0.38, text: "OMNI" },
+        ];
+        const reachStates = [
+          { t: 0, text: "" },
+          { t: 0.34, text: "R" },
+          { t: 0.52, text: "RE" },
+          { t: 0.72, text: "REA" },
+          { t: 0.94, text: "REAC" },
+          { t: 1.18, text: "REACH" },
+        ];
+
+        function stateAt(states, time) {
+          for (let index = states.length - 1; index >= 0; index -= 1) {
+            if (time >= states[index].t) return states[index].text;
+          }
+          return "";
+        }
+
+        function renderWordmark(time) {
+          omniText.textContent = stateAt(omniStates, time);
+          reachText.textContent = stateAt(reachStates, time);
+        }
+
+        renderWordmark(0);
+
+        const pathLength = transportPath.getTotalLength();
+        transportPath.style.strokeDasharray = `${pathLength}`;
+        transportPath.style.strokeDashoffset = `${pathLength}`;
+
+        const tl = gsap.timeline({ paused: true });
+        const wordmarkDriver = { time: 0 };
+
+        tl.to(
+          wordmarkDriver,
+          {
+            time: 1.4,
+            duration: 1.4,
+            ease: "none",
+            onUpdate: () => renderWordmark(wordmarkDriver.time),
+          },
+          0,
+        );
+
+        tl.fromTo(
+          separator,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.96, ease: "power3.out" },
+          0.18,
+        );
+
+        tl.fromTo(
+          transportPath,
+          { strokeDashoffset: pathLength },
+          { strokeDashoffset: 0, duration: 2.8, ease: "none" },
+          1.5,
+        );
+
+        tl.fromTo(
+          transportNodes[0],
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+          1.54,
+        );
+        tl.fromTo(
+          transportNodes[1],
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+          2.92,
+        );
+        tl.fromTo(
+          transportNodes[2],
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+          4.14,
+        );
+
+        tl.fromTo(
+          ledgerHeading,
+          { opacity: 0, x: 24 },
+          { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" },
+          4.84,
+        );
+        tl.fromTo(
+          permissionRows[0],
+          { opacity: 0, x: 24 },
+          { opacity: 1, x: 0, duration: 0.34, ease: "power3.out" },
+          4.98,
+        );
+        tl.fromTo(
+          permissionRows[1],
+          { opacity: 0, x: 24 },
+          { opacity: 1, x: 0, duration: 0.34, ease: "power3.out" },
+          5.44,
+        );
+        tl.fromTo(
+          permissionRows[2],
+          { opacity: 0, x: 24 },
+          { opacity: 1, x: 0, duration: 0.34, ease: "power3.out" },
+          5.9,
+        );
+
+        window.__timelines["03-native-bridge"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

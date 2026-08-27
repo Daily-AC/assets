@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Hitstorm</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #root {
+          --ink: #f5f7ff;
+          --surface: #07090d;
+          --canvas: #050505;
+          --cyan-dark: #003940;
+          --cyan: #31e8ff;
+          --teal: #008191;
+          --magenta-dark: #700047;
+          --magenta: #ff2fb3;
+          --success: #b6ff3b;
+          --border: 4px;
+          --shadow: 8px;
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          container-type: size;
+          color: var(--ink);
+          font-family: "Noto Sans CJK SC";
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .ground-layer {
+          z-index: 0;
+          overflow: hidden;
+          background: var(--canvas);
+        }
+
+        .ground-layer::before {
+          content: "";
+          position: absolute;
+          inset: 0 0 326px;
+          opacity: 0.44;
+          background-image: radial-gradient(rgba(49, 232, 255, 0.34) 1.4px, transparent 1.6px);
+          background-size: 24px 24px;
+        }
+
+        .ground-layer::after {
+          content: "";
+          position: absolute;
+          left: -90px;
+          top: 460px;
+          width: 1260px;
+          height: 640px;
+          border-top: 3px solid rgba(49, 232, 255, 0.18);
+          border-bottom: 3px solid rgba(255, 47, 179, 0.2);
+          background: rgba(0, 57, 64, 0.28);
+          transform: rotate(-4deg);
+        }
+
+        .ground-stripe {
+          position: absolute;
+          right: -24px;
+          top: 26px;
+          width: 260px;
+          height: 66px;
+          border: 4px solid var(--ink);
+          background: repeating-linear-gradient(
+            135deg,
+            var(--magenta) 0,
+            var(--magenta) 18px,
+            var(--surface) 18px,
+            var(--surface) 36px
+          );
+          box-shadow: 8px 8px 0 var(--ink);
+          transform: rotate(5deg);
+        }
+
+        .caption-ground {
+          position: absolute;
+          left: 0;
+          top: 1594px;
+          width: 100%;
+          height: 326px;
+          border-top: 3px solid rgba(49, 232, 255, 0.22);
+          background: var(--canvas);
+        }
+
+        .scene-layer {
+          z-index: 2;
+          overflow: hidden;
+          perspective: 1500px;
+        }
+
+        .camera-world {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1080px;
+          height: 1594px;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        .terminal-shell {
+          position: absolute;
+          left: 54px;
+          top: 68px;
+          width: 972px;
+          height: 548px;
+          overflow: hidden;
+          border: var(--border) solid var(--ink);
+          background: var(--surface);
+          box-shadow:
+            var(--shadow) var(--shadow) 0 var(--ink),
+            16px 16px 0 var(--magenta-dark);
+          transform-origin: 50% 30%;
+          will-change: transform, opacity;
+        }
+
+        .terminal-bar {
+          height: 68px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          padding: 0 24px;
+          border-bottom: 4px solid var(--ink);
+          background: var(--cyan);
+          color: var(--canvas);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 23px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .terminal-lamps {
+          display: flex;
+          gap: 10px;
+        }
+
+        .terminal-lamps span {
+          display: block;
+          width: 22px;
+          height: 22px;
+          border: 3px solid var(--canvas);
+          background: var(--success);
+        }
+
+        .terminal-lamps span:nth-child(2) {
+          background: var(--magenta);
+        }
+
+        .terminal-lamps span:nth-child(3) {
+          background: var(--teal);
+        }
+
+        .terminal-grid {
+          height: 476px;
+          display: grid;
+          grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+        }
+
+        .command-pane {
+          min-width: 0;
+          padding: 42px 30px 30px;
+          border-right: 4px solid var(--ink);
+        }
+
+        .command-label,
+        .terminal-side-label {
+          display: inline-flex;
+          align-items: center;
+          min-height: 48px;
+          padding: 8px 18px;
+          border: 3px solid var(--ink);
+          border-radius: 9999px;
+          background: var(--magenta);
+          box-shadow: 4px 4px 0 var(--ink);
+          color: var(--canvas);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 20px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .command-viewport {
+          width: 100%;
+          height: 180px;
+          margin-top: 44px;
+          overflow: hidden;
+          border-top: 3px solid rgba(245, 247, 255, 0.2);
+          border-bottom: 3px solid rgba(245, 247, 255, 0.2);
+          background: rgba(0, 57, 64, 0.34);
+        }
+
+        .command-pan {
+          height: 100%;
+          display: inline-flex;
+          align-items: center;
+          min-width: max-content;
+          padding: 0 24px;
+          white-space: nowrap;
+          will-change: transform;
+        }
+
+        .prompt,
+        .command-text {
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 24px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 1;
+        }
+
+        .prompt {
+          margin-right: 14px;
+          color: var(--success);
+        }
+
+        .command-cursor {
+          display: inline-block;
+          width: 18px;
+          height: 34px;
+          margin-left: 6px;
+          border: 3px solid var(--ink);
+          background: var(--cyan);
+          vertical-align: middle;
+          will-change: opacity;
+        }
+
+        .command-foot {
+          margin-top: 26px;
+          color: rgba(245, 247, 255, 0.58);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 18px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .terminal-side {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 0;
+          padding: 42px 28px 34px;
+          background: var(--cyan-dark);
+        }
+
+        .terminal-side-label {
+          align-self: flex-start;
+          background: var(--cyan);
+        }
+
+        .terminal-side-copy {
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 28px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 1.22;
+          text-transform: uppercase;
+        }
+
+        .terminal-side-copy strong {
+          display: block;
+          margin-top: 18px;
+          color: var(--cyan);
+          font-family: "Noto Sans CJK SC";
+          font-size: 62px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 0.92;
+        }
+
+        .hit-card {
+          position: absolute;
+          left: 60px;
+          top: 640px;
+          width: 960px;
+          height: 162px;
+          display: grid;
+          grid-template-columns: 260px 1fr;
+          border: var(--border) solid var(--ink);
+          background: var(--magenta-dark);
+          box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .hit-number-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border-right: 4px solid var(--ink);
+          background: var(--cyan);
+        }
+
+        .hit-number {
+          display: inline-block;
+          width: 210px;
+          color: var(--canvas);
+          font-family: "Noto Sans CJK SC";
+          font-size: 118px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: 0;
+          line-height: 1;
+          text-align: center;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        .hit-label-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+          padding: 0 40px;
+          overflow: hidden;
+        }
+
+        .hit-label {
+          display: inline-block;
+          color: var(--ink);
+          font-family: "Noto Sans CJK SC";
+          font-size: 78px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1;
+          text-transform: uppercase;
+          transform-origin: 0 50%;
+          will-change: transform, opacity;
+        }
+
+        .hit-fill {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 15px;
+          border-top: 3px solid var(--ink);
+          background: var(--success);
+          transform-origin: 0 50%;
+          will-change: transform;
+        }
+
+        .result-card {
+          position: absolute;
+          left: 60px;
+          width: 960px;
+          height: 178px;
+          display: grid;
+          grid-template-columns: 112px minmax(0, 1fr) 182px;
+          border: var(--border) solid var(--ink);
+          background: var(--surface);
+          box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .result-one {
+          top: 824px;
+        }
+
+        .result-two {
+          top: 1019px;
+        }
+
+        .result-three {
+          top: 1214px;
+        }
+
+        .result-rank {
+          display: grid;
+          place-items: center;
+          border-right: 4px solid var(--ink);
+          background: var(--cyan);
+          color: var(--canvas);
+          font-family: "Noto Sans CJK SC";
+          font-size: 66px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: -0.02em;
+          line-height: 1;
+        }
+
+        .result-two .result-rank {
+          background: var(--magenta);
+        }
+
+        .result-three .result-rank {
+          background: var(--success);
+        }
+
+        .result-body {
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 13px;
+          padding: 18px 24px;
+        }
+
+        .result-title {
+          max-width: 100%;
+          overflow: hidden;
+          color: var(--ink);
+          font-size: 25px;
+          font-weight: 700;
+          letter-spacing: 0;
+          line-height: 1.18;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .result-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 18px;
+          min-width: 0;
+          color: rgba(245, 247, 255, 0.72);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 18px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 1;
+        }
+
+        .result-author {
+          color: var(--cyan);
+          white-space: nowrap;
+        }
+
+        .result-url {
+          min-width: 0;
+          overflow: hidden;
+          text-align: right;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .result-likes {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          border-left: 4px solid var(--ink);
+          background: var(--cyan-dark);
+          color: var(--ink);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 20px;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        .result-likes strong {
+          color: var(--success);
+          font-family: "Noto Sans CJK SC";
+          font-size: 34px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: -0.01em;
+          line-height: 1;
+        }
+
+        .adapter-rail {
+          position: absolute;
+          left: 60px;
+          top: 1430px;
+          width: 960px;
+          height: 130px;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          gap: 22px;
+          padding: 20px 24px 20px 30px;
+          border: var(--border) solid var(--ink);
+          background: var(--cyan);
+          box-shadow:
+            var(--shadow) var(--shadow) 0 var(--ink),
+            16px 16px 0 var(--magenta-dark);
+          color: var(--canvas);
+          perspective: 1500px;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .adapter-line {
+          min-width: 0;
+          display: flex;
+          align-items: baseline;
+          gap: 18px;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 30px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .adapter-value {
+          position: relative;
+          display: inline-flex;
+          align-items: baseline;
+          min-width: 360px;
+          color: var(--canvas);
+          font-size: 40px;
+          transform-origin: 0 50%;
+          will-change: transform, text-shadow;
+        }
+
+        .adapter-ghost,
+        .adapter-live {
+          display: inline-flex;
+        }
+
+        .adapter-ghost {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .adapter-char {
+          display: inline-block;
+          min-width: 0.66em;
+          transform-origin: bottom;
+          transform-style: preserve-3d;
+          will-change: transform, opacity;
+        }
+
+        .verified-pill {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 50px;
+          padding: 10px 18px;
+          border: 3px solid var(--canvas);
+          border-radius: 9999px;
+          background: var(--success);
+          box-shadow: 4px 4px 0 var(--canvas);
+          color: var(--canvas);
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 19px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .cursor-trace {
+          position: absolute;
+          left: 966px;
+          top: 560px;
+          width: 4px;
+          height: 900px;
+          background: var(--cyan);
+          box-shadow: 6px 0 0 var(--magenta-dark);
+          transform-origin: 50% 0;
+          will-change: transform, opacity;
+        }
+
+        .cursor-actor {
+          position: absolute;
+          left: 956px;
+          top: 540px;
+          width: 24px;
+          height: 44px;
+          z-index: 30;
+          border: 3px solid var(--ink);
+          background: var(--cyan);
+          box-shadow: 5px 5px 0 var(--magenta-dark);
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+      <div
+        id="root"
+        data-composition-id="04-live-hitstorm"
+        data-duration="8.2"
+        data-width="1080"
+        data-height="1920"
+      >
+        <div
+          id="frame04-live-hitstorm-ground"
+          class="clip ground-layer"
+          data-start="0"
+          data-duration="8.2"
+          data-track-index="0"
+          aria-hidden="true"
+        >
+          <div class="ground-stripe" data-layout-allow-overflow></div>
+          <div class="caption-ground"></div>
+        </div>
+
+        <section
+          id="frame04-live-hitstorm-scene"
+          class="clip scene-layer"
+          data-start="0"
+          data-duration="8.2"
+          data-track-index="1"
+        >
+          <div id="frame04-live-hitstorm-world" class="camera-world">
+            <div id="frame04-live-hitstorm-terminal" class="terminal-shell">
+              <div class="terminal-bar">
+                <span>OMNIREACH / LIVE RUN</span>
+                <span class="terminal-lamps" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
+              <div class="terminal-grid">
+                <div class="command-pane">
+                  <div class="command-label">COMMAND</div>
+                  <div class="command-viewport">
+                    <div id="frame04-live-hitstorm-command-pan" class="command-pan">
+                      <span class="prompt">$</span>
+                      <span id="frame04-live-hitstorm-command-text" class="command-text"></span>
+                      <span id="frame04-live-hitstorm-command-cursor" class="command-cursor" aria-hidden="true"></span>
+                    </div>
+                  </div>
+                  <div class="command-foot">native transport / json response</div>
+                </div>
+                <div class="terminal-side">
+                  <div class="terminal-side-label">DOUYIN</div>
+                  <div class="terminal-side-copy">LIMIT<strong>03</strong></div>
+                  <div class="terminal-side-copy">QUERY<strong>GPT5.6</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="frame04-live-hitstorm-hit-card" class="hit-card">
+              <div class="hit-number-wrap">
+                <span id="frame04-live-hitstorm-hit-number" class="hit-number">0</span>
+              </div>
+              <div class="hit-label-wrap">
+                <span id="frame04-live-hitstorm-hit-label" class="hit-label">HITS</span>
+                <span id="frame04-live-hitstorm-hit-fill" class="hit-fill" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <article id="frame04-live-hitstorm-result-1" class="result-card result-one">
+              <div class="result-rank">1</div>
+              <div class="result-body">
+                <div class="result-title">GPT5.6 模型更新语音对话，真的笑麻了！！！</div>
+                <div class="result-meta">
+                  <span class="result-author">OdysseAI 奥德赛</span>
+                  <span class="result-url">douyin.com/video/7660840191250238747</span>
+                </div>
+              </div>
+              <div class="result-likes"><strong>46,000</strong><span>LIKES</span></div>
+            </article>
+
+            <article id="frame04-live-hitstorm-result-2" class="result-card result-two">
+              <div class="result-rank">2</div>
+              <div class="result-body">
+                <div class="result-title">GPT5.6实测30小时！这能力真的行爆了？</div>
+                <div class="result-meta">
+                  <span class="result-author">FredTalk</span>
+                  <span class="result-url">douyin.com/video/7661294188813700379</span>
+                </div>
+              </div>
+              <div class="result-likes"><strong>874</strong><span>LIKES</span></div>
+            </article>
+
+            <article id="frame04-live-hitstorm-result-3" class="result-card result-three">
+              <div class="result-rank">3</div>
+              <div class="result-body">
+                <div class="result-title">「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？</div>
+                <div class="result-meta">
+                  <span class="result-author">神烦老狗</span>
+                  <span class="result-url">douyin.com/video/7660852657644440895</span>
+                </div>
+              </div>
+              <div class="result-likes"><strong>768</strong><span>LIKES</span></div>
+            </article>
+
+            <div id="frame04-live-hitstorm-adapter" class="adapter-rail">
+              <div class="adapter-line">
+                <span>adapter:</span>
+                <span
+                  id="frame04-live-hitstorm-adapter-value"
+                  class="adapter-value"
+                  data-target="native-chrome"
+                  aria-label="native-chrome"
+                ></span>
+              </div>
+              <span class="verified-pill">VERIFIED</span>
+            </div>
+
+            <div id="frame04-live-hitstorm-cursor-trace" class="cursor-trace" aria-hidden="true"></div>
+            <div id="frame04-live-hitstorm-cursor-actor" class="cursor-actor" aria-hidden="true"></div>
+          </div>
+        </section>
+      </div>
+
+      <script>
+        (() => {
+          window.__timelines = window.__timelines || {};
+
+          const root = document.getElementById("root");
+          const world = document.getElementById("frame04-live-hitstorm-world");
+          const terminal = document.getElementById("frame04-live-hitstorm-terminal");
+          const commandText = document.getElementById("frame04-live-hitstorm-command-text");
+          const commandPan = document.getElementById("frame04-live-hitstorm-command-pan");
+          const commandCursor = document.getElementById("frame04-live-hitstorm-command-cursor");
+          const hitNumber = document.getElementById("frame04-live-hitstorm-hit-number");
+          const adapterValue = document.getElementById("frame04-live-hitstorm-adapter-value");
+
+          const camera = { x: 0, y: 55, scale: 1.06 };
+
+          function applyCamera() {
+            world.style.transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.scale})`;
+          }
+          applyCamera();
+
+          const fullCommand = 'omnireach search "gpt5.6" --on douyin --limit 3 --json';
+          const commandStates = [
+            { t: 0.0, text: "" },
+            { t: 0.08, text: "omni" },
+            { t: 0.14, text: "omnireach" },
+            { t: 0.22, text: "omnireach search" },
+            { t: 0.31, text: 'omnireach search "gpt' },
+            { t: 0.38, text: 'omnireach search "gpt5.6"' },
+            { t: 0.48, text: 'omnireach search "gpt5.6" --on' },
+            { t: 0.57, text: 'omnireach search "gpt5.6" --on douyin' },
+            { t: 0.69, text: 'omnireach search "gpt5.6" --on douyin --limit' },
+            { t: 0.76, text: 'omnireach search "gpt5.6" --on douyin --limit 3' },
+            { t: 0.88, text: fullCommand },
+          ];
+
+          function commandAt(time) {
+            for (let index = commandStates.length - 1; index >= 0; index -= 1) {
+              if (time >= commandStates[index].t) return commandStates[index].text;
+            }
+            return "";
+          }
+
+          const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*";
+
+          function pseudoGlyph(seed) {
+            const normalized = ((seed * 9301 + 49297) % 233280) / 233280;
+            return glyphs[Math.floor(normalized * glyphs.length)];
+          }
+
+          const adapterTarget = adapterValue.dataset.target;
+          const adapterGhost = document.createElement("span");
+          adapterGhost.className = "adapter-ghost";
+          adapterGhost.textContent = adapterTarget;
+          adapterValue.appendChild(adapterGhost);
+
+          const adapterLive = document.createElement("span");
+          adapterLive.className = "adapter-live";
+          const adapterChars = [];
+          Array.from(adapterTarget).forEach((character, index) => {
+            const element = document.createElement("span");
+            element.className = "adapter-char";
+            element.dataset.target = character;
+            element.textContent = pseudoGlyph(index * 1000);
+            element.style.transform = "rotateX(90deg)";
+            element.style.opacity = "0";
+            adapterLive.appendChild(element);
+            adapterChars.push(element);
+          });
+          adapterValue.appendChild(adapterLive);
+
+          const timeline = gsap.timeline({ paused: true });
+
+          timeline.fromTo(
+            terminal,
+            { y: -250, rotation: -7, scale: 0.9, opacity: 0 },
+            { y: 0, rotation: -2, scale: 1, opacity: 1, duration: 0.42, ease: "power4.out" },
+            0,
+          );
+
+          const typeDriver = { t: 0 };
+          let previousCommand = "";
+          timeline.fromTo(
+            typeDriver,
+            { t: 0 },
+            {
+              t: 1.02,
+              duration: 1.02,
+              ease: "none",
+              onUpdate: () => {
+                const visibleCommand = commandAt(typeDriver.t);
+                if (visibleCommand !== previousCommand) {
+                  commandText.textContent = visibleCommand;
+                  previousCommand = visibleCommand;
+                }
+                const cursorWorldX = 54 + visibleCommand.length * 14.6;
+                const trackingOffset = Math.min(0, 584 - cursorWorldX);
+                commandPan.style.transform = `translateX(${trackingOffset}px)`;
+              },
+            },
+            0,
+          );
+
+          const blinkDriver = { phase: 0 };
+          timeline.fromTo(
+            blinkDriver,
+            { phase: 0 },
+            {
+              phase: Math.PI * 18,
+              duration: 5.85,
+              ease: "none",
+              onUpdate: () => {
+                commandCursor.style.opacity = Math.sin(blinkDriver.phase) >= 0 ? "1" : "0";
+              },
+            },
+            0,
+          );
+
+          timeline.to(
+            camera,
+            {
+              x: 0,
+              y: -10,
+              scale: 0.96,
+              duration: 0.72,
+              ease: "power3.inOut",
+              onUpdate: applyCamera,
+            },
+            1.02,
+          );
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-hit-card",
+            { scale: 0.88, y: 34, opacity: 0 },
+            { scale: 1, y: 0, opacity: 1, duration: 0.58, ease: "power3.out" },
+            1.12,
+          );
+
+          const counterState = { value: 0, scale: 70 / 118 };
+          timeline.to(
+            counterState,
+            {
+              value: 3,
+              scale: 1,
+              duration: 0.78,
+              ease: "power3.out",
+              onUpdate: () => {
+                hitNumber.textContent = String(Math.round(counterState.value));
+                hitNumber.style.transform = `scale(${counterState.scale})`;
+              },
+            },
+            1.12,
+          );
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-hit-label",
+            { y: 22, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+            1.28,
+          );
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-hit-fill",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.78, ease: "power3.out" },
+            1.12,
+          );
+
+          const resultData = [
+            {
+              selector: "#frame04-live-hitstorm-result-1",
+              title: "GPT5.6 模型更新语音对话，真的笑麻了！！！",
+              x: 30,
+              rotation: -0.8,
+            },
+            {
+              selector: "#frame04-live-hitstorm-result-2",
+              title: "GPT5.6实测30小时！这能力真的行爆了？",
+              x: -38,
+              rotation: 0.9,
+            },
+            {
+              selector: "#frame04-live-hitstorm-result-3",
+              title: "「实测」OpenAI发布GPT5.6！ Sol、Terra、Luna？",
+              x: 42,
+              rotation: -0.7,
+            },
+          ];
+
+          const sequenceBase = 1.07;
+          const secondsPerCharacter = 0.007;
+          let sequenceCursor = 1.56;
+          const sequencedResults = resultData.map((item) => {
+            const start = sequenceCursor;
+            sequenceCursor += sequenceBase + item.title.length * secondsPerCharacter;
+            return { ...item, start };
+          });
+
+          sequencedResults.forEach((item) => {
+            timeline.fromTo(
+              item.selector,
+              { x: item.x, y: 28, scale: 0.88, rotation: item.rotation * -2.4, opacity: 0 },
+              {
+                x: 0,
+                y: 0,
+                scale: 1,
+                rotation: item.rotation,
+                opacity: 1,
+                duration: 0.58,
+                ease: "power3.out",
+              },
+              item.start,
+            );
+          });
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-cursor-trace",
+            { scaleY: 0, opacity: 0 },
+            { scaleY: 1, opacity: 0.72, duration: 0.48, ease: "power3.inOut" },
+            5.85,
+          );
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-cursor-actor",
+            { x: 0, y: 0, opacity: 0 },
+            { x: 0, y: 900, opacity: 1, duration: 0.52, ease: "power3.inOut" },
+            5.85,
+          );
+
+          timeline.to(
+            camera,
+            {
+              x: 0,
+              y: -88,
+              scale: 1.03,
+              duration: 0.52,
+              ease: "power3.inOut",
+              onUpdate: applyCamera,
+            },
+            5.85,
+          );
+
+          timeline.fromTo(
+            "#frame04-live-hitstorm-adapter",
+            { y: 34, scale: 0.92, opacity: 0 },
+            { y: 0, scale: 1, opacity: 1, duration: 0.46, ease: "power3.out" },
+            5.94,
+          );
+
+          adapterChars.forEach((element, index) => {
+            const state = { progress: 0 };
+            timeline.to(
+              state,
+              {
+                progress: 1,
+                duration: 0.48,
+                ease: "power3.out",
+                onUpdate: () => {
+                  const progress = state.progress;
+                  if (progress < 0.62) {
+                    element.textContent = pseudoGlyph(index * 1000 + Math.floor(progress * 100));
+                  } else {
+                    element.textContent = element.dataset.target;
+                  }
+                  element.style.transform = `rotateX(${90 - progress * 90}deg)`;
+                  element.style.opacity = String(Math.min(1, progress * 2));
+                },
+              },
+              6.02 + index * 0.032,
+            );
+          });
+
+          function glowEnvelope(time) {
+            const attack = 0.12;
+            const sustainEnd = 0.35;
+            const release = 0.34;
+            const rest = 0.2;
+            if (time < attack) return time / attack;
+            if (time < sustainEnd) return 1;
+            if (time < sustainEnd + release) {
+              const decay = (time - sustainEnd) / release;
+              return 1 - decay * (1 - rest);
+            }
+            return rest;
+          }
+
+          const glowDriver = { time: 0 };
+          timeline.fromTo(
+            glowDriver,
+            { time: 0 },
+            {
+              time: 0.72,
+              duration: 0.72,
+              ease: "none",
+              onUpdate: () => {
+                const envelope = glowEnvelope(glowDriver.time);
+                adapterValue.style.textShadow = `0 0 ${30 * envelope}px rgba(245, 247, 255, ${
+                  0.16 + envelope * 0.74
+                })`;
+                adapterValue.style.transform = `scale(${1 + envelope * 0.1})`;
+              },
+            },
+            6.56,
+          );
+
+          window.__timelines["04-live-hitstorm"] = timeline;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

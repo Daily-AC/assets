@@ -1,0 +1,673 @@
+<template>
+  <div id="root" data-composition-id="02-search" data-duration="8" data-width="1080" data-height="1920">
+    <div class="clip 02-search-ground" data-start="0" data-duration="8" data-track-index="0"></div>
+
+    <div class="clip 02-search-stage" data-start="0" data-duration="8" data-track-index="1">
+      <div class="02-search-window-stack" id="02-search-window-stack">
+        <div class="02-search-depth 02-search-depth-back" id="02-search-depth-back"></div>
+        <div class="02-search-depth 02-search-depth-mid" id="02-search-depth-mid"></div>
+
+        <section class="02-search-terminal" id="02-search-terminal" aria-label="OmniReach search terminal">
+          <header class="02-search-titlebar">
+            <div class="02-search-title-lockup">
+              <span class="02-search-app-mark">&gt;_</span>
+              <div>
+                <div class="02-search-app-name">OMNIREACH / SEARCH</div>
+                <div class="02-search-app-path">native adapter · douyin</div>
+              </div>
+            </div>
+
+            <div class="02-search-proof">
+              <div class="02-search-proof-copy">
+                <span>CAPTURED</span>
+                <span>UNIFORM JSON</span>
+              </div>
+              <img
+                class="02-search-proof-image"
+                src="capture/assets/demo-zero-config-wechat-search-uniform-j.gif"
+                alt="Captured OmniReach terminal demo"
+              />
+            </div>
+          </header>
+
+          <div class="02-search-terminal-body">
+            <div class="02-search-prompt" id="02-search-prompt">
+              <span class="02-search-shell">$</span>
+              <span class="02-search-command-wrap">
+                <span class="02-search-command-program" id="02-search-command-program"></span><span
+                  class="02-search-command-main"
+                  id="02-search-command-main"
+                ></span><span class="02-search-command-flag" id="02-search-command-flag"></span><span
+                  class="02-search-command-value"
+                  id="02-search-command-value"
+                ></span><span class="02-search-command-flag" id="02-search-command-json"></span><span
+                  class="02-search-command-string"
+                  id="02-search-command-string"
+                ></span><span class="02-search-cursor" id="02-search-cursor"></span>
+              </span>
+            </div>
+
+            <div class="02-search-submit" id="02-search-submit">ENTER</div>
+
+            <div class="02-search-status-line" id="02-search-status-line">
+              <span class="02-search-loader-wrap" id="02-search-loader-wrap" aria-hidden="true">
+                <svg class="02-search-loader" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="12" fill="none" stroke="rgba(246,248,250,.2)" stroke-width="3" />
+                  <path
+                    id="02-search-loader-hand"
+                    d="M16 4 A12 12 0 0 1 28 16"
+                    fill="none"
+                    stroke="#0969DA"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+              <span class="02-search-success" id="02-search-success">✓</span>
+              <span id="02-search-status-text">searching native source</span>
+              <span class="02-search-status-meta">adapter://douyin</span>
+            </div>
+
+            <div class="02-search-results-viewport">
+              <div class="02-search-results" id="02-search-results" data-layout-allow-overflow>
+                <article class="02-search-result" id="02-search-result-1">
+                  <div class="02-search-rank">01</div>
+                  <div class="02-search-source">DOUYIN</div>
+                  <div class="02-search-result-data">
+                    <div><span class="02-search-json-key">"title"</span>: <span class="02-search-json-string">"AI agent"</span></div>
+                    <div><span class="02-search-json-key">"url"</span>: <span class="02-search-url">"douyin.com/…"</span></div>
+                  </div>
+                </article>
+
+                <article class="02-search-result" id="02-search-result-2">
+                  <div class="02-search-rank">02</div>
+                  <div class="02-search-source">DOUYIN</div>
+                  <div class="02-search-result-data">
+                    <div><span class="02-search-json-key">"title"</span>: <span class="02-search-json-string">"AI agent workflow"</span></div>
+                    <div><span class="02-search-json-key">"url"</span>: <span class="02-search-url">"douyin.com/…"</span></div>
+                  </div>
+                </article>
+
+                <article class="02-search-result" id="02-search-result-3">
+                  <div class="02-search-rank">03</div>
+                  <div class="02-search-source">DOUYIN</div>
+                  <div class="02-search-result-data">
+                    <div><span class="02-search-json-key">"title"</span>: <span class="02-search-json-string">"AI agent tools"</span></div>
+                    <div><span class="02-search-json-key">"url"</span>: <span class="02-search-url">"douyin.com/…"</span></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <footer class="02-search-footer" id="02-search-footer">
+            <div class="02-search-footer-label">OUTPUT CONTRACT</div>
+            <div class="02-search-benefit">一个终端 · 真实来源 · 统一 JSON</div>
+          </footer>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      color: #1f2328;
+    }
+
+    [class~="02-search-ground"] {
+      position: absolute;
+      inset: 0;
+      background: #f6f8fa;
+    }
+
+    [class~="02-search-stage"] {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    [class~="02-search-window-stack"] {
+      position: absolute;
+      top: 4.6cqh;
+      left: 4.2cqw;
+      width: 91.6cqw;
+      height: 72cqh;
+    }
+
+    [class~="02-search-depth"] {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      border: 1px solid rgba(31, 35, 40, 0.12);
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-depth-back"] {
+      top: 28px;
+      left: 20px;
+      background: #d7f6e0;
+    }
+
+    [class~="02-search-depth-mid"] {
+      top: 14px;
+      left: 10px;
+      background: #1b1d1f;
+      border-color: rgba(246, 248, 250, 0.14);
+    }
+
+    [class~="02-search-terminal"] {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 106px 1fr 144px;
+      color: #f6f8fa;
+      background: #151618;
+      border: 1px solid rgba(246, 248, 250, 0.14);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(31, 35, 40, 0.08), 0 4px 16px rgba(31, 35, 40, 0.04);
+      box-sizing: border-box;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    [class~="02-search-titlebar"] {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 13px 18px 13px 30px;
+      background: #202225;
+      border-bottom: 1px solid rgba(246, 248, 250, 0.14);
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-title-lockup"] {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    [class~="02-search-app-mark"] {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      color: #f6f8fa;
+      border: 1px solid rgba(246, 248, 250, 0.22);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    [class~="02-search-app-name"],
+    [class~="02-search-app-path"],
+    [class~="02-search-proof-copy"] {
+      font-family: monospace;
+    }
+
+    [class~="02-search-app-name"] {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    [class~="02-search-app-path"] {
+      margin-top: 7px;
+      color: rgba(246, 248, 250, 0.56);
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    [class~="02-search-proof"] {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    [class~="02-search-proof-copy"] {
+      display: grid;
+      gap: 5px;
+      color: rgba(246, 248, 250, 0.55);
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-align: right;
+    }
+
+    [class~="02-search-proof-image"] {
+      display: block;
+      width: 176px;
+      height: 72px;
+      object-fit: cover;
+      object-position: left top;
+      border: 1px solid rgba(246, 248, 250, 0.2);
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-terminal-body"] {
+      position: relative;
+      min-height: 0;
+      padding: 42px 38px 26px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-prompt"] {
+      display: flex;
+      align-items: baseline;
+      width: 100%;
+      min-height: 66px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(246, 248, 250, 0.14);
+      font-family: monospace;
+      font-size: 25px;
+      line-height: 1.45;
+      letter-spacing: 0;
+      white-space: pre;
+      transform-origin: 0% 50%;
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-shell"] {
+      flex: 0 0 auto;
+      width: 30px;
+      color: rgba(246, 248, 250, 0.42);
+    }
+
+    [class~="02-search-command-wrap"] {
+      display: inline-flex;
+      align-items: baseline;
+      min-width: 780px;
+      white-space: pre;
+    }
+
+    [class~="02-search-command-program"],
+    [class~="02-search-command-flag"] {
+      color: #0969da;
+    }
+
+    [class~="02-search-command-main"],
+    [class~="02-search-command-value"] {
+      color: #f6f8fa;
+    }
+
+    [class~="02-search-command-string"] {
+      color: #5db8a6;
+    }
+
+    [class~="02-search-cursor"] {
+      display: inline-block;
+      flex: 0 0 auto;
+      width: 12px;
+      height: 28px;
+      margin-left: 4px;
+      background: #0969da;
+      vertical-align: -4px;
+    }
+
+    [class~="02-search-submit"] {
+      position: absolute;
+      top: 96px;
+      right: 38px;
+      padding: 8px 11px;
+      color: rgba(246, 248, 250, 0.56);
+      border: 1px solid rgba(246, 248, 250, 0.18);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      transform-origin: 50% 50%;
+    }
+
+    [class~="02-search-status-line"] {
+      display: grid;
+      grid-template-columns: 32px auto 1fr;
+      align-items: center;
+      gap: 14px;
+      min-height: 66px;
+      margin-top: 31px;
+      color: #f6f8fa;
+      border-bottom: 1px solid rgba(246, 248, 250, 0.14);
+      font-family: monospace;
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-loader-wrap"] {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    [class~="02-search-loader"] {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+
+    [class~="02-search-success"] {
+      display: none;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      color: #5db872;
+      font-family: monospace;
+      font-size: 24px;
+      line-height: 1;
+      transform-origin: 50% 50%;
+    }
+
+    [class~="02-search-status-meta"] {
+      justify-self: end;
+      color: rgba(246, 248, 250, 0.4);
+      font-size: 15px;
+    }
+
+    [class~="02-search-results-viewport"] {
+      position: relative;
+      height: 600px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+
+    [class~="02-search-results"] {
+      display: grid;
+      gap: 16px;
+      will-change: transform;
+    }
+
+    [class~="02-search-result"] {
+      display: grid;
+      grid-template-columns: 66px 122px minmax(0, 1fr);
+      align-items: center;
+      min-height: 202px;
+      padding: 24px 24px 24px 0;
+      overflow: hidden;
+      color: #f6f8fa;
+      background: #1b1d1f;
+      border: 1px solid rgba(246, 248, 250, 0.14);
+      border-radius: 8px;
+      font-family: monospace;
+      transform-origin: 50% 50%;
+      box-sizing: border-box;
+      will-change: transform;
+    }
+
+    [class~="02-search-rank"] {
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      color: #e8a55a;
+      border-right: 1px solid rgba(246, 248, 250, 0.14);
+      font-size: 18px;
+    }
+
+    [class~="02-search-source"] {
+      padding-left: 20px;
+      color: #0969da;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    [class~="02-search-result-data"] {
+      min-width: 0;
+      padding-left: 12px;
+      font-size: 20px;
+      line-height: 1.7;
+      white-space: nowrap;
+    }
+
+    [class~="02-search-json-key"] {
+      color: rgba(246, 248, 250, 0.58);
+    }
+
+    [class~="02-search-json-string"] {
+      color: #5db8a6;
+    }
+
+    [class~="02-search-url"] {
+      color: rgba(246, 248, 250, 0.78);
+    }
+
+    [class~="02-search-footer"] {
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      padding: 24px 38px 22px;
+      background: #202225;
+      border-top: 1px solid rgba(246, 248, 250, 0.14);
+      box-sizing: border-box;
+    }
+
+    [class~="02-search-footer-label"] {
+      color: rgba(246, 248, 250, 0.45);
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0.12em;
+    }
+
+    [class~="02-search-benefit"] {
+      color: #f6f8fa;
+      font-family: sans-serif;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-search"] = tl;
+
+      const stack = document.getElementById("02-search-window-stack");
+      const back = document.getElementById("02-search-depth-back");
+      const mid = document.getElementById("02-search-depth-mid");
+      const terminal = document.getElementById("02-search-terminal");
+      const prompt = document.getElementById("02-search-prompt");
+      const submit = document.getElementById("02-search-submit");
+      const cursor = document.getElementById("02-search-cursor");
+      const statusLine = document.getElementById("02-search-status-line");
+      const statusText = document.getElementById("02-search-status-text");
+      const loaderWrap = document.getElementById("02-search-loader-wrap");
+      const loaderHand = document.getElementById("02-search-loader-hand");
+      const success = document.getElementById("02-search-success");
+      const results = document.getElementById("02-search-results");
+      const footer = document.getElementById("02-search-footer");
+
+      tl.fromTo(
+        stack,
+        { y: 150, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+        0,
+      );
+      tl.fromTo(
+        back,
+        { y: 38, scale: 0.97, opacity: 0 },
+        { y: 0, scale: 1, opacity: 1, duration: 0.46, ease: "power3.out" },
+        0,
+      );
+      tl.fromTo(
+        mid,
+        { y: 28, scale: 0.98, opacity: 0 },
+        { y: 0, scale: 1, opacity: 1, duration: 0.44, ease: "power3.out" },
+        0.04,
+      );
+      tl.fromTo(
+        terminal,
+        { y: 18, scale: 0.985, opacity: 0 },
+        { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
+        0.08,
+      );
+
+      const commandParts = [
+        { id: "02-search-command-program", text: "omnireach", color: "#0969DA" },
+        { id: "02-search-command-main", text: " search ", color: "#F6F8FA" },
+        { id: "02-search-command-flag", text: "--on", color: "#0969DA" },
+        { id: "02-search-command-value", text: " douyin ", color: "#F6F8FA" },
+        { id: "02-search-command-json", text: "--json", color: "#0969DA" },
+        { id: "02-search-command-string", text: " \"AI agent\"", color: "#5DB8A6" },
+      ].map((part) => ({ ...part, el: document.getElementById(part.id) }));
+      const fullCommand = commandParts.map((part) => part.text).join("");
+
+      function renderCommand(count) {
+        let remaining = Math.max(0, Math.min(fullCommand.length, Math.floor(count)));
+        let cursorColor = commandParts[0].color;
+        commandParts.forEach((part) => {
+          const visible = Math.min(part.text.length, remaining);
+          part.el.textContent = part.text.slice(0, visible);
+          if (remaining > 0) cursorColor = part.color;
+          remaining -= visible;
+        });
+        cursor.style.background = cursorColor;
+      }
+
+      renderCommand(0);
+      const typeState = { count: 0 };
+      tl.to(
+        typeState,
+        {
+          count: fullCommand.length,
+          duration: 2.8,
+          ease: "none",
+          onUpdate: () => renderCommand(typeState.count),
+        },
+        1.2,
+      );
+
+      const blinkState = { p: 0 };
+      tl.to(
+        blinkState,
+        {
+          p: Math.PI * 2 * 4,
+          duration: 2.8,
+          ease: "none",
+          onUpdate: () => {
+            cursor.style.opacity = Math.sin(blinkState.p) > 0 ? "1" : "0";
+          },
+        },
+        1.2,
+      );
+
+      tl.set(cursor, { opacity: 0 }, 4.0);
+      tl.fromTo(
+        submit,
+        { scale: 1, color: "rgba(246,248,250,.56)", borderColor: "rgba(246,248,250,.18)" },
+        { scale: 0.9, color: "#0969DA", borderColor: "#0969DA", duration: 0.12, ease: "power2.in" },
+        4.0,
+      );
+      tl.to(
+        submit,
+        { scale: 1, color: "rgba(246,248,250,.72)", borderColor: "rgba(246,248,250,.24)", duration: 0.2, ease: "power3.out" },
+        4.12,
+      );
+      tl.to(prompt, { y: -10, scale: 0.96, duration: 0.28, ease: "power3.out" }, 4.02);
+      tl.fromTo(
+        statusLine,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.36, ease: "power3.out" },
+        4.08,
+      );
+
+      const statusSequence = [
+        { t: 4.0, text: "searching native source" },
+        { t: 7.1, text: "3 sources normalized" },
+      ];
+      function statusAt(time) {
+        for (let i = statusSequence.length - 1; i >= 0; i -= 1) {
+          if (time >= statusSequence[i].t) return statusSequence[i];
+        }
+        return statusSequence[0];
+      }
+      const statusDriver = { t: 4.0 };
+      let lastStatus = "";
+      tl.to(
+        statusDriver,
+        {
+          t: 8.0,
+          duration: 4.0,
+          ease: "none",
+          onUpdate: () => {
+            const entry = statusAt(statusDriver.t);
+            if (entry.text !== lastStatus) {
+              statusText.textContent = entry.text;
+              lastStatus = entry.text;
+            }
+          },
+        },
+        4.0,
+      );
+
+      const loaderState = { deg: 0 };
+      tl.to(
+        loaderState,
+        {
+          deg: 900,
+          duration: 3.1,
+          ease: "none",
+          onUpdate: () => loaderHand.setAttribute("transform", `rotate(${loaderState.deg} 16 16)`),
+        },
+        4.0,
+      );
+
+      const resultContent = [
+        { id: "02-search-result-1", title: "AI agent", body: "douyin.com/…" },
+        { id: "02-search-result-2", title: "AI agent workflow", body: "douyin.com/…" },
+        { id: "02-search-result-3", title: "AI agent tools", body: "douyin.com/…" },
+      ];
+      const weights = resultContent.map((item) => 0.42 + (item.title.length + item.body.length) * 0.008);
+      const weightTotal = weights.reduce((sum, value) => sum + value, 0);
+      let cumulative = 0;
+      const resultTimeline = resultContent.map((item, index) => {
+        const start = 5.3 + (cumulative / weightTotal) * 1.25;
+        cumulative += weights[index];
+        return { ...item, start };
+      });
+
+      resultTimeline.forEach((item) => {
+        const row = document.getElementById(item.id);
+        tl.fromTo(
+          row,
+          { scale: 0, opacity: 0, y: 18 },
+          { scale: 1, opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+          item.start,
+        );
+      });
+      tl.to(results, { y: -112, duration: 0.62, ease: "power3.out" }, 6.34);
+
+      tl.set(loaderWrap, { display: "none" }, 7.1);
+      tl.set(success, { display: "grid" }, 7.1);
+      tl.fromTo(
+        success,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
+        7.1,
+      );
+      tl.fromTo(
+        footer,
+        { y: 22, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+        7.1,
+      );
+    })();
+  </script>
+</template>

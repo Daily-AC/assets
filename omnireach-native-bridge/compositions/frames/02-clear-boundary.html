@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clear Boundary</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 700;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 500;
+          font-display: block;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          box-sizing: border-box;
+          container-type: size;
+          color: #f4f3ee;
+          font-family: "Noto Sans CJK SC";
+          font-synthesis: none;
+        }
+
+        * {
+          box-sizing: border-box;
+          letter-spacing: 0;
+        }
+
+        .frame-02-ground {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background: #111315;
+        }
+
+        .frame-02-header {
+          position: absolute;
+          top: 120px;
+          left: 72px;
+          z-index: 2;
+          width: 936px;
+          height: 210px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #f4f3ee;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 58px;
+          font-weight: 500;
+          line-height: 1.25;
+          text-align: center;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-header-accent {
+          color: #ffcc38;
+        }
+
+        .frame-02-comparison {
+          position: absolute;
+          top: 410px;
+          left: 72px;
+          z-index: 2;
+          width: 936px;
+          height: 1100px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+        }
+
+        .frame-02-comparison > .frame-02-panel {
+          position: relative;
+          inset: auto;
+          min-width: 0;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          overflow: hidden;
+          padding: 62px 68px 58px;
+          background: #181b1f;
+          border-right: 1px solid #353a40;
+          border-left: 1px solid #353a40;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-left-panel {
+          grid-row: 1;
+          border-top: 1px solid #353a40;
+        }
+
+        .frame-02-right-panel {
+          grid-row: 2;
+          border-top: 1px solid #353a40;
+          border-bottom: 1px solid #353a40;
+        }
+
+        .frame-02-panel-label {
+          display: block;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 28px;
+          font-weight: 500;
+          line-height: 1;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-left-label {
+          color: #58d4e5;
+        }
+
+        .frame-02-right-label {
+          color: #a8adb5;
+        }
+
+        .frame-02-left-copy {
+          display: block;
+          width: 100%;
+          margin-top: 64px;
+          color: #f4f3ee;
+          font-size: 132px;
+          font-weight: 700;
+          line-height: 1.02;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-interaction-copy {
+          width: 100%;
+          margin-top: 48px;
+          display: grid;
+          grid-template-columns: 0.82fr 1.42fr;
+          column-gap: 18px;
+          row-gap: 20px;
+          color: #f4f3ee;
+          font-size: 78px;
+          font-weight: 700;
+          line-height: 1.06;
+        }
+
+        .frame-02-interaction-unit {
+          display: flex;
+          align-items: baseline;
+          min-width: 0;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-interaction-separator {
+          display: inline-block;
+          margin-right: 14px;
+          color: #ffcc38;
+        }
+
+        .frame-02-route {
+          display: flex;
+          align-items: center;
+          margin-top: auto;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 30px;
+          font-weight: 500;
+          line-height: 1;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .frame-02-route::before {
+          width: 28px;
+          height: 2px;
+          margin-right: 14px;
+          flex: 0 0 auto;
+          background: currentColor;
+          content: "";
+        }
+
+        .frame-02-left-route {
+          color: #50e878;
+        }
+
+        .frame-02-right-route {
+          color: #ffcc38;
+        }
+
+        .frame-02-divider {
+          position: absolute;
+          top: 550px;
+          left: 0;
+          z-index: 4;
+          width: 936px;
+          height: 1px;
+          background: #ffcc38;
+          transform-origin: left center;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+      <div
+        id="root"
+        data-composition-id="02-clear-boundary"
+        data-width="1080"
+        data-height="1920"
+        data-duration="10.8"
+      >
+        <div
+          id="f02-ground"
+          class="clip frame-02-ground"
+          data-start="0"
+          data-duration="10.8"
+          data-track-index="0"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          id="f02-header"
+          class="clip frame-02-header"
+          data-start="0"
+          data-duration="10.8"
+          data-track-index="1"
+        >
+          <span>不是替代，</span><span class="frame-02-header-accent">是分工</span>
+        </div>
+
+        <div class="frame-02-comparison">
+          <section
+            id="f02-left-panel"
+            class="clip frame-02-panel frame-02-left-panel"
+            data-start="1.8"
+            data-duration="9"
+            data-track-index="2"
+          >
+            <div class="frame-02-panel-label frame-02-left-label">READ ONLY</div>
+            <div class="frame-02-left-copy">搜索 / 读取</div>
+            <div class="frame-02-route frame-02-left-route">OMNIREACH</div>
+          </section>
+
+          <section
+            id="f02-right-panel"
+            class="clip frame-02-panel frame-02-right-panel"
+            data-start="5"
+            data-duration="5.8"
+            data-track-index="3"
+          >
+            <div class="frame-02-panel-label frame-02-right-label">INTERACTION</div>
+            <div class="frame-02-interaction-copy">
+              <span class="frame-02-interaction-unit">点击</span>
+              <span class="frame-02-interaction-unit">
+                <span class="frame-02-interaction-separator">/</span>表单
+              </span>
+              <span class="frame-02-interaction-unit">上传</span>
+              <span class="frame-02-interaction-unit">
+                <span class="frame-02-interaction-separator">/</span>视觉检查
+              </span>
+            </div>
+            <div class="frame-02-route frame-02-right-route">PLAYWRIGHT</div>
+          </section>
+
+          <div
+            id="f02-divider"
+            class="clip frame-02-divider"
+            data-start="9.8"
+            data-duration="1"
+            data-track-index="4"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const compositionRoot = document.querySelector(
+          '[data-composition-id="02-clear-boundary"]',
+        );
+        const boundaryHeader = compositionRoot.querySelector(".frame-02-header");
+        const leftPanel = compositionRoot.querySelector(".frame-02-left-panel");
+        const leftLabel = compositionRoot.querySelector(".frame-02-left-label");
+        const leftCopy = compositionRoot.querySelector(".frame-02-left-copy");
+        const leftRoute = compositionRoot.querySelector(".frame-02-left-route");
+        const rightPanel = compositionRoot.querySelector(".frame-02-right-panel");
+        const rightLabel = compositionRoot.querySelector(".frame-02-right-label");
+        const interactionUnits = compositionRoot.querySelectorAll(
+          ".frame-02-interaction-unit",
+        );
+        const rightRoute = compositionRoot.querySelector(".frame-02-right-route");
+        const divider = compositionRoot.querySelector(".frame-02-divider");
+
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene 1: establish the distinction before either responsibility arrives.
+        tl.fromTo(
+          boundaryHeader,
+          { y: -72, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.46, ease: "power3.out" },
+          0.04,
+        );
+
+        // Scene 2: the read-only lane enters from its own wing, then explains itself.
+        tl.fromTo(
+          leftPanel,
+          { x: -1080, scale: 0.96, opacity: 0 },
+          { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+          1.8,
+        );
+        tl.fromTo(
+          leftLabel,
+          { y: 22, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
+          2.38,
+        );
+        tl.fromTo(
+          leftCopy,
+          { y: 38, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.58, ease: "power3.out" },
+          2.86,
+        );
+        tl.fromTo(
+          leftRoute,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
+          4.12,
+        );
+
+        // Scene 3: the interaction lane mirrors the entry and follows the spoken list.
+        tl.fromTo(
+          rightPanel,
+          { x: 1080, scale: 0.96, opacity: 0 },
+          { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+          5,
+        );
+        tl.fromTo(
+          rightLabel,
+          { y: 22, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
+          5.62,
+        );
+        tl.fromTo(
+          interactionUnits,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            stagger: 0.54,
+            ease: "power3.out",
+          },
+          6.15,
+        );
+        tl.fromTo(
+          rightRoute,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
+          9.08,
+        );
+
+        // Scene 4: lock the final responsibility boundary and hold.
+        tl.fromTo(
+          divider,
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
+          9.8,
+        );
+
+        window.__timelines["02-clear-boundary"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

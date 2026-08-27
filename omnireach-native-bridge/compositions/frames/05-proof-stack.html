@@ -1,0 +1,477 @@
+<template
+  id="f05-template"
+  data-composition-id="05-proof-stack"
+  data-width="1080"
+  data-height="1920"
+>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: "Noto Sans CJK SC";
+      src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+    }
+
+    @font-face {
+      font-family: "Noto Sans CJK SC";
+      src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+    }
+
+    @font-face {
+      font-family: "Noto Sans Mono CJK SC";
+      src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 500;
+      font-display: block;
+    }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      color: #f4f3ee;
+      font-family: "Noto Sans CJK SC";
+      font-synthesis: none;
+      letter-spacing: 0;
+    }
+
+    #root * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    .ground {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: #111315;
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .content-field {
+      position: absolute;
+      top: 120px;
+      left: 72px;
+      width: 936px;
+      height: 1430px;
+      overflow: hidden;
+    }
+
+    .headline-zone {
+      position: absolute;
+      top: 66px;
+      left: 0;
+      width: 936px;
+      height: 290px;
+    }
+
+    .headline {
+      display: block;
+      width: 100%;
+      margin: 0;
+      color: #f4f3ee;
+      font-size: 100px;
+      font-weight: 700;
+      line-height: 1.04;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .run-stamp {
+      display: block;
+      width: 100%;
+      margin-top: 34px;
+      color: #a8adb5;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 1.4;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .evidence-stack {
+      position: absolute;
+      top: 420px;
+      left: 0;
+      width: 936px;
+      height: 805px;
+    }
+
+    .evidence-row {
+      position: absolute;
+      left: 0;
+      display: grid;
+      grid-template-columns: 82px 314px minmax(0, 1fr);
+      width: 936px;
+      border-top: 1px solid #353a40;
+      align-items: center;
+      overflow: hidden;
+      will-change: transform, opacity;
+    }
+
+    .row-01 {
+      top: 0;
+      height: 205px;
+    }
+
+    .row-02 {
+      top: 205px;
+      height: 170px;
+    }
+
+    .row-03 {
+      top: 375px;
+      height: 170px;
+    }
+
+    .row-04 {
+      top: 545px;
+      height: 260px;
+      align-items: start;
+      padding-top: 36px;
+    }
+
+    .row-number {
+      align-self: start;
+      padding-top: 36px;
+      color: #7e8389;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .row-04 .row-number {
+      padding-top: 3px;
+    }
+
+    .row-key {
+      color: #58d4e5;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 27px;
+      font-weight: 500;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .row-04 .row-key {
+      padding-top: 1px;
+    }
+
+    .row-value {
+      justify-self: end;
+      display: block;
+      max-width: 540px;
+      color: #50e878;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 68px;
+      font-weight: 500;
+      line-height: 1;
+      text-align: right;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .row-value.adapter {
+      font-size: 52px;
+    }
+
+    .path-note {
+      position: absolute;
+      right: 0;
+      bottom: 34px;
+      display: block;
+      width: 540px;
+      color: #a8adb5;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.3;
+      text-align: right;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .chrome-values {
+      justify-self: end;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 540px;
+      gap: 24px;
+      color: #50e878;
+      font-family: "Noto Sans Mono CJK SC";
+      font-size: 51px;
+      font-weight: 500;
+      line-height: 1;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .chrome-state {
+      display: block;
+      width: 100%;
+      will-change: transform, opacity;
+    }
+
+    .verification-zone {
+      position: absolute;
+      top: 1355px;
+      left: 0;
+      width: 936px;
+      height: 20px;
+    }
+
+    .verification-rule {
+      display: block;
+      width: 936px;
+      height: 8px;
+      overflow: visible;
+    }
+
+    .verification-rule path {
+      fill: none;
+      stroke: #50e878;
+      stroke-width: 2;
+      stroke-linecap: square;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="05-proof-stack"
+    data-duration="13.4"
+    data-width="1080"
+    data-height="1920"
+  >
+    <div
+      id="f05-ground"
+      class="clip ground"
+      data-start="0"
+      data-duration="13.4"
+      data-track-index="0"
+      aria-hidden="true"
+    ></div>
+
+    <div
+      id="f05-stage"
+      class="clip stage"
+      data-start="0"
+      data-duration="13.4"
+      data-track-index="1"
+    >
+      <div class="content-field">
+        <div class="headline-zone">
+          <h1 id="f05-headline" class="headline">同一次真实运行</h1>
+          <div id="f05-run-stamp" class="run-stamp">
+            omnireach 0.14.0-alpha · bridge 0.1.1
+          </div>
+        </div>
+
+        <div class="evidence-stack" aria-label="同一次真实运行的四条证据">
+          <div id="f05-row-01" class="evidence-row row-01">
+            <div class="row-number">01</div>
+            <div class="row-key">OPENCLI / PATH</div>
+            <div id="f05-value-01" class="row-value">ABSENT</div>
+            <div id="f05-path-note" class="path-note">
+              PATH=/usr/bin:/bin:/usr/sbin:/sbin
+            </div>
+          </div>
+
+          <div id="f05-row-02" class="evidence-row row-02">
+            <div class="row-number">02</div>
+            <div class="row-key">ADAPTER</div>
+            <div id="f05-value-02" class="row-value adapter">
+              native-chrome
+            </div>
+          </div>
+
+          <div id="f05-row-03" class="evidence-row row-03">
+            <div class="row-number">03</div>
+            <div class="row-key">ERRORS</div>
+            <div id="f05-value-03" class="row-value">[]</div>
+          </div>
+
+          <div id="f05-row-04" class="evidence-row row-04">
+            <div class="row-number">04</div>
+            <div class="row-key">VISIBLE CHROME</div>
+            <div class="chrome-values">
+              <span id="f05-windows" class="chrome-state">WINDOWS 0→0</span>
+              <span id="f05-tabs" class="chrome-state">TABS 0→0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="verification-zone" aria-hidden="true">
+          <svg
+            class="verification-rule"
+            viewBox="0 0 936 8"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path id="f05-verification-path" d="M 0 4 H 936"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      window.__timelines = window.__timelines || {};
+
+      const headline = document.getElementById("f05-headline");
+      const runStamp = document.getElementById("f05-run-stamp");
+      const row01 = document.getElementById("f05-row-01");
+      const row02 = document.getElementById("f05-row-02");
+      const row03 = document.getElementById("f05-row-03");
+      const row04 = document.getElementById("f05-row-04");
+      const value01 = document.getElementById("f05-value-01");
+      const pathNote = document.getElementById("f05-path-note");
+      const value02 = document.getElementById("f05-value-02");
+      const value03 = document.getElementById("f05-value-03");
+      const windowsState = document.getElementById("f05-windows");
+      const tabsState = document.getElementById("f05-tabs");
+      const verificationPath = document.getElementById(
+        "f05-verification-path",
+      );
+
+      const verificationLength = verificationPath.getTotalLength();
+      verificationPath.style.strokeDasharray = `${verificationLength}`;
+      verificationPath.style.strokeDashoffset = `${verificationLength}`;
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.set([row01, row02, row03, row04], { opacity: 0, x: -54, scale: 0.985 }, 0);
+      tl.set(
+        [value01, pathNote, value02, value03, windowsState, tabsState],
+        { opacity: 0, x: -18 },
+        0,
+      );
+
+      tl.fromTo(
+        headline,
+        { opacity: 0, y: 38 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          ease: "power3.out",
+          immediateRender: false,
+        },
+        0.08,
+      );
+      tl.fromTo(
+        runStamp,
+        { opacity: 0, y: 18 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.52,
+          ease: "power2.out",
+          immediateRender: false,
+        },
+        0.64,
+      );
+
+      tl.fromTo(
+        row01,
+        { opacity: 0, x: -54, scale: 0.985 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.82,
+          ease: "power3.out",
+          immediateRender: false,
+        },
+        1.55,
+      );
+      tl.to(value01, { opacity: 1, x: 0, duration: 0.46, ease: "power2.out" }, 2.36);
+      tl.to(pathNote, { opacity: 1, x: 0, duration: 0.42, ease: "power2.out" }, 2.92);
+
+      tl.fromTo(
+        row02,
+        { opacity: 0, x: -54, scale: 0.985 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.82,
+          ease: "power3.out",
+          immediateRender: false,
+        },
+        3.72,
+      );
+      tl.to(value02, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 4.62);
+
+      tl.fromTo(
+        row03,
+        { opacity: 0, x: -54, scale: 0.985 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.82,
+          ease: "power3.out",
+          immediateRender: false,
+        },
+        6.12,
+      );
+      tl.to(value03, { opacity: 1, x: 0, duration: 0.48, ease: "power2.out" }, 7.02);
+
+      tl.fromTo(
+        row04,
+        { opacity: 0, x: -54, scale: 0.985 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.86,
+          ease: "power3.out",
+          immediateRender: false,
+        },
+        8.42,
+      );
+      tl.to(
+        windowsState,
+        { opacity: 1, x: 0, duration: 0.52, ease: "power2.out" },
+        9.4,
+      );
+      tl.to(
+        tabsState,
+        { opacity: 1, x: 0, duration: 0.52, ease: "power2.out" },
+        10.22,
+      );
+
+      tl.to(
+        verificationPath,
+        {
+          strokeDashoffset: 0,
+          duration: 0.86,
+          ease: "power2.out",
+        },
+        11.78,
+      );
+
+      window.__timelines["05-proof-stack"] = tl;
+    })();
+  </script>
+</template>

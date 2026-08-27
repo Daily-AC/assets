@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Ghost Window</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          container-type: size;
+          color: #f5f7ff;
+          font-family: "Noto Sans CJK SC";
+        }
+
+        .scene {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background-color: #050505;
+          background-image:
+            linear-gradient(rgba(49, 232, 255, 0.075) 2px, transparent 2px),
+            linear-gradient(90deg, rgba(255, 47, 179, 0.06) 2px, transparent 2px);
+          background-size: 54px 54px;
+          isolation: isolate;
+        }
+
+        .scene::before {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          content: "";
+          pointer-events: none;
+          background-image: repeating-linear-gradient(
+            to bottom,
+            rgba(245, 247, 255, 0.026) 0,
+            rgba(245, 247, 255, 0.026) 2px,
+            transparent 2px,
+            transparent 7px
+          );
+        }
+
+        .scene::after {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 0;
+          width: 100%;
+          height: 1594px;
+          content: "";
+          pointer-events: none;
+          background-image: radial-gradient(rgba(245, 247, 255, 0.26) 1.5px, transparent 1.5px);
+          background-position: 21px 21px;
+          background-size: 42px 42px;
+          opacity: 0.2;
+        }
+
+        .victim-group {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          will-change: transform, opacity;
+        }
+
+        .context-pill {
+          position: absolute;
+          top: 156px;
+          left: 72px;
+          display: flex;
+          width: 936px;
+          min-height: 154px;
+          align-items: center;
+          padding: 24px 34px 28px;
+          overflow: hidden;
+          border: 4px solid #f5f7ff;
+          border-radius: 9999px;
+          background: #07090d;
+          box-shadow: 8px 8px 0 #f5f7ff;
+        }
+
+        .typed-line {
+          display: inline-block;
+          min-width: 790px;
+          color: #f5f7ff;
+          font-size: 67px;
+          font-weight: 700;
+          line-height: 1.05;
+          letter-spacing: 0;
+          white-space: nowrap;
+        }
+
+        .cursor {
+          display: inline-block;
+          width: 22px;
+          height: 72px;
+          margin-left: 14px;
+          background: #31e8ff;
+          vertical-align: -10px;
+        }
+
+        .token-slot {
+          position: absolute;
+          top: 356px;
+          left: 258px;
+          display: flex;
+          width: 564px;
+          height: 118px;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border: 4px solid #f5f7ff;
+          background: #ff2fb3;
+          box-shadow: 8px 8px 0 #f5f7ff;
+          will-change: transform, opacity;
+        }
+
+        .token-slot::before,
+        .token-slot::after {
+          position: absolute;
+          top: 0;
+          width: 22px;
+          height: 100%;
+          content: "";
+          background: repeating-linear-gradient(
+            135deg,
+            #050505 0,
+            #050505 8px,
+            #31e8ff 8px,
+            #31e8ff 16px
+          );
+        }
+
+        .token-slot::before {
+          left: 0;
+        }
+
+        .token-slot::after {
+          right: 0;
+        }
+
+        .slot-word {
+          display: inline-block;
+          min-width: 430px;
+          color: #050505;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 70px;
+          font-weight: 500;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-align: center;
+          white-space: nowrap;
+        }
+
+        .window-swarm {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+        }
+
+        .window-wrap {
+          position: absolute;
+          will-change: transform, opacity;
+        }
+
+        .window-wrap--01 {
+          top: 564px;
+          left: 178px;
+          z-index: 5;
+          width: 700px;
+          height: 444px;
+        }
+
+        .window-wrap--02 {
+          top: 702px;
+          left: 84px;
+          z-index: 4;
+          width: 650px;
+          height: 420px;
+        }
+
+        .window-wrap--03 {
+          top: 804px;
+          left: 300px;
+          z-index: 3;
+          width: 650px;
+          height: 420px;
+        }
+
+        .window-wrap--04 {
+          top: 930px;
+          left: 132px;
+          z-index: 2;
+          width: 700px;
+          height: 430px;
+        }
+
+        .window-wrap--05 {
+          top: 1038px;
+          left: 260px;
+          z-index: 1;
+          width: 660px;
+          height: 408px;
+        }
+
+        .browser-window {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          border: 4px solid #f5f7ff;
+          background: rgba(7, 9, 13, 0.92);
+          box-shadow: 8px 8px 0 #f5f7ff;
+        }
+
+        .window-wrap--01 .browser-window {
+          box-shadow:
+            inset 0 0 0 7px #31e8ff,
+            8px 8px 0 #f5f7ff;
+        }
+
+        .window-wrap--02 .browser-window,
+        .window-wrap--04 .browser-window {
+          box-shadow:
+            inset 0 0 0 5px #ff2fb3,
+            8px 8px 0 #f5f7ff;
+        }
+
+        .window-wrap--03 .browser-window,
+        .window-wrap--05 .browser-window {
+          box-shadow:
+            inset 0 0 0 5px #008191,
+            8px 8px 0 #f5f7ff;
+        }
+
+        .browser-bar {
+          position: relative;
+          display: flex;
+          height: 70px;
+          align-items: center;
+          gap: 14px;
+          padding: 0 24px;
+          border-bottom: 4px solid #f5f7ff;
+          background: #003940;
+        }
+
+        .browser-control {
+          width: 18px;
+          height: 18px;
+          border: 3px solid #f5f7ff;
+          background: #050505;
+        }
+
+        .browser-address {
+          height: 24px;
+          flex: 1;
+          margin-left: 8px;
+          border: 3px solid #f5f7ff;
+          background: #07090d;
+        }
+
+        .window-index {
+          position: absolute;
+          top: 16px;
+          right: 22px;
+          color: #f5f7ff;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 22px;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+        }
+
+        .window-body {
+          position: absolute;
+          inset: 70px 0 0;
+          background-image:
+            linear-gradient(90deg, transparent 49.5%, rgba(245, 247, 255, 0.28) 49.5%, rgba(245, 247, 255, 0.28) 50.5%, transparent 50.5%),
+            linear-gradient(transparent 49.5%, rgba(245, 247, 255, 0.22) 49.5%, rgba(245, 247, 255, 0.22) 50.5%, transparent 50.5%);
+          background-size: 128px 104px;
+        }
+
+        .window-body::before,
+        .window-body::after {
+          position: absolute;
+          content: "";
+          border: 4px solid #f5f7ff;
+          background: #050505;
+        }
+
+        .window-body::before {
+          top: 48px;
+          left: 46px;
+          width: 38%;
+          height: 52%;
+        }
+
+        .window-body::after {
+          right: 46px;
+          bottom: 42px;
+          width: 34%;
+          height: 34%;
+          background: repeating-linear-gradient(
+            135deg,
+            #050505 0,
+            #050505 12px,
+            #700047 12px,
+            #700047 24px
+          );
+        }
+
+        .impact-grid {
+          position: absolute;
+          top: 540px;
+          left: 70px;
+          z-index: 1;
+          width: 940px;
+          height: 760px;
+          overflow: hidden;
+          border: 4px solid rgba(245, 247, 255, 0.62);
+          background-color: rgba(0, 57, 64, 0.74);
+          background-image:
+            linear-gradient(rgba(49, 232, 255, 0.24) 3px, transparent 3px),
+            linear-gradient(90deg, rgba(255, 47, 179, 0.18) 3px, transparent 3px);
+          background-size: 94px 76px;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+
+        .crack {
+          position: absolute;
+          top: 344px;
+          left: 466px;
+          width: 420px;
+          height: 5px;
+          background: #f5f7ff;
+          transform-origin: left center;
+        }
+
+        .crack--a {
+          transform: rotate(-27deg);
+        }
+
+        .crack--b {
+          transform: rotate(19deg);
+        }
+
+        .crack--c {
+          width: 310px;
+          transform: rotate(63deg);
+        }
+
+        .crack--d {
+          width: 360px;
+          transform: rotate(142deg);
+        }
+
+        .crack--e {
+          width: 270px;
+          transform: rotate(207deg);
+        }
+
+        .shard-field {
+          position: absolute;
+          inset: 0;
+          z-index: 4;
+          pointer-events: none;
+        }
+
+        .shard {
+          position: absolute;
+          top: 868px;
+          left: 596px;
+          height: 32px;
+          border: 4px solid #f5f7ff;
+          background: #31e8ff;
+          box-shadow: 4px 4px 0 #f5f7ff;
+          will-change: transform, opacity;
+        }
+
+        .shard:nth-child(2n) {
+          background: #ff2fb3;
+        }
+
+        .shard:nth-child(3n) {
+          background: #008191;
+        }
+
+        .shard--01 {
+          width: 150px;
+        }
+
+        .shard--02 {
+          width: 106px;
+        }
+
+        .shard--03 {
+          width: 188px;
+        }
+
+        .shard--04 {
+          width: 90px;
+        }
+
+        .shard--05 {
+          width: 126px;
+        }
+
+        .shard--06 {
+          width: 174px;
+        }
+
+        .shard--07 {
+          width: 112px;
+        }
+
+        .shard--08 {
+          width: 142px;
+        }
+
+        .hero-motion {
+          position: absolute;
+          top: 724px;
+          left: 90px;
+          z-index: 6;
+          width: 900px;
+          height: 282px;
+          filter: url(#frame01-streak-filter);
+          will-change: transform, opacity, filter;
+        }
+
+        .hero-jitter {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          will-change: transform;
+        }
+
+        .hero-echo,
+        .hero-word {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          width: 900px;
+          height: 250px;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border: 5px solid #f5f7ff;
+          font-size: 176px;
+          font-weight: 700;
+          line-height: 0.9;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .hero-echo--cyan {
+          top: 18px;
+          left: 18px;
+          z-index: 1;
+          border-color: #31e8ff;
+          background: #31e8ff;
+          color: #050505;
+        }
+
+        .hero-echo--pink {
+          top: -14px;
+          left: -14px;
+          z-index: 2;
+          border-color: #ff2fb3;
+          background: #ff2fb3;
+          color: #050505;
+        }
+
+        .hero-word {
+          z-index: 3;
+          background: #050505;
+          color: #f5f7ff;
+          box-shadow: 12px 12px 0 #31e8ff;
+        }
+
+        .impact-mark {
+          position: absolute;
+          top: 635px;
+          right: -66px;
+          z-index: 2;
+          width: 220px;
+          height: 220px;
+          border: 4px solid #f5f7ff;
+          background: #700047;
+          clip-path: polygon(
+            50% 0%,
+            61% 29%,
+            85% 15%,
+            71% 39%,
+            100% 50%,
+            71% 61%,
+            85% 85%,
+            61% 71%,
+            50% 100%,
+            39% 71%,
+            15% 85%,
+            29% 61%,
+            0% 50%,
+            29% 39%,
+            15% 15%,
+            39% 29%
+          );
+          opacity: 0.65;
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+      <div
+        id="root"
+        data-composition-id="01-ghost-window"
+        data-start="0"
+        data-duration="3.9"
+        data-width="1080"
+        data-height="1920"
+      >
+        <section
+          id="frame01-scene"
+          class="clip scene"
+          data-start="0"
+          data-duration="3.9"
+          data-track-index="0"
+        >
+          <div id="frame01-impact-grid" class="impact-grid" aria-hidden="true">
+            <span class="crack crack--a"></span>
+            <span class="crack crack--b"></span>
+            <span class="crack crack--c"></span>
+            <span class="crack crack--d"></span>
+            <span class="crack crack--e"></span>
+          </div>
+
+          <div id="frame01-victim-group" class="victim-group">
+            <div class="context-pill">
+              <span id="frame01-typed-line" class="typed-line"></span>
+              <span id="frame01-cursor" class="cursor" aria-hidden="true"></span>
+            </div>
+
+            <div id="frame01-token-slot" class="token-slot">
+              <span id="frame01-slot-word" class="slot-word">SEARCH</span>
+            </div>
+
+            <div id="frame01-window-swarm" class="window-swarm" aria-label="Stacked browser windows">
+              <div id="frame01-window-01" class="window-wrap window-wrap--01">
+                <div class="browser-window">
+                  <div class="browser-bar">
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-address"></span>
+                    <span class="window-index">01</span>
+                  </div>
+                  <div class="window-body"></div>
+                </div>
+              </div>
+
+              <div id="frame01-window-02" class="window-wrap window-wrap--02">
+                <div class="browser-window">
+                  <div class="browser-bar">
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-address"></span>
+                    <span class="window-index">02</span>
+                  </div>
+                  <div class="window-body"></div>
+                </div>
+              </div>
+
+              <div id="frame01-window-03" class="window-wrap window-wrap--03">
+                <div class="browser-window">
+                  <div class="browser-bar">
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-address"></span>
+                    <span class="window-index">03</span>
+                  </div>
+                  <div class="window-body"></div>
+                </div>
+              </div>
+
+              <div id="frame01-window-04" class="window-wrap window-wrap--04">
+                <div class="browser-window">
+                  <div class="browser-bar">
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-address"></span>
+                    <span class="window-index">04</span>
+                  </div>
+                  <div class="window-body"></div>
+                </div>
+              </div>
+
+              <div id="frame01-window-05" class="window-wrap window-wrap--05">
+                <div class="browser-window">
+                  <div class="browser-bar">
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-control"></span>
+                    <span class="browser-address"></span>
+                    <span class="window-index">05</span>
+                  </div>
+                  <div class="window-body"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="frame01-shard-field" class="shard-field" aria-hidden="true">
+            <span class="shard shard--01" data-index="0"></span>
+            <span class="shard shard--02" data-index="1"></span>
+            <span class="shard shard--03" data-index="2"></span>
+            <span class="shard shard--04" data-index="3"></span>
+            <span class="shard shard--05" data-index="4"></span>
+            <span class="shard shard--06" data-index="5"></span>
+            <span class="shard shard--07" data-index="6"></span>
+            <span class="shard shard--08" data-index="7"></span>
+          </div>
+
+          <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+            <defs>
+              <filter id="frame01-streak-filter" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur id="frame01-streak-blur" in="SourceGraphic" stdDeviation="18 0" />
+              </filter>
+            </defs>
+          </svg>
+
+          <div id="frame01-hero-motion" class="hero-motion" aria-label="Chrome interruption">
+            <div id="frame01-hero-jitter" class="hero-jitter">
+              <div class="hero-echo hero-echo--cyan" aria-hidden="true">CHROME?</div>
+              <div class="hero-echo hero-echo--pink" aria-hidden="true">CHROME?</div>
+              <div class="hero-word">CHROME?</div>
+            </div>
+          </div>
+
+          <div class="impact-mark" aria-hidden="true"></div>
+        </section>
+      </div>
+
+      <script>
+        (() => {
+          window.__timelines = window.__timelines || {};
+
+          const tl = gsap.timeline({ paused: true });
+          const typedLine = document.getElementById("frame01-typed-line");
+          const cursor = document.getElementById("frame01-cursor");
+          const slotWord = document.getElementById("frame01-slot-word");
+          const tokenSlot = document.getElementById("frame01-token-slot");
+          const victimGroup = document.getElementById("frame01-victim-group");
+          const heroMotion = document.getElementById("frame01-hero-motion");
+          const heroJitter = document.getElementById("frame01-hero-jitter");
+          const impactGrid = document.getElementById("frame01-impact-grid");
+          const blurNode = document.getElementById("frame01-streak-blur");
+
+          const phrase = "AGENT 搜个抖音";
+          const typeDriver = { value: 0 };
+          tl.fromTo(
+            typeDriver,
+            { value: 0 },
+            {
+              value: phrase.length,
+              duration: 0.72,
+              ease: "power1.inOut",
+              onUpdate: () => {
+                typedLine.textContent = phrase.substring(0, Math.floor(typeDriver.value));
+              },
+            },
+            0.04,
+          );
+
+          const blinkDriver = { phase: 0 };
+          tl.fromTo(
+            blinkDriver,
+            { phase: 0 },
+            {
+              phase: Math.PI * 10,
+              duration: 2.18,
+              ease: "none",
+              onUpdate: () => {
+                cursor.style.opacity = Math.sin(blinkDriver.phase) >= 0 ? "1" : "0";
+              },
+            },
+            0,
+          );
+
+          const windowEntries = [
+            { selector: "#frame01-window-01", at: 0.12, x: -980, y: 40, rotation: -7, settle: -2 },
+            { selector: "#frame01-window-02", at: 0.88, x: 1040, y: -20, rotation: 10, settle: 3 },
+            { selector: "#frame01-window-03", at: 1.08, x: -1080, y: 24, rotation: -11, settle: -3 },
+            { selector: "#frame01-window-04", at: 1.31, x: 1100, y: 16, rotation: 9, settle: 2 },
+            { selector: "#frame01-window-05", at: 1.55, x: -1100, y: -28, rotation: -8, settle: -2 },
+          ];
+
+          windowEntries.forEach((entry, index) => {
+            tl.fromTo(
+              entry.selector,
+              {
+                x: entry.x,
+                y: entry.y,
+                rotation: entry.rotation,
+                scale: 0.92 - index * 0.018,
+                opacity: 0,
+              },
+              {
+                x: 0,
+                y: 0,
+                rotation: entry.settle,
+                scale: 1,
+                opacity: 1,
+                duration: index === 0 ? 0.48 : 0.43,
+                ease: "power4.out",
+              },
+              entry.at,
+            );
+          });
+
+          tl.fromTo(
+            tokenSlot,
+            { y: -28, scale: 0.94, opacity: 0 },
+            { y: 0, scale: 1, opacity: 1, duration: 0.34, ease: "power4.out" },
+            0.84,
+          );
+
+          const tokenSequence = [
+            { t: 0, text: "SEARCH" },
+            { t: 0.43, text: "FETCH" },
+            { t: 0.86, text: "READ" },
+          ];
+          const tokenDriver = { t: 0 };
+          let lastToken = "";
+
+          tl.fromTo(
+            tokenDriver,
+            { t: 0 },
+            {
+              t: 1.12,
+              duration: 1.12,
+              ease: "none",
+              onUpdate: () => {
+                let nextToken = tokenSequence[0].text;
+                for (let i = tokenSequence.length - 1; i >= 0; i -= 1) {
+                  if (tokenDriver.t >= tokenSequence[i].t) {
+                    nextToken = tokenSequence[i].text;
+                    break;
+                  }
+                }
+                if (nextToken !== lastToken) {
+                  slotWord.textContent = nextToken;
+                  lastToken = nextToken;
+                }
+              },
+            },
+            0.88,
+          );
+
+          const blurProxy = { value: 18 };
+          const impactDriver = { progress: 0 };
+          const applyImpact = () => {
+            const p = impactDriver.progress;
+            const victimP = Math.min(1, p / 0.47);
+            const heroX = 1180 * (1 - p);
+            const heroRotation = 8 * (1 - p);
+            const heroScale = 1 + 0.08 * (1 - p);
+
+            heroMotion.style.transform = `translateX(${heroX}px) rotate(${heroRotation}deg) scale(${heroScale})`;
+            heroMotion.style.opacity = String(Math.min(1, p * 5.5));
+
+            victimGroup.style.transform = `translateX(${-960 * victimP}px) rotate(${-8 * victimP}deg)`;
+            victimGroup.style.opacity = String(1 - victimP);
+
+            blurProxy.value = 18 * (1 - p);
+            blurNode.setAttribute("stdDeviation", `${blurProxy.value} 0`);
+          };
+          applyImpact();
+
+          tl.fromTo(
+            impactDriver,
+            { progress: 0 },
+            {
+              progress: 1,
+              duration: 0.58,
+              ease: "power4.out",
+              onUpdate: applyImpact,
+            },
+            2.22,
+          );
+
+          tl.fromTo(
+            impactGrid,
+            { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.64, ease: "power3.out" },
+            2.26,
+          );
+
+          const shards = gsap.utils.toArray("#frame01-shard-field .shard");
+          shards.forEach((shard) => {
+            const index = Number(shard.dataset.index);
+            const direction = index % 2 === 0 ? -1 : 1;
+            const x = direction * (150 + index * 36);
+            const yBand = (index % 4) - 1.5;
+            const y = yBand * (72 + index * 5);
+            const rotation = direction * (18 + index * 13);
+
+            tl.fromTo(
+              shard,
+              { x: 0, y: 0, rotation: 0, scale: 0.45, opacity: 0 },
+              {
+                x,
+                y,
+                rotation,
+                scale: 1,
+                opacity: 0.84,
+                duration: 0.48 + index * 0.018,
+                ease: "power4.out",
+              },
+              2.24 + index * 0.018,
+            );
+          });
+
+          const jitterDriver = { phase: 0 };
+          tl.fromTo(
+            jitterDriver,
+            { phase: 0 },
+            {
+              phase: Math.PI * 2.4,
+              duration: 0.33,
+              ease: "none",
+              onUpdate: () => {
+                const x = Math.sin(jitterDriver.phase) * 1.8;
+                const y = Math.sin(jitterDriver.phase * 1.7) * 1.2;
+                heroJitter.style.transform = `translate(${x}px, ${y}px)`;
+              },
+            },
+            3.17,
+          );
+
+          window.__timelines["01-ghost-window"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "omnireach-native-bridge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.7.54 preview",
+    "test": "node --test tests/*.test.mjs",
+    "voice:qwen": "node scripts/run-qwen-voice.mjs",
+    "check": "npx --yes hyperframes@0.7.54 check",
+    "render": "npx --yes hyperframes@0.7.54 render",
+    "publish": "npx --yes hyperframes@0.7.54 publish"
+  }
+}

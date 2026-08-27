@@ -1,0 +1,54 @@
+{
+  "tts": {
+    "provider": "qwen3-tts",
+    "runtime": "mlx-audio",
+    "request": "qwen_voice_request.json"
+  },
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "error",
+        "whoosh-short"
+      ]
+    },
+    {
+      "id": "02",
+      "sfx": [
+        "click-soft",
+        "whoosh-short"
+      ]
+    },
+    {
+      "id": "03",
+      "sfx": [
+        "whoosh",
+        "chime"
+      ]
+    },
+    {
+      "id": "04",
+      "sfx": [
+        "typing",
+        "click-soft"
+      ]
+    },
+    {
+      "id": "05",
+      "sfx": [
+        "pop",
+        "ping"
+      ]
+    },
+    {
+      "id": "06",
+      "sfx": [
+        "key-press",
+        "chime"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

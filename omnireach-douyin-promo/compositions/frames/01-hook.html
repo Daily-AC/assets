@@ -1,0 +1,343 @@
+<template>
+  <style>
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      color: #1f2328;
+    }
+
+    .clip {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hf-01-hook-ground {
+      background: #f6f8fa;
+      overflow: hidden;
+    }
+
+    .hf-01-hook-depth {
+      position: absolute;
+      top: 0;
+      height: 83cqh;
+      width: 1px;
+      background: rgba(31, 35, 40, 0.08);
+      transform-origin: top center;
+    }
+
+    .hf-01-hook-depth-a { left: 7.4cqw; }
+    .hf-01-hook-depth-b { left: 50cqw; opacity: 0.52; }
+    .hf-01-hook-depth-c { right: 7.4cqw; opacity: 0.32; }
+
+    .hf-01-hook-index {
+      position: absolute;
+      top: 5.9cqh;
+      left: 12.2cqw;
+      display: flex;
+      align-items: center;
+      gap: 1.1cqw;
+      height: 3.1cqh;
+      white-space: nowrap;
+      font-family: monospace;
+      font-size: 2.4cqw;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .hf-01-hook-index-word {
+      display: inline-block;
+    }
+
+    .hf-01-hook-index-rule {
+      display: block;
+      width: 12.8cqw;
+      height: 1px;
+      background: rgba(31, 35, 40, 0.2);
+      transform-origin: left center;
+    }
+
+    .hf-01-hook-accent {
+      position: absolute;
+      z-index: 8;
+      top: 5.45cqh;
+      left: 7.2cqw;
+      width: 4.2cqw;
+      height: 4.2cqw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0969da;
+      font-family: sans-serif;
+      font-size: 3.4cqw;
+      font-weight: 500;
+      line-height: 1;
+      transform-origin: center;
+    }
+
+    .hf-01-hook-stage {
+      position: absolute;
+      top: 20cqh;
+      left: 5.5cqw;
+      width: 89cqw;
+      height: 39cqh;
+      transform-origin: center;
+    }
+
+    .hf-01-hook-beat {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      color: #1f2328;
+      font-family: sans-serif;
+      font-size: 18.2cqw;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      line-height: 0.98;
+      text-align: center;
+      transform-origin: center;
+    }
+
+    .hf-01-hook-question {
+      padding-right: 8.2cqw;
+      font-size: 16.1cqw;
+    }
+
+    .hf-01-hook-resolve {
+      position: absolute;
+      z-index: 5;
+      top: 46.5cqh;
+      left: 10.2cqw;
+      width: 73cqw;
+      min-height: 22cqh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      color: #1f2328;
+      font-family: sans-serif;
+      font-size: 9.2cqw;
+      font-weight: 400;
+      letter-spacing: -0.018em;
+      line-height: 1.05;
+      transform-origin: center;
+    }
+
+    .hf-01-hook-resolve-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hf-01-hook-resolve-rule {
+      width: 0;
+      height: 1px;
+      margin-top: 2.5cqh;
+      background: rgba(31, 35, 40, 0.2);
+      transform-origin: left center;
+    }
+
+    .hf-01-hook-brand {
+      position: absolute;
+      z-index: 6;
+      top: 69cqh;
+      right: 8.6cqw;
+      width: 11cqw;
+      height: 11cqw;
+      border: 1px solid rgba(31, 35, 40, 0.12);
+      border-radius: 12px;
+      background: #f6f8fa;
+      object-fit: contain;
+      transform-origin: center;
+    }
+
+  </style>
+
+  <div id="root" data-composition-id="01-hook" data-duration="5.1" data-width="1080" data-height="1920">
+    <div class="clip hf-01-hook-ground" data-start="0" data-duration="5.1" data-track-index="0">
+      <i class="hf-01-hook-depth hf-01-hook-depth-a" aria-hidden="true"></i>
+      <i class="hf-01-hook-depth hf-01-hook-depth-b" aria-hidden="true"></i>
+      <i class="hf-01-hook-depth hf-01-hook-depth-c" aria-hidden="true"></i>
+
+      <div id="hf-01-hook-accent" class="hf-01-hook-accent" aria-hidden="true">&#10033;</div>
+
+      <div id="hf-01-hook-index" class="hf-01-hook-index">
+        <span id="hf-01-hook-index-omni" class="hf-01-hook-index-word">OMNIREACH</span>
+        <span id="hf-01-hook-index-rule" class="hf-01-hook-index-rule" aria-hidden="true"></span>
+        <span id="hf-01-hook-index-number" class="hf-01-hook-index-word">018</span>
+      </div>
+
+      <div id="hf-01-hook-stage" class="hf-01-hook-stage">
+        <div id="hf-01-hook-phrase" class="hf-01-hook-beat">搜得到</div>
+        <div id="hf-01-hook-question" class="hf-01-hook-beat hf-01-hook-question">拿得下来吗</div>
+      </div>
+
+      <div id="hf-01-hook-resolve" class="hf-01-hook-resolve">
+        <span id="hf-01-hook-resolve-a" class="hf-01-hook-resolve-line">让 Agent</span>
+        <span id="hf-01-hook-resolve-b" class="hf-01-hook-resolve-line">真正触达网络</span>
+        <i id="hf-01-hook-resolve-rule" class="hf-01-hook-resolve-rule" aria-hidden="true"></i>
+      </div>
+
+      <img id="hf-01-hook-brand" class="hf-01-hook-brand" src="capture/assets/favicon.png" alt="" />
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-hook"] = tl;
+
+      const PULSE = 0.1;
+      const BEATS = [PULSE * 8, PULSE * 17, PULSE * 27, PULSE * 37];
+
+      const indexParts = [
+        { selector: "#hf-01-hook-index-omni", text: "OMNIREACH" },
+        { selector: "#hf-01-hook-index-rule", text: "---" },
+        { selector: "#hf-01-hook-index-number", text: "018" },
+      ];
+      let indexCursor = 0.08;
+      const indexTimeline = indexParts.map((part) => {
+        const duration = 0.12 + part.text.length * 0.012;
+        const start = indexCursor;
+        indexCursor += duration + 0.045;
+        return { ...part, start, duration };
+      });
+
+      indexTimeline.forEach((part) => {
+        const from = part.selector === "#hf-01-hook-index-rule"
+          ? { scaleX: 0, opacity: 0 }
+          : { x: -16, opacity: 0, filter: "blur(5px)" };
+        const to = part.selector === "#hf-01-hook-index-rule"
+          ? { scaleX: 1, opacity: 1, duration: part.duration, ease: "power2.out" }
+          : { x: 0, opacity: 1, filter: "blur(0px)", duration: part.duration, ease: "power3.out" };
+        tl.fromTo(part.selector, from, to, part.start);
+      });
+
+      tl.fromTo(
+        "#hf-01-hook-accent",
+        { scale: 0.92, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.32, ease: "power3.out" },
+        0.05,
+      );
+      tl.fromTo(
+        ".hf-01-hook-depth",
+        { scaleY: 0, opacity: 0 },
+        { scaleY: 1, opacity: 1, duration: 0.62, ease: "power2.out", stagger: 0.06 },
+        0,
+      );
+
+      tl.fromTo(
+        "#hf-01-hook-phrase",
+        { scale: 1.42, filter: "blur(18px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.46, ease: "power4.out" },
+        BEATS[0],
+      );
+
+      const TEXT_STATES = [
+        { t: 0, text: "搜得到" },
+        { t: BEATS[1], text: "读得懂" },
+        { t: BEATS[2], text: "" },
+      ];
+      const textAt = (time) => {
+        for (let i = TEXT_STATES.length - 1; i >= 0; i -= 1) {
+          if (time >= TEXT_STATES[i].t) return TEXT_STATES[i].text;
+        }
+        return "";
+      };
+      const textDriver = { t: 0 };
+      const phraseEl = document.getElementById("hf-01-hook-phrase");
+      let lastPhrase = phraseEl.textContent;
+      tl.to(
+        textDriver,
+        {
+          t: 4.5,
+          duration: 4.5,
+          ease: "none",
+          onUpdate: () => {
+            const next = textAt(textDriver.t);
+            if (next !== lastPhrase) {
+              phraseEl.textContent = next;
+              lastPhrase = next;
+            }
+          },
+        },
+        0,
+      );
+
+      tl.fromTo(
+        "#hf-01-hook-question",
+        { y: 84, scale: 0.76, opacity: 0, filter: "blur(12px)" },
+        { y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.52, ease: "circ.out" },
+        BEATS[2],
+      );
+
+      const accentDriver = { t: 0 };
+      const accentEl = document.getElementById("hf-01-hook-accent");
+      tl.to(
+        accentDriver,
+        {
+          t: 4.5,
+          duration: 4.5,
+          ease: "none",
+          onUpdate: () => {
+            const next = accentDriver.t >= BEATS[2] ? "？" : "✱";
+            if (accentEl.textContent !== next) accentEl.textContent = next;
+          },
+        },
+        0,
+      );
+      tl.to(
+        "#hf-01-hook-accent",
+        { x: "76.8cqw", y: "24.05cqh", scale: 4.1, duration: 0.38, ease: "expo.out" },
+        BEATS[2],
+      );
+
+      tl.to(
+        "#hf-01-hook-stage",
+        { y: "-7.5cqh", scale: 0.68, opacity: 0, duration: 0.36, ease: "power2.in" },
+        BEATS[3],
+      );
+      tl.to(
+        "#hf-01-hook-accent",
+        { x: "64.8cqw", y: "11.75cqh", scale: 2.78, opacity: 0, duration: 0.36, ease: "power2.in" },
+        BEATS[3],
+      );
+      tl.fromTo(
+        "#hf-01-hook-resolve",
+        { scale: 0.7, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.58, ease: "back.out(1.4)" },
+        BEATS[3] + 0.2,
+      );
+      tl.fromTo(
+        "#hf-01-hook-resolve-a",
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.32, ease: "power3.out" },
+        4.02,
+      );
+      tl.fromTo(
+        "#hf-01-hook-resolve-b",
+        { y: 34, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.36, ease: "power3.out" },
+        4.1,
+      );
+      tl.to(
+        "#hf-01-hook-resolve-rule",
+        { width: "55cqw", duration: 0.28, ease: "power2.out" },
+        4.16,
+      );
+      tl.fromTo(
+        "#hf-01-hook-brand",
+        { scale: 0.72, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
+        3.92,
+      );
+    })();
+  </script>
+</template>

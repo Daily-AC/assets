@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Native Tunnel</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Bold.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans CJK SC";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansCJKSC-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+          font-family: "Noto Sans Mono CJK SC";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/NotoSansMonoCJKSC-Medium.woff2") format("woff2");
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 1920px;
+          overflow: hidden;
+          container-type: size;
+          color: #f5f7ff;
+          font-family: "Noto Sans CJK SC";
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .ground-layer {
+          overflow: hidden;
+          background: #050505;
+        }
+
+        .ground-dots {
+          position: absolute;
+          inset: 0 0 326px;
+          opacity: 0.2;
+          background-image: radial-gradient(circle, #31e8ff 1.4px, transparent 1.6px);
+          background-size: 24px 24px;
+        }
+
+        .ground-stripe {
+          position: absolute;
+          top: 0;
+          right: 52px;
+          width: 180px;
+          height: 54px;
+          border: 3px solid #f5f7ff;
+          background-image: repeating-linear-gradient(
+            135deg,
+            #ff2fb3 0,
+            #ff2fb3 18px,
+            #050505 18px,
+            #050505 36px
+          );
+          box-shadow: 4px 4px 0 #f5f7ff;
+          transform: rotate(4deg);
+        }
+
+        .caption-keepout {
+          position: absolute;
+          left: 0;
+          top: 1594px;
+          width: 100%;
+          height: 326px;
+          border-top: 3px solid rgba(49, 232, 255, 0.2);
+          background: #050505;
+        }
+
+        .scene-layer {
+          overflow: hidden;
+          perspective: 1500px;
+        }
+
+        .world {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1080px;
+          height: 2300px;
+          transform-origin: 0 0;
+          will-change: transform;
+        }
+
+        .tunnel-grid,
+        .bridge-map {
+          position: absolute;
+          inset: 0;
+          width: 1080px;
+          height: 2300px;
+          overflow: visible;
+        }
+
+        .tunnel-grid {
+          z-index: 0;
+        }
+
+        .grid-edge {
+          fill: none;
+          stroke: #008191;
+          stroke-width: 4;
+          opacity: 0.62;
+        }
+
+        .grid-cross {
+          fill: none;
+          stroke: #31e8ff;
+          stroke-width: 3;
+          opacity: 0.2;
+        }
+
+        .grid-tick {
+          fill: #050505;
+          stroke: #31e8ff;
+          stroke-width: 3;
+        }
+
+        .rail-base {
+          fill: none;
+          stroke: #f5f7ff;
+          stroke-width: 16;
+          opacity: 0.14;
+        }
+
+        .bridge-map {
+          z-index: 3;
+          pointer-events: none;
+        }
+
+        .bridge-path {
+          fill: none;
+          stroke: #31e8ff;
+          stroke-width: 12;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          filter: drop-shadow(6px 6px 0 #700047);
+        }
+
+        .station {
+          position: absolute;
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 38px 42px;
+          border: 4px solid #f5f7ff;
+          border-radius: 0;
+          background: #07090d;
+          box-shadow: 8px 8px 0 #f5f7ff;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .station-chrome {
+          left: 240px;
+          top: 80px;
+          width: 720px;
+          height: 340px;
+        }
+
+        .station-bridge {
+          left: 110px;
+          top: 930px;
+          width: 720px;
+          height: 340px;
+          border-color: #31e8ff;
+          box-shadow: 8px 8px 0 #31e8ff;
+        }
+
+        .station-omni {
+          left: 120px;
+          top: 1690px;
+          width: 840px;
+          height: 520px;
+          padding: 54px 56px;
+          border-width: 5px;
+          box-shadow: 12px 12px 0 #31e8ff;
+        }
+
+        .station-label {
+          align-self: flex-start;
+          display: inline-flex;
+          align-items: center;
+          min-height: 50px;
+          padding: 8px 20px;
+          border: 3px solid #f5f7ff;
+          border-radius: 9999px;
+          background: #31e8ff;
+          box-shadow: 4px 4px 0 #f5f7ff;
+          color: #050505;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 23px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .station-title {
+          max-width: 100%;
+          color: #f5f7ff;
+          font-size: 72px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 0.96;
+          text-transform: uppercase;
+        }
+
+        .station-bridge .station-title {
+          font-size: 58px;
+          color: #31e8ff;
+        }
+
+        .station-omni .station-title {
+          font-size: 108px;
+        }
+
+        .station-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 23px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .status-blocks {
+          display: flex;
+          gap: 10px;
+        }
+
+        .status-blocks span {
+          display: block;
+          width: 30px;
+          height: 30px;
+          border: 3px solid #f5f7ff;
+          background: #008191;
+        }
+
+        .status-blocks span:nth-child(2) {
+          background: #ff2fb3;
+        }
+
+        .status-blocks span:nth-child(3) {
+          background: #31e8ff;
+        }
+
+        .hacker-text-wrap {
+          position: relative;
+          display: flex;
+          min-height: 116px;
+          align-items: center;
+          color: #31e8ff;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 100px;
+          font-weight: 500;
+          letter-spacing: 0;
+          line-height: 1;
+          perspective: 1500px;
+          white-space: nowrap;
+        }
+
+        .hacker-live,
+        .hacker-ghost {
+          display: inline-flex;
+        }
+
+        .hacker-ghost {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .hacker-char {
+          display: inline-block;
+          min-width: 0.68em;
+          transform-origin: bottom;
+          transform-style: preserve-3d;
+          will-change: transform, opacity;
+        }
+
+        .bridge-keyword {
+          display: inline-block;
+          transform-origin: 50% 50%;
+          will-change: transform, text-shadow;
+        }
+
+        .packet-shell {
+          position: absolute;
+          z-index: 4;
+          top: 300px;
+          width: 126px;
+          height: 48px;
+          will-change: transform, opacity;
+        }
+
+        .packet-a {
+          left: 278px;
+        }
+
+        .packet-b {
+          left: 430px;
+        }
+
+        .packet-c {
+          left: 582px;
+        }
+
+        .packet-d {
+          left: 734px;
+        }
+
+        .packet-lead,
+        .packet-ghost {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          width: 126px;
+          height: 48px;
+          border: 3px solid #31e8ff;
+          background: #07090d;
+          box-shadow: 4px 4px 0 #700047;
+          color: #f5f7ff;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 18px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .packet-lead {
+          z-index: 2;
+        }
+
+        .packet-ghost {
+          z-index: 1;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+
+        .corner-star {
+          position: absolute;
+          z-index: 2;
+          left: 36px;
+          top: 1420px;
+          display: grid;
+          place-items: center;
+          width: 132px;
+          height: 132px;
+          clip-path: polygon(
+            50% 0%,
+            61% 30%,
+            88% 12%,
+            72% 40%,
+            100% 50%,
+            72% 60%,
+            88% 88%,
+            61% 70%,
+            50% 100%,
+            39% 70%,
+            12% 88%,
+            28% 60%,
+            0% 50%,
+            28% 40%,
+            12% 12%,
+            39% 30%
+          );
+          background: #ff2fb3;
+          color: #f5f7ff;
+          font-family: "Noto Sans Mono CJK SC";
+          font-size: 21px;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          text-align: center;
+          transform: rotate(-8deg);
+        }
+
+        .corner-star span {
+          display: block;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="03-native-tunnel"
+        data-width="1080"
+        data-height="1920"
+        data-duration="5.8"
+      >
+        <div id="frame03-ground" class="clip ground-layer" data-start="0" data-duration="5.8" data-track-index="0">
+          <div class="ground-dots"></div>
+          <div class="ground-stripe"></div>
+          <div class="caption-keepout"></div>
+        </div>
+
+        <div id="frame03-scene" class="clip scene-layer" data-start="0" data-duration="5.8" data-track-index="1">
+          <div class="world" id="frame03-native-tunnel-world">
+            <svg class="tunnel-grid" viewBox="0 0 1080 2300" aria-hidden="true">
+              <path class="grid-edge" d="M 430 60 L 80 2240 M 650 60 L 1000 2240" />
+              <path class="grid-edge" d="M 500 60 L 360 2240 M 580 60 L 720 2240" />
+              <path class="rail-base" d="M 600 420 L 555 660 L 470 930 L 500 1270 L 540 1510 L 540 1690" />
+              <path class="grid-cross" d="M 404 220 L 676 220 M 370 420 L 710 420 M 330 680 L 750 680" />
+              <path class="grid-cross" d="M 278 1000 L 802 1000 M 224 1340 L 856 1340" />
+              <path class="grid-cross" d="M 160 1740 L 920 1740 M 106 2100 L 974 2100" />
+              <rect class="grid-tick" x="422" y="202" width="22" height="36" />
+              <rect class="grid-tick" x="638" y="202" width="22" height="36" />
+              <rect class="grid-tick" x="267" y="982" width="22" height="36" />
+              <rect class="grid-tick" x="791" y="982" width="22" height="36" />
+              <rect class="grid-tick" x="149" y="1722" width="22" height="36" />
+              <rect class="grid-tick" x="909" y="1722" width="22" height="36" />
+            </svg>
+
+            <svg class="bridge-map" viewBox="0 0 1080 2300" aria-hidden="true">
+              <path
+                id="frame03-native-tunnel-bridge-path"
+                class="bridge-path"
+                d="M 600 420 L 555 660 L 470 930 L 500 1270 L 540 1510 L 540 1690"
+              />
+            </svg>
+
+            <div class="station station-chrome" id="frame03-native-tunnel-chrome">
+              <div class="station-label">STATION / SESSION</div>
+              <div class="station-title">LOGGED-IN CHROME</div>
+              <div class="station-meta">
+                <span>ACTIVE SESSION</span>
+                <span class="status-blocks" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
+            </div>
+
+            <div class="station station-bridge" id="frame03-native-tunnel-bridge">
+              <div class="station-label">LOCALHOST</div>
+              <div class="station-title">
+                <span class="bridge-keyword" id="frame03-native-tunnel-bridge-keyword">READ-ONLY</span>
+                NATIVE BRIDGE
+              </div>
+              <div class="station-meta">
+                <span>LOCAL LINK</span>
+                <span class="status-blocks" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
+            </div>
+
+            <div class="station station-omni" id="frame03-native-tunnel-omni">
+              <div class="station-label">NATIVE ENTRY</div>
+              <div
+                class="hacker-text-wrap"
+                id="frame03-native-tunnel-hacker"
+                data-target="OMNIREACH"
+                aria-label="Omnireach"
+              ></div>
+              <div class="station-meta">
+                <span>OMNIREACH</span>
+                <span class="status-blocks" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
+            </div>
+
+            <div class="packet-shell packet-a" data-packet="A">
+              <div class="packet-ghost" data-echo="2" aria-hidden="true">IDX A</div>
+              <div class="packet-ghost" data-echo="1" aria-hidden="true">IDX A</div>
+              <div class="packet-lead">IDX A</div>
+            </div>
+            <div class="packet-shell packet-b" data-packet="B">
+              <div class="packet-ghost" data-echo="2" aria-hidden="true">IDX B</div>
+              <div class="packet-ghost" data-echo="1" aria-hidden="true">IDX B</div>
+              <div class="packet-lead">IDX B</div>
+            </div>
+            <div class="packet-shell packet-c" data-packet="C">
+              <div class="packet-ghost" data-echo="2" aria-hidden="true">IDX C</div>
+              <div class="packet-ghost" data-echo="1" aria-hidden="true">IDX C</div>
+              <div class="packet-lead">IDX C</div>
+            </div>
+            <div class="packet-shell packet-d" data-packet="D">
+              <div class="packet-ghost" data-echo="2" aria-hidden="true">IDX D</div>
+              <div class="packet-ghost" data-echo="1" aria-hidden="true">IDX D</div>
+              <div class="packet-lead">IDX D</div>
+            </div>
+          </div>
+
+          <div class="corner-star"><span>LOCAL</span><span>ONLY</span></div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const hackerWrap = document.getElementById("frame03-native-tunnel-hacker");
+        const targetWord = hackerWrap.dataset.target;
+        const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*";
+
+        function pseudoGlyph(seed) {
+          const normalized = ((seed * 9301 + 49297) % 233280) / 233280;
+          return glyphs[Math.floor(normalized * glyphs.length)];
+        }
+
+        const ghostRow = document.createElement("div");
+        ghostRow.className = "hacker-ghost";
+        ghostRow.textContent = targetWord;
+        hackerWrap.appendChild(ghostRow);
+
+        const liveRow = document.createElement("div");
+        liveRow.className = "hacker-live";
+        const hackerChars = [];
+        Array.from(targetWord).forEach((character, index) => {
+          const span = document.createElement("span");
+          span.className = "hacker-char";
+          span.dataset.target = character;
+          span.textContent = pseudoGlyph(index * 1000);
+          span.style.transform = "rotateX(90deg)";
+          span.style.opacity = "0.2";
+          liveRow.appendChild(span);
+          hackerChars.push(span);
+        });
+        hackerWrap.appendChild(liveRow);
+
+        const world = document.getElementById("frame03-native-tunnel-world");
+        const camera = { x: -27, y: -1368, scale: 1.05 };
+
+        function applyCamera() {
+          world.style.transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.scale})`;
+        }
+        applyCamera();
+
+        const bridgePath = document.getElementById("frame03-native-tunnel-bridge-path");
+        const bridgeLength = bridgePath.getTotalLength();
+        bridgePath.style.strokeDasharray = String(bridgeLength);
+        bridgePath.style.strokeDashoffset = String(bridgeLength);
+
+        const timeline = gsap.timeline({ paused: true });
+
+        timeline.fromTo(
+          "#frame03-native-tunnel-omni",
+          { opacity: 0.68, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.38, ease: "power3.out" },
+          0,
+        );
+
+        hackerChars.forEach((element, index) => {
+          const state = { progress: 0 };
+          timeline.to(
+            state,
+            {
+              progress: 1,
+              duration: 0.45,
+              ease: "power3.out",
+              onUpdate: () => {
+                const progress = state.progress;
+                if (progress < 0.62) {
+                  element.textContent = pseudoGlyph(index * 1000 + Math.floor(progress * 100));
+                } else {
+                  element.textContent = element.dataset.target;
+                }
+                element.style.transform = `rotateX(${90 - progress * 90}deg)`;
+                element.style.opacity = String(Math.min(1, 0.2 + progress * 1.4));
+              },
+            },
+            0.04 + index * 0.035,
+          );
+        });
+
+        timeline.to(
+          camera,
+          {
+            x: -90,
+            y: 418,
+            duration: 1.52,
+            ease: "power2.inOut",
+            onUpdate: applyCamera,
+          },
+          1.12,
+        );
+
+        const packetShells = gsap.utils.toArray(".packet-shell");
+        packetShells.forEach((shell, index) => {
+          const start = 1.28 + index * 0.19;
+          const xOffset = index % 2 === 0 ? -56 : 56;
+          timeline.fromTo(
+            shell,
+            { x: xOffset, y: 1400, opacity: 1 },
+            { x: 0, y: 0, opacity: 1, duration: 0.62, ease: "power4.out" },
+            start,
+          );
+
+          shell.querySelectorAll(".packet-ghost").forEach((ghost) => {
+            const echo = Number(ghost.dataset.echo);
+            timeline.fromTo(
+              ghost,
+              { y: echo * 54, opacity: 0.52 / echo },
+              { y: 0, opacity: 0, duration: 0.62, ease: "power4.out" },
+              start,
+            );
+          });
+        });
+
+        timeline.fromTo(
+          "#frame03-native-tunnel-chrome",
+          { opacity: 0.72, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.46, ease: "power3.out" },
+          2.2,
+        );
+
+        timeline.to(
+          camera,
+          {
+            x: 47,
+            y: -475,
+            duration: 0.78,
+            ease: "power3.inOut",
+            onUpdate: applyCamera,
+          },
+          3.34,
+        );
+
+        timeline.fromTo(
+          "#frame03-native-tunnel-bridge",
+          { opacity: 0.7, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.46, ease: "power3.out" },
+          3.68,
+        );
+
+        timeline.to(
+          bridgePath,
+          {
+            strokeDashoffset: 0,
+            duration: 1.05,
+            ease: "power2.out",
+          },
+          3.48,
+        );
+
+        timeline.to(
+          camera,
+          {
+            x: 243,
+            y: 100,
+            scale: 0.55,
+            duration: 0.34,
+            ease: "power3.out",
+            onUpdate: applyCamera,
+          },
+          4.84,
+        );
+
+        const glowElement = document.getElementById("frame03-native-tunnel-bridge-keyword");
+        const glowDriver = { time: 0 };
+        const glowAttack = 0.08;
+        const glowEnd = 0.16;
+        const glowRelease = 0.26;
+        const glowRest = 0.24;
+
+        function glowEnvelope(time) {
+          if (time < glowAttack) return time / glowAttack;
+          if (time < glowEnd) return 1;
+          if (time < glowEnd + glowRelease) {
+            const decay = (time - glowEnd) / glowRelease;
+            return 1 - decay * (1 - glowRest);
+          }
+          return glowRest;
+        }
+
+        timeline.to(
+          glowDriver,
+          {
+            time: 0.42,
+            duration: 0.42,
+            ease: "none",
+            onUpdate: () => {
+              const envelope = glowEnvelope(glowDriver.time);
+              glowElement.style.textShadow = `0 0 ${34 * envelope}px rgba(49, 232, 255, ${0.2 + envelope * 0.68})`;
+              glowElement.style.transform = `scale(${1 + envelope * 0.12})`;
+            },
+          },
+          4.88,
+        );
+
+        window.__timelines["03-native-tunnel"] = timeline;
+      </script>
+    </template>
+  </body>
+</html>

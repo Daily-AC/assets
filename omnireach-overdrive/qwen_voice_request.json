@@ -1,0 +1,61 @@
+{
+  "provider": "qwen3-tts",
+  "runtime": "mlx-audio",
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-6bit",
+  "voice": "Vivian",
+  "language": "Chinese",
+  "instruct": "中文普通话，年轻女性，懂技术，快速、冷静、有攻击性但不喊叫。每个短句像电子音乐里的一个重拍。英文产品名、命令和字段名自然发音。不要播音腔。",
+  "temperature": 0.78,
+  "top_p": 0.9,
+  "top_k": 50,
+  "repetition_penalty": 1.1,
+  "seed": 20260713,
+  "lead_s": 0.08,
+  "trim_threshold": 0.003,
+  "trim_margin_s": 0.06,
+  "target_peak_dbfs": -3.0,
+  "frames": [
+    {
+      "id": "01",
+      "frame": 1,
+      "target_duration_s": 3.5,
+      "gaps_s": [0.181],
+      "phrases": ["Agent 搜个抖音，怎么又弹", "Chrome？"]
+    },
+    {
+      "id": "02",
+      "frame": 2,
+      "target_duration_s": 4.2,
+      "gaps_s": [0.181],
+      "phrases": ["搜索和读取，", "不该每次拉起整套浏览器自动化。"]
+    },
+    {
+      "id": "03",
+      "frame": 3,
+      "target_duration_s": 5.3,
+      "gaps_s": [0.181, 0.181],
+      "phrases": ["Omnireach", "直接复用你已经登录的 Chrome，", "只走一条只读原生桥。"]
+    },
+    {
+      "id": "04",
+      "frame": 4,
+      "target_duration_s": 7.8,
+      "gaps_s": [0.181, 0.181],
+      "phrases": ["真实运行，", "三条抖音结果，", "adapter 是 native-chrome。"]
+    },
+    {
+      "id": "05",
+      "frame": 5,
+      "target_duration_s": 15.3,
+      "gaps_s": [0.181, 0.181, 0.181, 0.181, 0.181],
+      "phrases": [
+        "PATH 里没有 OpenCLI。",
+        "errors 为空。",
+        "可见窗口和标签页，零到零。",
+        "点击和表单，交给 Playwright。",
+        "搜索和读取，",
+        "装完就用。"
+      ]
+    }
+  ]
+}
