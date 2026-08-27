@@ -1,14 +1,16 @@
-# videos
+# assets
 
-Launch and promo video projects. Each directory is a self-contained
-frame-based video build: HTML compositions, storyboard, narration script,
-voice/SFX assets, and the scripts that render them.
+Shared asset repository: launch videos, demo recordings, and promotional
+images for projects that shouldn't carry this weight in their own history.
 
-Rendered `.mp4` files are **not** committed. They ship as
-[Release assets](../../releases) so the repository history stays free of
-binaries that can be re-rendered from source.
+Rendered `.mp4` files are **not** committed — they ship as
+[Release assets](../../releases/tag/renders-2026-07) so the repository stays
+free of binaries that can be re-rendered from the sources here.
 
-## Projects
+## Video projects
+
+Each directory is a self-contained frame-based video build: HTML compositions,
+storyboard, narration script, voice/SFX assets, and the render scripts.
 
 | Project | For | Format | Length | Narration |
 |---|---|---|---|---|
@@ -20,7 +22,7 @@ binaries that can be re-rendered from source.
 `_planning/` holds the design and plan documents for the two OmniReach
 narrated shorts.
 
-## Layout
+### Video project layout
 
 ```
 <project>/
@@ -35,8 +37,20 @@ narrated shorts.
   renders/                output — gitignored, published as Release assets
 ```
 
-Regenerating a narration track needs a Qwen3-TTS endpoint; see each
-project's `qwen_voice_request.json` for the exact request used.
+Regenerating a narration track needs a Qwen3-TTS endpoint; see each project's
+`qwen_voice_request.json` for the exact request used.
+
+## Images
+
+[`omnireach-images/`](omnireach-images) — retired and campaign-only imagery
+moved out of the OmniReach repository so ordinary installs don't clone it.
+
+| File | Was |
+|---|---|
+| `demo.gif` | v0.11 README hero, retired when `demo-wechat.gif` replaced it |
+| `launch-xhs-cover.png` | v0.12 Xiaohongshu launch card |
+| `launch-xhs-demo.png` | v0.12 Xiaohongshu launch card |
+| `launch-xhs-routing.png` | v0.12 Xiaohongshu launch card |
 
 ## What is not committed
 
